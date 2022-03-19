@@ -7,19 +7,19 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FirstScreen implements Initializable {
-    public Label TheLabel;
+public class LogIn implements Initializable {
+    //public Label TheLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("I am initialized!");
-        TheLabel.setText("Initialized!");
+        //TheLabel.setText("Initialized!");
     }
 
     public void onButtonAction(ActionEvent actionEvent) {
         System.out.println("I am clicked");
 
-        TheLabel.setText("You clicked it!");
+        //TheLabel.setText("You clicked it!");
     }
 
 }
