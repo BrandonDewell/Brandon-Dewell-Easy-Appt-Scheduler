@@ -15,7 +15,7 @@ import java.time.*;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/LogIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LogInMenu.fxml"));
         stage.setTitle("Log In");
         stage.setScene(new Scene(root, 300, 200));
         stage.show();
@@ -23,7 +23,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();
-        //Locale.setDefault(new Locale("fr"));  // To test for French language
+        //Locale.setDefault(new Locale("fr"));  // To test for French language from video "C195 Requirements - PART # 1 : Overview And Section A.1 (Login Form) (09-11-2021)"
 
         // TimeZone info from TimeZone webinar
         // System.out.println(ZoneId.systemDefault());  // Displays Time Zone in Java
@@ -49,16 +49,50 @@ public class Main extends Application {
 
         myZDT = ZonedDateTime.ofInstant(utcZDT.toInstant(), myZoneId);  // resets timezone zero AKA utc to local time AKA myZoneId.
         System.out.println("UTC to user time: " + myZDT);
+
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
-        int rowsAffected = CustomersQuery.insert("Brandon Dewell","12941 Bartlett Drive", "46037", "317-696-8955", ts, "Brandon Dewell", ts,"Brandon Dewell", 42); // test insert function
+          // Test insert function
+        /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","12941 Bartlett Drive", "46037", "317-696-8955", ts, "Brandon Dewell", ts,"Brandon Dewell", 42);
 
         if(rowsAffected > 0){
             System.out.println("Insert successful!");
         }
         else{
             System.out.println("Insert failed!");
+        }*/
+
+
+          // Test update function
+        /*int rowsAffected = CustomersQuery.update(2, "Michael Jordan");// test update function
+
+        if(rowsAffected > 0){
+            System.out.println("Update successful!");
         }
+        else{
+            System.out.println("Update failed!");
+        }*/
+
+
+        // Test delete function
+       /* int rowsAffected = CustomersQuery.delete(9);// test update function
+
+        if(rowsAffected > 0){
+            System.out.println("Delete successful!");
+        }
+        else{
+            System.out.println("Delete failed!");
+        }*/
+
+
+        // Test select function
+        //CustomersQuery.select();
+
+        // Test overloaded select function while using a bind variable
+        //CustomersQuery.select("Daddy Warbucks");
+
+        // Test another overloaded select function while using a bind variable
+        //CustomersQuery.select(103);
 
 
         launch(args);
