@@ -24,8 +24,14 @@ public abstract class JDBC {
         }
         catch(Exception e)
         {
-            System.out.println("Error:" + e.getMessage());
+            //System.out.println("Error:" + e.getMessage());
+            e.printStackTrace();  // 5/14/22 3:57pm from Getting the DBConnection class project ready video at about 10 minutes in.
         }
+    }
+
+    // need to get the connection
+    public static Connection getConnection(){   // 5/14/22 4:05pm about 11 mins into the Getting the DBConnection class project ready video.
+        return connection;
     }
 
     public static void closeConnection() {
