@@ -56,7 +56,7 @@ public class Main extends Application {
 
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
-          // Test insert function
+          // Test insert() function from Malcom's webinar titled JDBC at 43 mins.
         /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","12941 Bartlett Drive", "46037", "317-696-8955", ts, "Brandon Dewell", ts,"Brandon Dewell", 42);
 
         if(rowsAffected > 0){
@@ -67,8 +67,8 @@ public class Main extends Application {
         }*/
 
 
-          // Test update function
-        /*int rowsAffected = CustomersQuery.update(2, "Michael Jordan");// test update function
+          // Test update() function from Malcom's webinar titled JDBC at 52 mins.
+        /*int rowsAffected = CustomersQuery.update(2, "Michael Jordan");
 
         if(rowsAffected > 0){
             System.out.println("Update successful!");
@@ -78,7 +78,7 @@ public class Main extends Application {
         }*/
 
 
-        // Test delete function
+        // Test delete() function from Malcom's webinar titled JDBC at 57 mins 45 secs.
        /* int rowsAffected = CustomersQuery.delete(9);// test update function
 
         if(rowsAffected > 0){
@@ -89,13 +89,13 @@ public class Main extends Application {
         }*/
 
 
-        // Test select function
+         // Test select() function from Malcom's webinar titled JDBC at 1 hr 8 mins 20 secs.
         //CustomersQuery.select();
 
-        // Test overloaded select function while using a bind variable
+         // Test overloaded select() function while using a bind variable from Malcom's webinar titled JDBC at 1 hr 14 mins.
         //CustomersQuery.select("Daddy Warbucks");
 
-        // Test another overloaded select function while using a bind variable
+         // Test another overloaded select function while using a bind variable from Malcom's webinar titled JDBC also at 1 hr 8 mins 20 secs.
         //CustomersQuery.select(103);
 
 
