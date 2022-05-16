@@ -2,6 +2,7 @@ package helper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public abstract class JDBC {
 
@@ -22,10 +23,13 @@ public abstract class JDBC {
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
             System.out.println("Connection successful!");
         }
-        catch(Exception e)
+        catch(SQLException e)
         {
             //System.out.println("Error:" + e.getMessage());
             e.printStackTrace();  // 5/14/22 3:57pm from Getting the DBConnection class project ready video at about 10 minutes in.
+        }
+        catch(ClassNotFoundException e){
+            e.printStackTrace();
         }
     }
 
