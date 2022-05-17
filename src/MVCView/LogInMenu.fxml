@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MVCController.LogInMenuController">
+   <children>
+      <Label layoutX="121.0" layoutY="14.0" text="Log In">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:countryId="ZoneLabel" layoutX="15.0" layoutY="160.0" prefHeight="17.0" prefWidth="150.0" text="Location:" />
+      <Button fx:countryId="displlayMainMenuB" layoutX="204.0" layoutY="151.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="35.0" prefWidth="82.0" text="Sign In" />
+      <TextField fx:countryId="userNameTxt" layoutX="91.0" layoutY="66.0" prefHeight="25.0" prefWidth="191.0" />
+      <TextField fx:countryId="passwordTxt" layoutX="91.0" layoutY="100.0" prefHeight="25.0" prefWidth="191.0" />
+      <Label fx:countryId="userNameLabel" layoutX="14.0" layoutY="70.0" text="User Name" />
+      <Label fx:countryId="passwordLabel" layoutX="14.0" layoutY="104.0" text="Password" />
+   </children>
+</AnchorPane>

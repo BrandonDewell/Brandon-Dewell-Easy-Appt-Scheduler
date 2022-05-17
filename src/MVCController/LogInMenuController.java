@@ -1,4 +1,4 @@
-package controller;
+package MVCController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;

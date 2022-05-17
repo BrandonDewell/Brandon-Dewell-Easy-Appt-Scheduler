@@ -1,6 +1,5 @@
 package main;
 
-import helper.CustomersQuery;
 import helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +18,7 @@ public class Main extends Application {
 //        stage.setTitle("Log In");
 //        stage.setScene(new Scene(root, 300, 200));
 //        stage.show();
-        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/MVCView/MainMenu.fxml"));
         stage.setTitle("Main Menu");
         stage.setScene(new Scene(root, 1200, 700));
         stage.show();
