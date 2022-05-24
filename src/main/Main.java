@@ -18,7 +18,7 @@ public class Main extends Application {
 //        stage.setTitle("Log In");
 //        stage.setScene(new Scene(root, 300, 200));
 //        stage.show();
-        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
         stage.setTitle("Main Menu");
         stage.setScene(new Scene(root, 1200, 700));
         stage.show();

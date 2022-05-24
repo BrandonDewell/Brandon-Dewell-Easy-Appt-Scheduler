@@ -1,15 +1,22 @@
 package daoView_Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 // test
 
 public class MainMenuController implements Initializable {
 
+    Scene scene;
     public TableView custTable;
     public TableColumn CRcustIDCol;
     public TableColumn CRcustNameCol;
@@ -44,30 +51,51 @@ public class MainMenuController implements Initializable {
         System.out.println("Main Menu is initialized");
     }
 
-    public void onActionAddCustomer(ActionEvent actionEvent) {
+    public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
+        // System.out.println("Add Customer button clicked");  // to test that the event handler is working
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 400);
+        stage.setTitle("Add Customer");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onActionUpdateCustomer(ActionEvent actionEvent) {
+        System.out.println("Update Customer button clicked");
     }
 
     public void onActionDeleteCustomer(ActionEvent actionEvent) {
+        System.out.println("Delete Customer button clicked");
     }
 
-    public void onActionAddAppointment(ActionEvent actionEvent) {
+    public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
+        // System.out.println("Add Appointment button clicked");
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Appointment.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 400);
+        stage.setTitle("Add Appointment");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onActionUpdateAppointment(ActionEvent actionEvent) {
+        System.out.println("Update Appointment button clicked");
     }
 
     public void onActionDeleteAppointment(ActionEvent actionEvent) {
+        System.out.println("Delete Appointment button clicked");
     }
 
     public void onActionWeekView(ActionEvent actionEvent) {
+        System.out.println("Week radio button clicked");
     }
 
     public void onActionMonthView(ActionEvent actionEvent) {
+        System.out.println("Month radio button clicked");
     }
 
     public void onActionAllView(ActionEvent actionEvent) {
+        System.out.println("All radio button clicked");
     }
 }
