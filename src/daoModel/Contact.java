@@ -1,4 +1,4 @@
-package DAOModelObject;
+package daoModel;
 
 public class Contact {
     private String contactId;

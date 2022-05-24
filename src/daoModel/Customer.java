@@ -1,4 +1,4 @@
-package DAOModelObject;
+package daoModel;
 
 import java.sql.Timestamp;
 
@@ -8,22 +8,22 @@ public class Customer {
     private String address;
     private String postalCode;
     private int phone;
-    private Timestamp createDate;
+/*    private Timestamp createDate;  // 5/18 4:08pm
     private String createdBy;
     private Timestamp lastUpdate;
-    private String lastUpdatedBy;
+    private String lastUpdatedBy;*/
     private int divisionId;
 
-    public Customer(int customerId, String customerName, String address, String postalCode, int phone, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int divisionId) {
+    public Customer(int customerId, String customerName, String address, String postalCode, int phone, /*Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,*/ int divisionId) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
-        this.createDate = createDate;
+/*        this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
+        this.lastUpdatedBy = lastUpdatedBy;*/
         this.divisionId = divisionId;
     }
 
@@ -67,7 +67,7 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Timestamp getCreateDate() {
+    /*public Timestamp getCreateDate() {
         return createDate;
     }
 
@@ -97,7 +97,7 @@ public class Customer {
 
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
-    }
+    }*/
 
     public int getDivisionId() {
         return divisionId;

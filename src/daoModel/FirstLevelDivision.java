@@ -1,43 +1,40 @@
-package DAOModelObject;
+package daoModel;
 
 import java.sql.Timestamp;
 
-public class Country {
-    private int countryId;
-    private String countryName;
+public class FirstLevelDivision {
+    private int divisionId;
+    private String division;
     private Timestamp createDate;
     private String createdBy;
     private Timestamp lastUpdate;
     private String lastUpdatedBy;
+    private int countryId;
 
-    public Country(int countryId, String countryName, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
-        this.countryId = countryId;
-        this.countryName = countryName;
+    public FirstLevelDivision(int divisionId, String division, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int countryId) {
+        this.divisionId = divisionId;
+        this.division = division;
         this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
-    }
-
-    public Country(int countryId, String countryName) {  // constructor
-        this.countryId = countryId;
-        this.countryName = countryName;
-    }
-
-    public int getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public int getDivisionId() {
+        return divisionId;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setDivisionId(int divisionId) {
+        this.divisionId = divisionId;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
     }
 
     public Timestamp getCreateDate() {
@@ -70,5 +67,13 @@ public class Country {
 
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public int getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
     }
 }

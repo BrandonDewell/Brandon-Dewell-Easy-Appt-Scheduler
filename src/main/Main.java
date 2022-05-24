@@ -18,7 +18,7 @@ public class Main extends Application {
 //        stage.setTitle("Log In");
 //        stage.setScene(new Scene(root, 300, 200));
 //        stage.show();
-        Parent root = FXMLLoader.load(getClass().getResource("/MVCView/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
         stage.setTitle("Main Menu");
         stage.setScene(new Scene(root, 1200, 700));
         stage.show();
@@ -26,6 +26,11 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();
+
+        /*CustomerDAO customer = new CustomerDAOImpl();  // if using DAO Pattern
+        customer.select();
+        CustomersQuery.in*/
+
         //Locale.setDefault(new Locale("fr"));  // To test for French language from video "C195 Requirements - PART # 1 : Overview And Section A.1 (Login Form) (09-11-2021)"
 
         // TimeZone info from TimeZone webinar

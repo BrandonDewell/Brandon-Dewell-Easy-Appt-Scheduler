@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MVCController.AppointmentController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.AppointmentController">
     <children>
-        <Label fx:countryId="appointmentLabel" layoutX="243.0" layoutY="14.0" text="Appointment">
+        <Label fx:id="appointmentLabel" layoutX="243.0" layoutY="14.0" text="Appointment">
             <font>
                 <Font size="18.0" />
             </font>
@@ -40,24 +40,24 @@
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin></Label>
-                <TextField fx:countryId="appointmentIDTextField" disable="true" editable="false" maxWidth="150.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
-                <TextField fx:countryId="titleTextField" maxWidth="150.0" GridPane.columnIndex="3" />
+                <TextField fx:id="appointmentIDTextField" disable="true" editable="false" maxWidth="150.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
+                <TextField fx:id="titleTextField" maxWidth="150.0" GridPane.columnIndex="3" />
                 <Label prefHeight="17.0" prefWidth="67.0" text="Description" GridPane.rowIndex="2" />
                 <Label text="Location" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin></Label>
-                <TextField fx:countryId="locationTextField" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                <TextField fx:id="locationTextField" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Contact" GridPane.rowIndex="3" />
-            <ComboBox fx:countryId="contactComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:countryId="descriptionTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="contactComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="descriptionTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Type" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox fx:countryId="typeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <DatePicker fx:countryId="startDateDatePicker" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="typeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <DatePicker fx:id="startDateDatePicker" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Start Date" GridPane.rowIndex="4" />
             <Label text="Start Time" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <GridPane.margin>
@@ -65,25 +65,25 @@
                </GridPane.margin>
             </Label>
             <Label text="Customer_ID" GridPane.rowIndex="1" />
-            <ComboBox fx:countryId="customerIDComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="customerIDComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="User_ID" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox fx:countryId="userIDComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <ComboBox fx:countryId="startTimeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <ComboBox fx:id="userIDComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ComboBox fx:id="startTimeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Label text="End Date" GridPane.rowIndex="5" />
-            <DatePicker fx:countryId="endDateDatePicker" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <DatePicker fx:id="endDateDatePicker" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="End Time" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox fx:countryId="endTimeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <ComboBox fx:id="endTimeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             </children>
         </GridPane>
-        <Button fx:countryId="saveButton" layoutX="392.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionSave" text="Save" />
-        <Button fx:countryId="cancelButton" layoutX="461.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
+        <Button fx:id="saveButton" layoutX="392.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionSave" text="Save" />
+        <Button fx:id="cancelButton" layoutX="461.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
     </children>
 </AnchorPane>

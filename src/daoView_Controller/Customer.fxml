@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MVCController.CustomerController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.CustomerController">
    <children>
-      <Label fx:countryId="customerLabel" layoutX="243.0" layoutY="14.0" text="Customer">
+      <Label fx:id="customerLabel" layoutX="243.0" layoutY="14.0" text="Customer">
          <font>
             <Font size="18.0" />
          </font>
@@ -25,12 +25,12 @@
          <children>
             <Label text="Customer_ID" />
             <Label text="Customer Name" GridPane.rowIndex="1" />
-            <TextField fx:countryId="customerIDTextField" disable="true" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="127.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
-            <TextField fx:countryId="customerNameTextField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="customerIDTextField" disable="true" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="127.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
+            <TextField fx:id="customerNameTextField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="43.0" text="Country" GridPane.rowIndex="2" />
-            <ComboBox fx:countryId="countryComboBox" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="countryComboBox" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Address" GridPane.rowIndex="3" />
-            <TextField fx:countryId="addressTextField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="addressTextField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <GridPane layoutX="22.0" layoutY="239.0" prefHeight="80.0" prefWidth="540.0">
@@ -46,14 +46,14 @@
         </rowConstraints>
          <children>
             <Label text="State/Province" />
-            <ComboBox fx:countryId="stateProvinceComboBox" prefWidth="140.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="stateProvinceComboBox" prefWidth="140.0" GridPane.columnIndex="1" />
             <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Postal Code" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <TextField fx:countryId="postalCodeTextField" prefHeight="25.0" prefWidth="87.0" GridPane.columnIndex="3" />
+            <TextField fx:id="postalCodeTextField" prefHeight="25.0" prefWidth="87.0" GridPane.columnIndex="3" />
             <Label text="Phone Number" GridPane.rowIndex="1" />
-            <TextField fx:countryId="phoneNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="phoneNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button fx:countryId="saveButton" layoutX="392.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionSave" text="Save" />
-      <Button fx:countryId="cancelButton" layoutX="461.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
+      <Button fx:id="saveButton" layoutX="392.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionSave" text="Save" />
+      <Button fx:id="cancelButton" layoutX="461.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
    </children>
 </AnchorPane>
