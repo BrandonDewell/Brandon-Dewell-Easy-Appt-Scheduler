@@ -39,10 +39,10 @@ public class CustomerController implements Initializable {
     public void onActionSave(ActionEvent actionEvent) {
         System.out.println("Customer save button clicked");
 
-        /* ObservableList<Customer> cList = CustomerDAOImpl.getAllCustomers();
+        ObservableList<Customer> cList = CustomerDAOImpl.getAllCustomers();
                 for(Customer c : cList){
                     System.out.println("Customer ID : " + c.getCustomerId() + " Name : " + c.getCustomerName());
-                }*/
+                }
 
     }
 

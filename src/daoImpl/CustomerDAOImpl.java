@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class CustomerDAOImpl implements CustomerDAO {  // write sql things here
-    @Override
-    public void select() throws SQLException {
+
+    public void select(Customer customer) throws SQLException {
         String sql = "SELECT * FROM CUSTOMERS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -25,38 +25,21 @@ public class CustomerDAOImpl implements CustomerDAO {  // write sql things here
         }
     }
 
-    @Override
-    public int insert() {
-        return 0;
-    }
 
-    @Override
-    public int update() {
-        return 0;
-    }
-
-    @Override
-    public int delete() {
-        return 0;
-    }
-
-    public static int insert(String CustomerName, String Address, String PostalCode, String Phone, Timestamp CreateDate, String CreatedBy, Timestamp LastUpdate, String LastUpdatedBy, int DivisionID) throws SQLException {
-        //String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // 3/15 12:13pm Question marks are bind variables starting at index 1.
-        String sql = "INSERT INTO CUSTOMERS VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in NULL to let mysql handle inputting values for the Customer_ID.
+    public static int insert(Customer customer) throws SQLException {
+        //String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // 3/15 12:13pm Question marks are bind variables starting at index 1.
+        String sql = "INSERT INTO CUSTOMERS VALUES (NULL, ?, ?, ?, ?, NULL, NULL, NULL, NULL, ?)";  // have to put in NULL to let mysql handle inputting values for the Customer_ID.
 
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);  // anytime there is a preparedStatement() called in a method, you must throw a SQLException in the header/signature of the method that calls the preparedStatement().
-        ps.setString(1, CustomerName);
-        ps.setString(2, Address);
-        ps.setString(3, PostalCode);
-        ps.setString(4, Phone);
-        ps.setTimestamp(5, CreateDate);
-        ps.setString(6, CreatedBy);
-        ps.setTimestamp(7, LastUpdate);
-        ps.setString(8, LastUpdatedBy);
-        ps.setInt(9, DivisionID);
+        ps.setString(1, customer.getCustomerName());
+        ps.setString(2, customer.getAddress());
+        ps.setString(3, customer.getPostalCode());
+        ps.setInt(4, customer.getPhone());
+        ps.setInt(9, customer.getDivisionId());
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+
 
     public static int update(int CustomerID, String CustomerName) throws SQLException {  // this function updates the customer name
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ? WHERE Customer_ID = ?";
@@ -66,6 +49,7 @@ public class CustomerDAOImpl implements CustomerDAO {  // write sql things here
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+
 
     public static int delete(int CustomerID) throws SQLException {
         String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";

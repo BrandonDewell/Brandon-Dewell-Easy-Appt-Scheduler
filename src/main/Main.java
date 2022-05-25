@@ -27,9 +27,15 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();
 
-        /*CustomerDAO customer = new CustomerDAOImpl();  // if using DAO Pattern
+        /*CustomerDAO customer = new CustomerDAOImpl();  // if using DAO Pattern // to create an object:  type of object (name matches class type), variable name = new, constructor (name must match name of Class)
         customer.select();
+        CustomersQuery.in
+
+        CustomerDAO customer = new CustomerDAOImpl();  // if using DAO Pattern // to create an object:  type of object (name matches class type), variable name = new, constructor (name must match name of Class)
+        customer.insert();
         CustomersQuery.in*/
+
+
 
         //Locale.setDefault(new Locale("fr"));  // To test for French language from video "C195 Requirements - PART # 1 : Overview And Section A.1 (Login Form) (09-11-2021)"
 
@@ -61,7 +67,7 @@ public class Main extends Application {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
 
           // Test insert() function from Malcom's webinar titled JDBC at 43 mins.
-        /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","12941 Bartlett Drive", "46037", "317-696-8955", ts, "Brandon Dewell", ts,"Brandon Dewell", 42);
+        /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","123 Main St", "90210", "317-696-8955", ts, "Brandon Dewell", ts,"Brandon Dewell", 42);
 
         if(rowsAffected > 0){
             System.out.println("Insert successful!");
