@@ -1,5 +1,6 @@
 package daoView_Controller;
 
+import daoModel.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,6 +49,8 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        custTable.setItems(Customer.getAllCustomers());
+
         System.out.println("Main Menu is initialized");
     }
 

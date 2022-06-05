@@ -1,32 +1,69 @@
 package daoModel;
 
+import helper.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class Customer {
+    // class variables/fields
     private int customerId;
     private String customerName;
     private String address;
     private String postalCode;
-    private int phone;
-/*    private Timestamp createDate;  // 5/18 4:08pm
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdatedBy;*/
+    private String phone;
     private int divisionId;
 
-    public Customer(int customerId, String customerName, String address, String postalCode, int phone, /*Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,*/ int divisionId) {
+    //private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+
+
+    // constructor
+    public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
-/*        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;*/
         this.divisionId = divisionId;
     }
 
+    public Customer(String customerName, String address, String postalCode, String phone, int divisionId) {
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionId = divisionId;
+    }
+
+
+    public static ObservableList<Customer> getAllCustomers(){
+        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+
+        try{
+            String sql = "SELECT * FROM Customer";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int custId = rs.getInt("Customer_ID");
+                String custName = rs.getString("Customer_Name");
+                String addr = rs.getString("Address");
+                String pcode = rs.getString("Postal_Code");
+                String ph = rs.getString("Phone");
+                int divId = rs.getInt("Division_ID");
+                Customer c = new Customer(custId, custName, addr, pcode, ph, divId);
+                allCustomers.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCustomers;
+    }
+
+    // methods
     public int getCustomerId() {
         return customerId;
     }
@@ -59,12 +96,20 @@ public class Customer {
         this.postalCode = postalCode;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getDivisionId() {
+        return divisionId;
+    }
+
+    public void setDivisionId(int divisionId) {
+        this.divisionId = divisionId;
     }
 
     /*public Timestamp getCreateDate() {
@@ -98,12 +143,4 @@ public class Customer {
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
     }*/
-
-    public int getDivisionId() {
-        return divisionId;
-    }
-
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
-    }
 }
