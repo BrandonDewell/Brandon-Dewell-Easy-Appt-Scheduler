@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,6 +51,12 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         custTable.setItems(Customer.getAllCustomers());
+        CRcustIDCol.setCellValueFactory(new PropertyValueFactory<>("cId"));
+        CRcustNameCol.setCellValueFactory(new PropertyValueFactory<>("cName"));
+        CRaddressCol.setCellValueFactory(new PropertyValueFactory<>("cAddr"));
+        CRstateProvinceCol.setCellValueFactory(new PropertyValueFactory<>("cState/Prov"));
+        CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("cPostalCode"));
+        CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("cPhoneNum"));
 
         System.out.println("Main Menu is initialized");
     }
