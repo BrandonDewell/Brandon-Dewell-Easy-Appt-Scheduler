@@ -44,7 +44,7 @@ public class Customer {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
         try{
-            String sql = "SELECT * FROM Customer";
+            String sql = "SELECT * FROM Customers";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

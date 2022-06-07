@@ -51,18 +51,20 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         custTable.setItems(Customer.getAllCustomers());
-        CRcustIDCol.setCellValueFactory(new PropertyValueFactory<>("cId"));
-        CRcustNameCol.setCellValueFactory(new PropertyValueFactory<>("cName"));
-        CRaddressCol.setCellValueFactory(new PropertyValueFactory<>("cAddr"));
-        CRstateProvinceCol.setCellValueFactory(new PropertyValueFactory<>("cState/Prov"));
-        CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("cPostalCode"));
-        CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("cPhoneNum"));
+        CRcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        CRcustNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        CRaddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        CRstateProvinceCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        // TODO setup DAO schema for Appointments, and add appointment table initialization here.
 
         System.out.println("Main Menu is initialized");
     }
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
-        // System.out.println("Add Customer button clicked");  // to test that the event handler is working
+        System.out.println("Add Customer button clicked");  // to test that the event handler is working
         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);
@@ -71,8 +73,14 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
-    public void onActionUpdateCustomer(ActionEvent actionEvent) {
+    public void onActionUpdateCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Customer button clicked");
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 400);
+        stage.setTitle("Update Customer");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onActionDeleteCustomer(ActionEvent actionEvent) {
@@ -80,7 +88,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
-        // System.out.println("Add Appointment button clicked");
+        System.out.println("Add Appointment button clicked");
         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Appointment.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);
@@ -89,8 +97,14 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
-    public void onActionUpdateAppointment(ActionEvent actionEvent) {
+    public void onActionUpdateAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Appointment button clicked");
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Appointment.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 400);
+        stage.setTitle("Update Appointment");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onActionDeleteAppointment(ActionEvent actionEvent) {

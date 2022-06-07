@@ -16,7 +16,7 @@ import java.time.*;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("/view/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
+//        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
 //        stage.setTitle("Log In");
 //        stage.setScene(new Scene(root, 300, 200));
 //        stage.show();
@@ -35,13 +35,14 @@ public class Main extends Application {
         //CustomerDAOImpl.in
 
         //CustomerDAOImpl customer = new CustomerDAOImpl();  // create new customer object in CustomerDAOImpl class
-        Customer customer = new Customer("Brandon", "12345 Main St.", "46037", "555-555-5555", 47);
+        Customer customer = new Customer("Brandon", "12345 Main St.", "46037", "555-555-5555", 47);  // to add a customer use this
+        // Indiana's state int is 13.
         //customer.insert(customer);
-        //CustomerDAOImpl.insert(customer);
+        CustomerDAOImpl.insert(customer);
         //CustomerDAOImpl.select();
 
         //CustomerDAOImpl.in
-        CustomerDAOImpl.select(customer);
+        //CustomerDAOImpl.select(customer);
         //CustomerDAOImpl.delete(3);
         //CustomerDAOImpl.update(1, "Brandon");
 
@@ -59,7 +60,7 @@ public class Main extends Application {
         // ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);  // same as
         // above but with a Time Zone filter for America.
 
-        LocalDate myLD = LocalDate.of(2022, 03, 17);  // use a combo box to replace the things to the right of
+        /*LocalDate myLD = LocalDate.of(2022, 03, 17);  // use a combo box to replace the things to the right of
         // the equals sign so the info is inputted by the user.  we are adding this manually here instead.
         LocalTime myLT = LocalTime.of(22, 0);  // same comment as above.
         LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);  // creates a LocalDateTime object
@@ -80,7 +81,7 @@ public class Main extends Application {
         myZDT = ZonedDateTime.ofInstant(utcZDT.toInstant(), myZoneId);  // resets timezone zero AKA utc to local time AKA myZoneId.
         System.out.println("UTC to user time: " + myZDT);
 
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        Timestamp ts = new Timestamp(System.currentTimeMillis());*/
 
           // Test insert() function from Malcom's webinar titled JDBC at 43 mins.
         /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","123 Main St", "90210", "317-696-8955",

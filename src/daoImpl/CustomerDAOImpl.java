@@ -23,7 +23,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
         ps.setString(2, customer.getAddress());
         ps.setString(3, customer.getPostalCode());
         ps.setString(4, customer.getPhone());
-        ps.setInt(9, customer.getDivisionId());
+        ps.setInt(5, customer.getDivisionId());
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
@@ -50,7 +50,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
     }*/
 
     public static void select(Customer customer) throws SQLException {
-        String sql = "SELECT * FROM CUSTOMERS";
+       /* String sql = "SELECT * FROM CUSTOMERS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
@@ -61,7 +61,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
             // multiple lines.  Malcom's JDBC webinar at 1hr 7mins.
             System.out.print(customerName + "\n");
             customer.getAllCustomers();
-        }
+        }*/
     }
 
     /* // Overloaded select statement
