@@ -1,5 +1,12 @@
 package daoModel;
 
+import helper.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class Appointment {
@@ -10,31 +17,44 @@ public class Appointment {
     private String type;
     private Timestamp start;
     private Timestamp end;
-    private Timestamp createDate;
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdatedBy;
     private int customerId;
     private int userId;
     private int contactId;
 
-    public Appointment(int apptId, String title, String description, String location, String type, Timestamp start, Timestamp end, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
+    //private static ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
+
+    public Appointment(int apptId, String title, String description, String location, String type) {
         this.apptId = apptId;
         this.title = title;
         this.description = description;
         this.location = location;
         this.type = type;
-        this.start = start;
-        this.end = end;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
-        this.customerId = customerId;
-        this.userId = userId;
-        this.contactId = contactId;
     }
 
+    public static ObservableList<Appointment> getAllAppointments(){
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+        try{
+            String sql = "SELECT * FROM Appointments";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int apptId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String desc = rs.getString("Description");
+                String loc = rs.getString("Location");
+                String type = rs.getString("Type");
+
+                Appointment a = new Appointment(apptId, title, desc, loc, type);
+                allAppointments.add(a);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allAppointments;
+    }
+
+    // methods
     public int getApptId() {
         return apptId;
     }
@@ -91,7 +111,31 @@ public class Appointment {
         this.end = end;
     }
 
-    public Timestamp getCreateDate() {
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
+    }
+
+    /*public Timestamp getCreateDate() {
         return createDate;
     }
 
@@ -121,29 +165,5 @@ public class Appointment {
 
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
-    }
+    }*/
 }

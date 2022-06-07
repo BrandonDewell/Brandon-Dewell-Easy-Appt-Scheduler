@@ -1,5 +1,6 @@
 package daoView_Controller;
 
+import daoModel.Appointment;
 import daoModel.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 // test
 
@@ -58,7 +60,17 @@ public class MainMenuController implements Initializable {
         CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
-        // TODO setup DAO schema for Appointments, and add appointment table initialization here.
+        apptTable.setItems(Appointment.getAllAppointments());
+        SAapptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptId"));
+        SAtitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        SAdescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        SAlocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        SAcontactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        SAtypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        SAcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        SAuserIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         System.out.println("Main Menu is initialized");
     }
