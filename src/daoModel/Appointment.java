@@ -23,12 +23,17 @@ public class Appointment {
 
     //private static ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
 
-    public Appointment(int apptId, String title, String description, String location, String type) {
+    public Appointment(int apptId, String title, String description, String location, String type, Timestamp start, Timestamp end, int customerId, int userId, int contactId) {
         this.apptId = apptId;
         this.title = title;
         this.description = description;
         this.location = location;
         this.type = type;
+        this.start = start;
+        this.end = end;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.contactId = contactId;
     }
 
     public static ObservableList<Appointment> getAllAppointments(){
@@ -44,8 +49,14 @@ public class Appointment {
                 String desc = rs.getString("Description");
                 String loc = rs.getString("Location");
                 String type = rs.getString("Type");
+                Timestamp start = rs.getTimestamp("Start");  // should be data type date and time instead of timestamp?
+                Timestamp end = rs.getTimestamp("End");     // should be data type date and time
+                int custId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contId = rs.getInt("Contact_ID");
 
-                Appointment a = new Appointment(apptId, title, desc, loc, type);
+
+                Appointment a = new Appointment(apptId, title, desc, loc, type, start, end, custId, userId, contId);
                 allAppointments.add(a);
             }
         } catch (SQLException e) {

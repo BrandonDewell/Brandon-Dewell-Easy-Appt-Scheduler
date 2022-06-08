@@ -35,10 +35,10 @@ public class Main extends Application {
         //CustomerDAOImpl.in
 
         //CustomerDAOImpl customer = new CustomerDAOImpl();  // create new customer object in CustomerDAOImpl class
-        Customer customer = new Customer("Brandon", "12345 Main St.", "46037", "555-555-5555", 47);  // to add a customer use this
+    //    Customer customer = new Customer("Brandon", "12345 Main St.", "46037", "555-555-5555", 47);  // to add a customer use this
         // Indiana's state int is 13.
         //customer.insert(customer);
-        CustomerDAOImpl.insert(customer);
+    //    CustomerDAOImpl.insert(customer);
         //CustomerDAOImpl.select();
 
         //CustomerDAOImpl.in
