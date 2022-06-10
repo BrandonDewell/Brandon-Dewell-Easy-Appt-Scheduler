@@ -21,8 +21,9 @@ public class Appointment {
     private int userId;
     private int contactId;
 
-    //private static ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
+    private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
+    // constructors
     public Appointment(int apptId, String title, String description, String location, String type, Timestamp start, Timestamp end, int customerId, int userId, int contactId) {
         this.apptId = apptId;
         this.title = title;
@@ -36,8 +37,11 @@ public class Appointment {
         this.contactId = contactId;
     }
 
-    public static ObservableList<Appointment> getAllAppointments(){
-        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    public Appointment() {
+    }
+
+    public ObservableList<Appointment> getAllAppointments(){
+        //ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
         try{
             String sql = "SELECT * FROM Appointments";

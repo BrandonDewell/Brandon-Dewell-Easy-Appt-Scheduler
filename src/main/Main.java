@@ -24,6 +24,7 @@ public class Main extends Application {
         stage.setTitle("Main Menu");
         stage.setScene(new Scene(root, 1200, 700));
         stage.show();
+        System.out.println(" -- start(Stage stage) called from Main.java");
     }
 
     public static void main(String[] args) throws SQLException {
@@ -50,6 +51,9 @@ public class Main extends Application {
 
         //Locale.setDefault(new Locale("fr"));  // To test for French language from video "C195 Requirements - PART # 1 : Overview
         // And Section A.1 (Login Form) (09-11-2021)"
+
+
+
 
         // TimeZone info from TimeZone webinar
         // System.out.println(ZoneId.systemDefault());  // Displays Time Zone in Java

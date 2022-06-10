@@ -12,6 +12,33 @@ import java.sql.SQLException;
 
 public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
 
+    public ObservableList<Customer> getAllCustomersOL(){
+
+        ObservableList<Customer> allCustomersOL = FXCollections.observableArrayList();
+
+        try{
+            String sql = "SELECT * FROM Customers";
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int custId = rs.getInt("Customer_ID");
+                String custName = rs.getString("Customer_Name");
+                String addr = rs.getString("Address");
+                String pcode = rs.getString("Postal_Code");
+                String ph = rs.getString("Phone");
+                int divId = rs.getInt("Division_ID");
+                Customer c = new Customer(custId, custName, addr, pcode, ph, divId);
+                allCustomersOL.add(c);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allCustomersOL;
+    }
+
     public static int insert(Customer customer) throws SQLException {
         //String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // 3/15 12:13pm Question
         // marks are bind variables starting at index 1.
@@ -60,7 +87,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
             System.out.print(customerID + " | ");  // use print instead of println if I want to print customer id and customer name info for each customer on
             // multiple lines.  Malcom's JDBC webinar at 1hr 7mins.
             System.out.print(customerName + "\n");
-            customer.getAllCustomers();
+            customer.getAllCustomersOL();
         }*/
     }
 
@@ -109,7 +136,8 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, CustomerID);
         int rowsAffected = ps.executeUpdate();
-        System.out.println("The number of rows affected from the delete() call is " + rowsAffected);
+        System.out.println("The number of rows affected from the delete() call is " + rowsAffected + ".  -- delete(int CustomerID) called in CustomerDAOImpl.java");
+
         return rowsAffected;
     }
 

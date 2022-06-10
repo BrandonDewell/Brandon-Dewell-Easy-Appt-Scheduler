@@ -21,7 +21,7 @@ public abstract class JDBC {  // abstract because I am not going to be instantia
         try {
             Class.forName(driver); // this locates the driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // creates a connection object reference
-            System.out.println("Connection successful!");
+            System.out.println("Connection successful! -- openConnection() called from JDBC.java");
         }
         catch(SQLException e) {
             e.printStackTrace();  // 5/14/22 3:57pm from Getting the DBConnection class project ready video at about 10 minutes in.
@@ -39,7 +39,7 @@ public abstract class JDBC {  // abstract because I am not going to be instantia
     public static void closeConnection() {
         try {
             connection.close();
-            System.out.println("Connection closed!");
+            System.out.println("Connection closed!  -- closeConnection() called from JDBC.java");
         }
         catch(Exception e) {
             System.out.println("Error:" + e.getMessage());

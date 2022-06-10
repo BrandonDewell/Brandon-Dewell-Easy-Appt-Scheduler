@@ -1,5 +1,6 @@
 package daoModel;
 
+import daoImpl.CustomerDAOImpl;
 import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,9 +19,11 @@ public class Customer {
     private String phone;
     private int divisionId, countryId;
     private String division, country;
-    //private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+
+    private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
 
+    // constructors
     public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, int countryId, String division, String country) {
         this.customerId = customerId;
         this.customerName = customerName;
@@ -31,6 +34,51 @@ public class Customer {
         this.countryId = countryId;
         this.division = division;
         this.country = country;
+    }
+
+    public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionId = divisionId;
+    }
+
+    public Customer(String customerName, String address, String postalCode, String phone, int divisionId) {
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionId = divisionId;
+    }
+
+    public Customer(String customerName, String address, String postalCode, String phone, int divisionId, int countryId) {
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionId = divisionId;
+        this.countryId = countryId;
+    }
+
+    public Customer() {
+    }
+
+    public Customer(String name, String address, String postCode, String phone, FirstLevelDivision stateProv, Country country) {
+    }
+
+
+    public static boolean deleteCustomer(Customer selectedCustomer) throws SQLException {
+        /*for(Customer c : getAllCustomersOL())
+        {
+            if(c.getCustomerId() == selectedCustomer.getCustomerId())
+                return getAllCustomersOL().remove(c);
+        }
+        return false;*/
+        CustomerDAOImpl.delete(selectedCustomer.getCustomerId());
+
+        return true;
     }
 
     public int getCountryId() {
@@ -57,49 +105,6 @@ public class Customer {
         this.country = country;
     }
 
-    // constructor
-    public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.phone = phone;
-        this.divisionId = divisionId;
-    }
-
-    public Customer(String customerName, String address, String postalCode, String phone, int divisionId) {
-        this.customerName = customerName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.phone = phone;
-        this.divisionId = divisionId;
-    }
-
-
-    public static ObservableList<Customer> getAllCustomers(){
-        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-
-        try{
-            String sql = "SELECT * FROM Customers";
-            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int custId = rs.getInt("Customer_ID");
-                String custName = rs.getString("Customer_Name");
-                String addr = rs.getString("Address");
-                String pcode = rs.getString("Postal_Code");
-                String ph = rs.getString("Phone");
-                int divId = rs.getInt("Division_ID");
-                Customer c = new Customer(custId, custName, addr, pcode, ph, divId);
-                allCustomers.add(c);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return allCustomers;
-    }
-
-    // methods
     public int getCustomerId() {
         return customerId;
     }

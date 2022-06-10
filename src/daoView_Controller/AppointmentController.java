@@ -33,7 +33,7 @@ public class AppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        System.out.println("Nothing being done here.  -- initialize(URL url, ResourceBundle resourceBundle) called from AppointmentController.java");
     }
 
     public void onActionSave(ActionEvent actionEvent) {
