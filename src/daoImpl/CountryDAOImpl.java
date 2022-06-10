@@ -14,6 +14,7 @@ public class CountryDAOImpl implements ICountryDAO {
 
     @Override
     public ObservableList<Country> getAllCountriesOL() {
+
         ObservableList<Country> countriesOL = FXCollections.observableArrayList();
 
         try {

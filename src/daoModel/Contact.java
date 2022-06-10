@@ -1,21 +1,22 @@
 package daoModel;
 
 public class Contact {
-    private String contactId;
+
+    private int contactId;
     private String contactName;
     private String email;
 
-    public Contact(String contactId, String contactName, String email) {
+    public Contact(int contactId, String contactName, String email) {
         this.contactId = contactId;
         this.contactName = contactName;
         this.email = email;
     }
 
-    public String getContactId() {
+    public int getContactId() {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
+    public void setContactId(int contactId) {
         this.contactId = contactId;
     }
 

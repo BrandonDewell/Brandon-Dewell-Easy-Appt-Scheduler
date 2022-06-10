@@ -1,14 +1,5 @@
 package daoModel;
 
-import helper.JDBC;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
 public class Country {
     private int countryId;
     private String countryName;
