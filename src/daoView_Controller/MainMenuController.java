@@ -63,7 +63,7 @@ public class MainMenuController implements Initializable {
         CRcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         CRcustNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         CRaddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        CRstateProvinceCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        CRstateProvinceCol.setCellValueFactory(new PropertyValueFactory<>("division"));
         CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
@@ -120,9 +120,9 @@ public class MainMenuController implements Initializable {
             alert.setHeaderText("Are you sure?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                Customer.deleteCustomer((Customer)custTable.getSelectionModel().getSelectedItem());
-//                custTable.setItems(Customer.getAllCustomersOL());
-//                custTable.refresh();  // TODO find out how to refresh the table view
+                CustomerDAOImpl dao = new CustomerDAOImpl();
+                dao.delete(custTable.getSelectionModel().getSelectedItem());
+                custTable.setItems(dao.getAllCustomersOL());
             }
         }
     }

@@ -17,7 +17,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
         ObservableList<Customer> allCustomersOL = FXCollections.observableArrayList();
 
         try{
-            String sql = "SELECT * FROM Customers";
+            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Customers.Division_ID, Division, first_level_divisions.Country_ID, COUNTRY FROM Customers, first_level_divisions, countries WHERE customers.Division_ID = first_level_divisions.Division_ID AND first_level_divisions.Country_ID = countries.Country_ID";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -28,7 +28,10 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
                 String pcode = rs.getString("Postal_Code");
                 String ph = rs.getString("Phone");
                 int divId = rs.getInt("Division_ID");
-                Customer c = new Customer(custId, custName, addr, pcode, ph, divId);
+                int countryId = rs.getInt("Country_ID");
+                String div = rs.getString("Division");
+                String country = rs.getString("Country");
+                Customer c = new Customer(custId, custName, addr, pcode, ph, divId, countryId, div, country);
                 allCustomersOL.add(c);
             }
         }
@@ -39,22 +42,22 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
         return allCustomersOL;
     }
 
-    public static int insert(Customer customer) throws SQLException {
-        //String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // 3/15 12:13pm Question
-        // marks are bind variables starting at index 1.
-        String sql = "INSERT INTO CUSTOMERS VALUES (NULL, ?, ?, ?, ?, NULL, NULL, NULL, NULL, ?)";  // have to put in the first NULL to let mysql handle inputting
-        // values for the Customer_ID.
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);  // anytime there is a preparedStatement() called in a method, you must throw a SQLException
-        // in the header/signature of the method that calls the preparedStatement().
-        ps.setString(1, customer.getCustomerName());
-        ps.setString(2, customer.getAddress());
-        ps.setString(3, customer.getPostalCode());
-        ps.setString(4, customer.getPhone());
-        ps.setInt(5, customer.getDivisionId());
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+    public int insert(Customer customer) {
+        try {
+            String sql = "INSERT INTO CUSTOMERS VALUES (NULL, ?, ?, ?, ?, NULL, NULL, NULL, NULL, ?)";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, customer.getCustomerName());
+            ps.setString(2, customer.getAddress());
+            ps.setString(3, customer.getPostalCode());
+            ps.setString(4, customer.getPhone());
+            ps.setInt(5, customer.getDivisionId());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
-
     /*public static int insert(String CustomerName, String Address, String PostalCode, String Phone, Timestamp CreateDate, String CreatedBy, Timestamp LastUpdate,
                                 String LastUpdatedBy, int DivisionID) throws SQLException {
         //String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID)
@@ -76,7 +79,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
         return rowsAffected;
     }*/
 
-    public static void select(Customer customer) throws SQLException {
+    public void select(Customer customer) {
        /* String sql = "SELECT * FROM CUSTOMERS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -89,6 +92,16 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql things here
             System.out.print(customerName + "\n");
             customer.getAllCustomersOL();
         }*/
+    }
+
+    @Override
+    public int update(Customer customer) {
+        return 0;
+    }
+
+    @Override
+    public int delete(Customer customer) {
+        return 0;
     }
 
     /* // Overloaded select statement

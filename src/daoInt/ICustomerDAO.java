@@ -9,19 +9,12 @@ public interface ICustomerDAO {   // abstract means you cannot instantiate from 
 
     public ObservableList<Customer> getAllCustomersOL();
 
-    public static int insert(Customer customer) throws SQLException  {    //watch JDBC webinar 5/24 7:28pm
-        return 0;
-    }
+    public  int insert(Customer customer);
 
-    public static void select(Customer customer) throws SQLException  {
-    }
+    public  void select(Customer customer);
 
-    public static int update(Customer customer) {
-        return 0;
-    }
+    public int update(Customer customer);
 
-    public static int delete(Customer customer) {
-        return 0;
-    }
+    public  int delete(Customer customer);
 
 }

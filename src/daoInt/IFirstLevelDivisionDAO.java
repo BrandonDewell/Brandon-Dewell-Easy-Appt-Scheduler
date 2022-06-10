@@ -5,6 +5,6 @@ import javafx.collections.ObservableList;
 
 public interface IFirstLevelDivisionDAO {
 
-    ObservableList<FirstLevelDivision> getAllFirstLevelDivisions();
+    ObservableList<FirstLevelDivision> getAllFirstLevelDivisionsOL(int countryId);
 
 }

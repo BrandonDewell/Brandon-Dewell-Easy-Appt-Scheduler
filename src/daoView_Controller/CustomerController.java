@@ -1,6 +1,8 @@
 package daoView_Controller;
 
 import daoImpl.CountryDAOImpl;
+import daoImpl.CustomerDAOImpl;
+import daoImpl.FirstLevelDivisionDAOImpl;
 import daoModel.Country;
 import daoModel.Customer;
 import daoModel.FirstLevelDivision;
@@ -37,6 +39,8 @@ public class CustomerController implements Initializable {
 
         CountryDAOImpl countryDAO = new CountryDAOImpl();
         countryComboBox.setItems(countryDAO.getAllCountriesOL());
+
+
     }
 
 
@@ -52,7 +56,7 @@ public class CustomerController implements Initializable {
             String address = addressTextField.getText();
             FirstLevelDivision stateProv = stateProvinceComboBox.getValue();  // not sure if this is done right since its
             // using a combo box, and I'm not sure of the syntax to get the selection.
-            String postCode = customerNameTextField.getText();
+            String postCode = postalCodeTextField.getText();
             String phone = phoneNumberTextField.getText();
 
             if(name.isBlank() || address.isBlank() || postCode.isBlank() || phone.isBlank()){  // how to do this with a combo box?
@@ -64,7 +68,10 @@ public class CustomerController implements Initializable {
                 alert.showAndWait();
                 return;
             } else {
-                Customer c = new Customer(name, address, postCode, phone, stateProv, country);
+                // TODO need to write to database
+                Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(),0, "", "");
+                CustomerDAOImpl dao = new CustomerDAOImpl();
+                dao.insert(c);  // TODO check insert code
 
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -105,4 +112,11 @@ public class CustomerController implements Initializable {
 
     }
 
+    public void onActionCountry(ActionEvent actionEvent) {
+
+        Country c = countryComboBox.getValue();
+        FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
+        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));
+
+    }
 }
