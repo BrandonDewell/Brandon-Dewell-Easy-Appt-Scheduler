@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
+
     Scene scene;
     public TableView<Customer> custTable;
     public TableColumn<Customer, Integer> CRcustIDCol;
@@ -29,7 +30,9 @@ public class MainMenuController implements Initializable {
     public TableColumn<Customer, String> CRaddressCol;
     public TableColumn<Customer, String> CRstateProvinceCol;
     public TableColumn<Customer, String> CRpostalCodeCol;
+    public TableColumn<Customer, String> CRcountryCol;
     public TableColumn<Customer, Integer> CRphoneNumCol;
+
     public TableView<Appointment> apptTable;
     public TableColumn<Appointment, Integer> SAapptIDCol;
     public TableColumn<Appointment, String> SAtitleCol;
@@ -41,6 +44,7 @@ public class MainMenuController implements Initializable {
     public TableColumn<Appointment, LocalDateTime> SAeDATCol;
     public TableColumn<Appointment, Integer> SAcustIDCol;
     public TableColumn<Appointment, Integer> SAuserIDCol;
+
     public Button addCustomer;
     public Button updateCustomer;
     public Button deleteCustomer;
@@ -48,9 +52,9 @@ public class MainMenuController implements Initializable {
     public Button updateAppointment;
     public Button deleteAppointment;
     public RadioButton weekRB;
-    public ToggleGroup timePeriod;
     public RadioButton monthRB;
     public RadioButton allRB;
+    public ToggleGroup timePeriod;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -64,6 +68,7 @@ public class MainMenuController implements Initializable {
         CRaddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         CRstateProvinceCol.setCellValueFactory(new PropertyValueFactory<>("division"));
         CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        CRcountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         Appointment a = new Appointment();
@@ -94,12 +99,34 @@ public class MainMenuController implements Initializable {
     public void onActionUpdateCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Customer button clicked.  -- onActionUpdateCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
-        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle("Update Customer");
-        stage.setScene(scene);
-        stage.show();
+        Customer temp = custTable.getSelectionModel().getSelectedItem();  // 1. get the selected item and assign it to a temporary variable.
+
+        if (temp == null) {        // 2. check if temp is null, then if null pop up an error message box telling the user to make sure to select an item.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No selection was made");
+            alert.setContentText("Please select a customer from the top table to update.");
+            alert.showAndWait();
+
+        }
+        else {                   // 3. else do the rest including sending data and loading the modify part stage.
+            FXMLLoader loader = new FXMLLoader();                                           // 4. created the FXMLLoader object.
+            loader.setLocation(getClass().getResource("/daoView_Controller/Customer.fxml"));  // 5. let that loader object know which view to use.
+            loader.load();                                                                  // 6. load the object.
+
+            CustomerController CustController = loader.getController();  // 7. call the loader object's getController() method using the loader reference variable CustController.
+             // 8. use indexOf() to get the index of the selected item in the allParts observableList and assign it to tempIndex.
+
+            CustController.sendCustomer(temp);        // 9. move the selected object to the controller
+              // and also move the index of the selected object.
+
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();                      // 10. then set the stage and scene
+            Parent root = loader.getRoot();
+            stage.setTitle("Update Customer");
+            Scene scene = new Scene(root, 600, 600);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onActionDeleteCustomer(ActionEvent actionEvent) throws SQLException {

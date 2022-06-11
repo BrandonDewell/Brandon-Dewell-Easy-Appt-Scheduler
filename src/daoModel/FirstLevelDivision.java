@@ -1,6 +1,7 @@
 package daoModel;
 
 public class FirstLevelDivision {
+
     private int divisionId;
     private String division;
     private int countryId;

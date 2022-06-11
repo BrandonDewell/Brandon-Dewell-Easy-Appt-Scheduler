@@ -22,6 +22,8 @@ import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
 
+    private Customer selectedCustomer;
+
     public TextField customerIDTextField;
     public TextField customerNameTextField;
     public ComboBox<Country> countryComboBox;
@@ -40,9 +42,7 @@ public class CustomerController implements Initializable {
         CountryDAOImpl countryDAO = new CountryDAOImpl();
         countryComboBox.setItems(countryDAO.getAllCountriesOL());
 
-
     }
-
 
     public void onActionSave(ActionEvent actionEvent) {
         System.out.println("Customer save button clicked.  -- onActionSave(ActionEvent actionEvent) called in CustomerController.java");
@@ -107,9 +107,6 @@ public class CustomerController implements Initializable {
             stage.show();
         }
 
-
-
-
     }
 
     public void onActionCountry(ActionEvent actionEvent) {
@@ -118,5 +115,27 @@ public class CustomerController implements Initializable {
         FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
         stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));
 
+    }
+
+    public void sendCustomer(Customer inCustomer){
+        selectedCustomer = inCustomer;  // TODO if selectedCustomer == NULL then do the add, if not do the update
+
+        customerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerId()));  //retrieved id of inCustomer, converted that id which is an int to a string (via the valueOf method) so we can assign it to a text field.
+        /*modifyPartNameTxt.setText(selectedPart.getName());
+        modifyPartInvTxt.setText(String.valueOf(selectedPart.getStock()));
+        modifyPartPriceTxt.setText(String.valueOf(selectedPart.getPrice()));
+        modifyPartMaxTxt.setText(String.valueOf(selectedPart.getMax()));
+        modifyPartMinTxt.setText(String.valueOf(selectedPart.getMin()));
+
+        if(selectedPart instanceof InHouse) {
+            modifyPartMachineTxt.setText(String.valueOf(((InHouse) selectedPart).getMachineId()));
+            modifyPartMachineLbl.setText("Machine ID");
+            modifyPartInHouseRBtn.setSelected(true);
+        }
+        else {
+            modifyPartMachineTxt.setText(((Outsourced) selectedPart).getCompanyName());
+            modifyPartMachineLbl.setText("Company Name");
+            modifyPartOutsourcedRBtn.setSelected(true);
+        }*/
     }
 }
