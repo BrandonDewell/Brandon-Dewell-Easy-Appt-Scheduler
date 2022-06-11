@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
-// test
 
 public class MainMenuController implements Initializable {
 

@@ -1,26 +1,11 @@
 package daoModel;
 
-import daoImpl.CustomerDAOImpl;
-import helper.JDBC;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
 public class Customer {
     // class variables/fields
-    private int customerId;
-    private String customerName;
-    private String address;
-    private String postalCode;
-    private String phone;
-    private int divisionId, countryId;
-    private String division, country;
+    private int customerId, divisionId, countryId;
+    private String customerName, address, postalCode, phone, division, country;
 
-    // constructors
+    // constructor/methods
     public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, int countryId, String division, String country) {
         this.customerId = customerId;
         this.customerName = customerName;

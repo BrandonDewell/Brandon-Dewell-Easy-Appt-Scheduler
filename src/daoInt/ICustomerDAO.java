@@ -3,8 +3,6 @@ package daoInt;
 import daoModel.Customer;
 import javafx.collections.ObservableList;
 
-import java.sql.SQLException;
-
 public interface ICustomerDAO {   // abstract means you cannot instantiate from them
 
     public ObservableList<Customer> getAllCustomersOL();
