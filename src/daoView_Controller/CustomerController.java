@@ -59,7 +59,7 @@ public class CustomerController implements Initializable {
             String postCode = postalCodeTextField.getText();
             String phone = phoneNumberTextField.getText();
 
-            if(name.isBlank() || address.isBlank() || postCode.isBlank() || phone.isBlank()){  // how to do this with a combo box?
+            if(name.isBlank() || address.isBlank() || postCode.isBlank() || phone.isBlank() || stateProv == null){  // how to do this with a combo box?
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Fields must not be left blank.\nDrop down selection must be made.");
@@ -68,10 +68,15 @@ public class CustomerController implements Initializable {
                 alert.showAndWait();
                 return;
             } else {
-                // TODO need to write to database
-                Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(),0, "", "");
-                CustomerDAOImpl dao = new CustomerDAOImpl();
-                dao.insert(c);  // TODO check insert code
+                if (selectedCustomer == null) {  // Add situation
+                    Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
+                    CustomerDAOImpl dao = new CustomerDAOImpl();
+                    dao.insert(c);  // TODO check insert code
+                } else{  // Update situation
+                    Customer c = new Customer(selectedCustomer.getCustomerId(), name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
+                    CustomerDAOImpl dao = new CustomerDAOImpl();
+                    dao.update(c);
+                }
 
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -118,21 +123,32 @@ public class CustomerController implements Initializable {
     }
 
     public void sendCustomer(Customer inCustomer) {
-        selectedCustomer = inCustomer;  // TODO if selectedCustomer == NULL then do the add, if not do the update.
-
-        // TODO              BUT we already made sure that there was a customer selected with our ERROR dialog popup box. ???
-
-        // if (selectedCustomer == NULL)
-
+        selectedCustomer = inCustomer;
 
         customerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerId()));
         customerNameTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
-        //countryComboBox.setValue();
-        addressTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
-        //stateProvinceComboBox.setValue();
+
+        addressTextField.setText(String.valueOf(selectedCustomer.getAddress()));
+
         postalCodeTextField.setText(String.valueOf(selectedCustomer.getPostalCode()));
         phoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
 
+        for(Country c : countryComboBox.getItems()){
+            if (selectedCustomer.getCountryId() == c.getCountryId()){
+                countryComboBox.setValue(c);
+                break;
+            }
+        }
+
+        FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
+        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(selectedCustomer.getCountryId()));
+
+        for(FirstLevelDivision f : stateProvinceComboBox.getItems()){
+            if(selectedCustomer.getDivisionId() == f.getDivisionId()){
+                stateProvinceComboBox.setValue(f);
+                break;
+            }
+        }
 
         //retrieved id of inCustomer, converted that id which is an int to a string (via the valueOf method) so we can assign it to a text field.
         /*modifyPartNameTxt.setText(selectedPart.getName());

@@ -1,21 +1,18 @@
 package daoInt;
 
 import daoModel.Appointment;
+import javafx.collections.ObservableList;
 
 public interface IAppointmentDAO {
 
-    public static int insert(Appointment appointment){
-        return 0;
-    }
+    public ObservableList<Appointment> getAllAppointmentsOL();
 
-    public static void select(Appointment appointment){
-    }
+    public int insert(Appointment appointment);
 
-    public static int update(Appointment appointment){
-        return 0;
-    }
+    public void select(Appointment appointment);
 
-    public static int delete(Appointment appointment){
-        return 0;
-    }
+    public int update(Appointment appointment);
+
+    public int delete(Appointment appointment);
+
 }

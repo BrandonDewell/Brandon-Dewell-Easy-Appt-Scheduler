@@ -40,7 +40,7 @@ public class Appointment {
     public Appointment() {
     }
 
-    public ObservableList<Appointment> getAllAppointments(){
+    public ObservableList<Appointment> getAllAppointments(){  // TODO move this to the impl so the DAO is set up correctly.
         //ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
         try{
@@ -53,7 +53,7 @@ public class Appointment {
                 String desc = rs.getString("Description");
                 String loc = rs.getString("Location");
                 String type = rs.getString("Type");
-                Timestamp start = rs.getTimestamp("Start");  // should be data type date and time instead of timestamp?
+                Timestamp start = rs.getTimestamp("Start");  // should be data type date and time instead of timestamp? no
                 Timestamp end = rs.getTimestamp("End");     // should be data type date and time
                 int custId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
