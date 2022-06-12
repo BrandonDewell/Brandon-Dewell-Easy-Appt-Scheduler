@@ -117,10 +117,23 @@ public class CustomerController implements Initializable {
 
     }
 
-    public void sendCustomer(Customer inCustomer){
-        selectedCustomer = inCustomer;  // TODO if selectedCustomer == NULL then do the add, if not do the update
+    public void sendCustomer(Customer inCustomer) {
+        selectedCustomer = inCustomer;  // TODO if selectedCustomer == NULL then do the add, if not do the update.
 
-        customerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerId()));  //retrieved id of inCustomer, converted that id which is an int to a string (via the valueOf method) so we can assign it to a text field.
+        // TODO              BUT we already made sure that there was a customer selected with our ERROR dialog popup box. ???
+
+        // if (selectedCustomer == NULL)
+
+
+        customerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerId()));
+        customerNameTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
+        //countryComboBox.setValue();
+        addressTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
+        //stateProvinceComboBox.setValue();
+        postalCodeTextField.setText(String.valueOf(selectedCustomer.getPostalCode()));
+        phoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
+
+        //retrieved id of inCustomer, converted that id which is an int to a string (via the valueOf method) so we can assign it to a text field.
         /*modifyPartNameTxt.setText(selectedPart.getName());
         modifyPartInvTxt.setText(String.valueOf(selectedPart.getStock()));
         modifyPartPriceTxt.setText(String.valueOf(selectedPart.getPrice()));

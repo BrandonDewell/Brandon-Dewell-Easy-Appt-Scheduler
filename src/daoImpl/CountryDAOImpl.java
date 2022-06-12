@@ -28,7 +28,6 @@ public class CountryDAOImpl implements ICountryDAO {
                 Country c = new Country(countryID, countryName);
                 countriesOL.add(c);
             }
-           // System.out.println(countriesOL.get(1));
         }
         catch (SQLException ex){
             ex.printStackTrace();

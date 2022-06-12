@@ -72,6 +72,7 @@ public class MainMenuController implements Initializable {
         CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         Appointment a = new Appointment();
+
         apptTable.setItems(a.getAllAppointments());
         SAapptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptId"));
         SAtitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -109,16 +110,16 @@ public class MainMenuController implements Initializable {
             alert.showAndWait();
 
         }
-        else {                   // 3. else do the rest including sending data and loading the modify part stage.
+        else {                   // 3. else do the rest including sending data and loading the update customer stage.
             FXMLLoader loader = new FXMLLoader();                                           // 4. created the FXMLLoader object.
             loader.setLocation(getClass().getResource("/daoView_Controller/Customer.fxml"));  // 5. let that loader object know which view to use.
             loader.load();                                                                  // 6. load the object.
 
             CustomerController CustController = loader.getController();  // 7. call the loader object's getController() method using the loader reference variable CustController.
-             // 8. use indexOf() to get the index of the selected item in the allParts observableList and assign it to tempIndex.
+             // 8. use indexOf() to get the index of the selected item in the allParts observableList and assign it to tempIndex.  **** we dont use indexOf() with a database.
 
             CustController.sendCustomer(temp);        // 9. move the selected object to the controller
-              // and also move the index of the selected object.
+              // and also move the index of the selected object.  ** we dont deal with the index.
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();                      // 10. then set the stage and scene
             Parent root = loader.getRoot();
