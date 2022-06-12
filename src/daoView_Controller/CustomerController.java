@@ -133,6 +133,7 @@ public class CustomerController implements Initializable {
         postalCodeTextField.setText(String.valueOf(selectedCustomer.getPostalCode()));
         phoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
 
+
         //retrieved id of inCustomer, converted that id which is an int to a string (via the valueOf method) so we can assign it to a text field.
         /*modifyPartNameTxt.setText(selectedPart.getName());
         modifyPartInvTxt.setText(String.valueOf(selectedPart.getStock()));
