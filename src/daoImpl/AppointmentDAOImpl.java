@@ -49,8 +49,22 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     @Override
     public int delete(Appointment appointment) {
+
+        try {
+            String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
+            PreparedStatement ps = null;
+            ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, appointment.getApptId());
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("The number of rows affected from the delete() call is " + rowsAffected);
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return 0;
     }
+
 
     public static int update(int AppointmentID, String Type) throws SQLException {  // this function updates the appointment type
         String sql = "UPDATE APPOINTMENTS SET Type = ? WHERE Appointment_ID = ?";
@@ -62,12 +76,20 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return rowsAffected;
     }
 
-    public static int delete(int AppointmentID) throws SQLException {
-        String sql = "DELETE FROM CUSTOMERS WHERE Appointment_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, AppointmentID);
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("The number of rows affected from the delete() call is " + rowsAffected);
-        return rowsAffected;
+
+    public int delete(int CustomerID) {
+
+        try {
+            String sql = "DELETE FROM APPOINTMENTS WHERE Customer_ID = ?";
+            PreparedStatement ps = null;
+            ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, CustomerID);
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("The number of rows affected from the delete() call is " + rowsAffected);
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -51,22 +51,20 @@ public class CustomerController implements Initializable {
         try {
 
             String name = customerNameTextField.getText();
-            Country country = countryComboBox.getValue();  // not sure if this is done right since its
-            // using a combo box, and I'm not sure of the syntax to get the selection.
+            Country country = countryComboBox.getValue();
             String address = addressTextField.getText();
-            FirstLevelDivision stateProv = stateProvinceComboBox.getValue();  // not sure if this is done right since its
-            // using a combo box, and I'm not sure of the syntax to get the selection.
+            FirstLevelDivision stateProv = stateProvinceComboBox.getValue();
             String postCode = postalCodeTextField.getText();
             String phone = phoneNumberTextField.getText();
 
-            if(name.isBlank() || address.isBlank() || postCode.isBlank() || phone.isBlank() || stateProv == null){  // how to do this with a combo box?
+            if(name.isBlank() || address.isBlank() || postCode.isBlank() || phone.isBlank() || stateProv == null){  // combo boxes use
+                // comboBox == null to do error checks instead of textfield.isBlank()
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Fields must not be left blank.\nDrop down selection must be made.");
                 alert.setContentText("Please enter a valid value for each text field.\nCustomer Name, Address, Postal Code, and Phone " +
                         "Number must use characters.\nPlease make a selection in the drop down boxes.");
                 alert.showAndWait();
-                return;
             } else {
                 if (selectedCustomer == null) {  // Add situation
                     Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
@@ -89,11 +87,6 @@ public class CustomerController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        /*ObservableList<Customer> cList = Customer.getAllCustomersOL();
-                for(Customer c : cList){
-                    System.out.println("Customer ID : " + c.getCustomerId() + " Name : " + c.getCustomerName());
-                }*/
 
     }
 

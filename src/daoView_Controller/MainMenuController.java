@@ -1,5 +1,6 @@
 package daoView_Controller;
 
+import daoImpl.AppointmentDAOImpl;
 import daoImpl.CustomerDAOImpl;
 import daoModel.Appointment;
 import daoModel.Customer;
@@ -133,7 +134,7 @@ public class MainMenuController implements Initializable {
     public void onActionDeleteCustomer(ActionEvent actionEvent) throws SQLException {
         System.out.println("Delete Customer button clicked.  -- onActionDeleteCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
-        Customer temp = custTable.getSelectionModel().getSelectedItem();
+        /*Customer temp = custTable.getSelectionModel().getSelectedItem();
         if (temp == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -149,6 +150,29 @@ public class MainMenuController implements Initializable {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 CustomerDAOImpl dao = new CustomerDAOImpl();
                 dao.delete(custTable.getSelectionModel().getSelectedItem());
+                custTable.setItems(dao.getAllCustomersOL());*/
+
+
+        Customer temp = custTable.getSelectionModel().getSelectedItem();
+        if (temp == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No selection was made");
+            alert.setContentText("Please select a customer from the top table to delete.");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm you would like to delete the selected " +
+                    "customer by clicking the OK button.");
+            alert.setTitle("Deleting a Customer");
+            alert.setHeaderText("Are you sure?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+                AppointmentDAOImpl adao = new AppointmentDAOImpl();
+                adao.delete(temp.getCustomerId());
+                apptTable.setItems(adao.getAllAppointmentsOL());
+
+                CustomerDAOImpl dao = new CustomerDAOImpl();
+                dao.delete(temp);  // tried casting customer object temp to customerDAOImpl object, but wont work.
                 custTable.setItems(dao.getAllCustomersOL());
             }
         }
@@ -179,6 +203,7 @@ public class MainMenuController implements Initializable {
 
     public void onActionDeleteAppointment(ActionEvent actionEvent) {
         System.out.println("Delete Appointment button clicked.  -- onActionDeleteAppointment(ActionEvent actionEvent) called in MainMenuController.java");
+
     }
 
     public void onActionWeekView(ActionEvent actionEvent) {
