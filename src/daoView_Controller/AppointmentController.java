@@ -1,5 +1,12 @@
 package daoView_Controller;
 
+import daoImpl.ContactDAOImpl;
+import daoImpl.CustomerDAOImpl;
+import daoImpl.FirstLevelDivisionDAOImpl;
+import daoModel.Contact;
+import daoModel.Country;
+import daoModel.Customer;
+import daoModel.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -19,15 +27,15 @@ public class AppointmentController implements Initializable {
     public TextField appointmentIDTextField;
     public TextField titleTextField;
     public TextField locationTextField;
-    public ComboBox contactComboBox;
+    public ComboBox<Contact> contactComboBox;
     public TextField descriptionTextField;
-    public ComboBox typeComboBox;
+    public ComboBox<String> typeComboBox;
     public DatePicker startDateDatePicker;
-    public ComboBox customerIDComboBox;
-    public ComboBox userIDComboBox;
-    public ComboBox startTimeComboBox;
+    public ComboBox<Customer> customerIDComboBox;
+    public ComboBox<User> userIDComboBox;
+    public ComboBox<Time> startTimeComboBox;
     public DatePicker endDateDatePicker;
-    public ComboBox endTimeComboBox;
+    public ComboBox<Time> endTimeComboBox;
     public Button saveButton;
     public Button cancelButton;
 
@@ -55,4 +63,25 @@ public class AppointmentController implements Initializable {
             stage.show();
         }
     }
+
+    public void onActionCustomerID(ActionEvent actionEvent) {
+        Customer c = customerIDComboBox.getValue();
+        ContactDAOImpl contactDAO = new ContactDAOImpl();
+        contactComboBox.setItems(contactDAO.getAllContactsOL());
+    }
+    /*public void onActionCountry(ActionEvent actionEvent) {
+        Country c = countryComboBox.getValue();
+        FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
+        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));
+    }*/
+
+
+
+
+
+
+
+
+
+
 }

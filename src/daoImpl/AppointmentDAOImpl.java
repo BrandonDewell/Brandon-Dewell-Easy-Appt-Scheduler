@@ -4,17 +4,53 @@ import daoInt.IAppointmentDAO;
 import daoModel.Appointment;
 import daoModel.Customer;
 import helper.JDBC;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql interactions and observable lists here
 
     @Override
     public ObservableList<Appointment> getAllAppointmentsOL() {
-        return null;
+
+        ObservableList<Appointment> allAppointmentsOL = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM Appointments";
+
+            // "SELECT Appointment_ID, Title, Appointments.Customer_ID, Appointments.User_ID, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments"
+
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int apptId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                int custId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                String desc = rs.getString("Description");
+                int loc = rs.getInt("Location");
+                int contactId = rs.getInt("Contact_ID");
+                String type = rs.getString("Type");
+                Timestamp start = rs.getTimestamp("Start");
+                Timestamp end = rs.getTimestamp("End");
+                Appointment a = new Appointment(apptId, title, custId, userId, desc, loc, contactId, type, start, end);
+
+                Customer c = new Customer(custId, custName, addr, pcode, ph, divId, countryId, div, country);
+                allCustomersOL.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allCustomersOL;
     }
+        return null;
+    } // TODO
 
     public int insert(Appointment appointment) {
         try {

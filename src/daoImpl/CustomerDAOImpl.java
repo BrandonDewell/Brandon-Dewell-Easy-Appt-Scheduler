@@ -17,7 +17,9 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
         ObservableList<Customer> allCustomersOL = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Customers.Division_ID, Division, First_Level_Divisions.Country_ID, Country FROM Customers, First_Level_Divisions, Countries WHERE Customers.Division_ID = First_Level_Divisions.Division_ID AND First_Level_Divisions.Country_ID = Countries.Country_ID";
+            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Customers.Division_ID, Division, " +
+                    "First_Level_Divisions.Country_ID, Country FROM Customers, First_Level_Divisions, Countries WHERE " +
+                    "Customers.Division_ID = First_Level_Divisions.Division_ID AND First_Level_Divisions.Country_ID = Countries.Country_ID";
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
