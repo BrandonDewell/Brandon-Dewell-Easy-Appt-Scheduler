@@ -20,7 +20,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         ObservableList<Appointment> allAppointmentsOL = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM Appointments";
+            String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
+                    "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";
 
             // "SELECT Appointment_ID, Title, Appointments.Customer_ID, Appointments.User_ID, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments"
 
@@ -29,28 +30,30 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
             while (rs.next()) {
                 int apptId = rs.getInt("Appointment_ID");
-                String title = rs.getString("Title");
                 int custId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
-                String desc = rs.getString("Description");
-                int loc = rs.getInt("Location");
                 int contactId = rs.getInt("Contact_ID");
+                String title = rs.getString("Title");
+                String desc = rs.getString("Description");
+                String loc = rs.getString("Location");
                 String type = rs.getString("Type");
+                String custName = rs.getString("Customer_Name");
+                String userName = rs.getString("User_Name");
+                String contactName = rs.getString("Contact_Name");
                 Timestamp start = rs.getTimestamp("Start");
                 Timestamp end = rs.getTimestamp("End");
-                Appointment a = new Appointment(apptId, title, custId, userId, desc, loc, contactId, type, start, end);
+                Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
 
-                Customer c = new Customer(custId, custName, addr, pcode, ph, divId, countryId, div, country);
-                allCustomersOL.add(c);
+                //Customer c = new Customer();
+                allAppointmentsOL.add(a);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return allCustomersOL;
+        return allAppointmentsOL;
     }
-        return null;
-    } // TODO
+
 
     public int insert(Appointment appointment) {
         try {
@@ -121,7 +124,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, CustomerID);
             int rowsAffected = ps.executeUpdate();
-            System.out.println("The number of rows affected from the delete() call is " + rowsAffected);
+            System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int delete(int " +
+                    "CustomerID) in AppointmentDAOImpl.java");
             return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -10,63 +10,25 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class Appointment {
-    private int apptId;
-    private String title;
-    private String description;
-    private String location;
-    private String type;
-    private Timestamp start;
-    private Timestamp end;
-    private int customerId;
-    private int userId;
-    private int contactId;
+    private int apptId, customerId, userId, contactId;
+    private String title, description, location, type, customerName, userName, contactName;
+    private Timestamp start, end;
 
-    private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-
-    // constructors
-    public Appointment(int apptId, String title, String description, String location, String type, Timestamp start, Timestamp end, int customerId, int userId, int contactId) {
+    // constructor
+    public Appointment(int apptId, int customerId, int userId, int contactId, String title, String description, String location, String type, String customerName, String userName, String contactName, Timestamp start, Timestamp end) {
         this.apptId = apptId;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.contactId = contactId;
         this.title = title;
         this.description = description;
         this.location = location;
         this.type = type;
+        this.customerName = customerName;
+        this.userName = userName;
+        this.contactName = contactName;
         this.start = start;
         this.end = end;
-        this.customerId = customerId;
-        this.userId = userId;
-        this.contactId = contactId;
-    }
-
-    public Appointment() {
-    }
-
-    public ObservableList<Appointment> getAllAppointments(){  // TODO move this to the impl so the DAO is set up correctly.
-        //ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-
-        try{
-            String sql = "SELECT * FROM Appointments";
-            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int apptId = rs.getInt("Appointment_ID");
-                String title = rs.getString("Title");
-                String desc = rs.getString("Description");
-                String loc = rs.getString("Location");
-                String type = rs.getString("Type");
-                Timestamp start = rs.getTimestamp("Start");  // should be data type date and time instead of timestamp? no
-                Timestamp end = rs.getTimestamp("End");     // should be data type date and time
-                int custId = rs.getInt("Customer_ID");
-                int userId = rs.getInt("User_ID");
-                int contId = rs.getInt("Contact_ID");
-
-
-                Appointment a = new Appointment(apptId, title, desc, loc, type, start, end, custId, userId, contId);
-                allAppointments.add(a);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return allAppointments;
     }
 
     // methods

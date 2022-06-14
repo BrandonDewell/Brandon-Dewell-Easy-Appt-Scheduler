@@ -138,28 +138,4 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
         return rowsAffected;
     }
 
-
-   /* public class query {  // from Carolyn's video titled C195 Organizing your code 2021 at 9 mins 30 secs.
-        private static String query;
-        private static Statement stmt;
-        private static ResultSet result;
-
-        public static void makeQuery(String q){
-            query = q;
-            try{
-                stmt = conn.createStatement();
-                //determine query execution
-                if(query.toLowerCase().startsWith("select"))
-                    result = stmt.executeQuery(q);
-                if(query.toLowerCase().startsWith("delete") || query.toLowerCase().startsWith("insert") || query.toLowerCase().startsWith("update"))
-                    result = stmt.executeUpdate(q);
-            }
-            catch (Exception e){
-                System.out.println("Error: " + e.getMessage());
-            }
-            public static ResultSet getResult() {
-                return result;
-            }
-        }
-    }*/
 }

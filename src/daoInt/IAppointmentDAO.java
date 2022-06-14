@@ -15,6 +15,6 @@ public interface IAppointmentDAO {
 
     public int delete(Appointment appointment);
 
-    public int delete(int customer_Id);
+    //public int delete(int customer_Id);
 
 }

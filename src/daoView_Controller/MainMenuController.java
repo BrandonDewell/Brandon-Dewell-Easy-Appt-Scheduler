@@ -72,9 +72,9 @@ public class MainMenuController implements Initializable {
         CRcountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
-        Appointment a = new Appointment();
+        AppointmentDAOImpl a = new AppointmentDAOImpl();
 
-        apptTable.setItems(a.getAllAppointments());
+        apptTable.setItems(a.getAllAppointmentsOL());
         SAapptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptId"));
         SAtitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         SAdescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -134,25 +134,6 @@ public class MainMenuController implements Initializable {
     public void onActionDeleteCustomer(ActionEvent actionEvent) throws SQLException {
         System.out.println("Delete Customer button clicked.  -- onActionDeleteCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
-        /*Customer temp = custTable.getSelectionModel().getSelectedItem();
-        if (temp == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No selection was made");
-            alert.setContentText("Please select a customer from the top table to delete.");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm you would like to delete the selected " +
-                    "customer by clicking the OK button.");
-            alert.setTitle("Deleting a Customer");
-            alert.setHeaderText("Are you sure?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                CustomerDAOImpl dao = new CustomerDAOImpl();
-                dao.delete(custTable.getSelectionModel().getSelectedItem());
-                custTable.setItems(dao.getAllCustomersOL());*/
-
-
         Customer temp = custTable.getSelectionModel().getSelectedItem();
         if (temp == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -177,7 +158,6 @@ public class MainMenuController implements Initializable {
             }
         }
     }
-
 
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("Add Appointment button clicked.  -- onActionAddAppointment(ActionEvent actionEvent) called in MainMenuController.java");
