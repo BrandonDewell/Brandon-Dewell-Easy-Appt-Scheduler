@@ -67,7 +67,8 @@ public class CustomerController implements Initializable {
                 alert.showAndWait();
             } else {
                 if (selectedCustomer == null) {  // Add situation
-                    Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
+                    Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");  // The customerId, countryId, division, and country parameters are not really important and
+                    // I don't care about that info so I can "leave" them blank.
                     CustomerDAOImpl dao = new CustomerDAOImpl();
                     dao.insert(c);  // TODO check insert code
                 } else{  // Update situation
@@ -120,9 +121,7 @@ public class CustomerController implements Initializable {
 
         customerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerId()));
         customerNameTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
-
         addressTextField.setText(String.valueOf(selectedCustomer.getAddress()));
-
         postalCodeTextField.setText(String.valueOf(selectedCustomer.getPostalCode()));
         phoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
 

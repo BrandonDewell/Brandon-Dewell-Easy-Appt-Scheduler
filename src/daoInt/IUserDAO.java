@@ -5,6 +5,6 @@ import javafx.collections.ObservableList;
 
 public interface IUserDAO {
 
-    ObservableList<User> getAllUsers();
+    ObservableList<User> getAllUsersOL();
 
 }

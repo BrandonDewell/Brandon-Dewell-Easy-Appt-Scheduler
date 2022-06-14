@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class UserDAOImpl implements IUserDAO {
 
     @Override
-    public ObservableList<User> getAllUsers() {
+    public ObservableList<User> getAllUsersOL() {
 
         ObservableList<User> usersOL = FXCollections.observableArrayList();
 
@@ -23,13 +23,11 @@ public class UserDAOImpl implements IUserDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int userId = rs.getInt("User_ID");
-                String userName = rs.getString("User_Name");  // I only got customer id and customer name and excluded lots
-                // of other columns in the while loop walking through all the customer data.
+                String userName = rs.getString("User_Name");
                 String pw = rs.getString("Password");
                 User u = new User(userId, userName, pw);
                 usersOL.add(u);
             }
-            // System.out.println(usersOL.get(1));
         }
         catch (SQLException ex){
             ex.printStackTrace();
@@ -39,3 +37,5 @@ public class UserDAOImpl implements IUserDAO {
     }
 
 }
+
+

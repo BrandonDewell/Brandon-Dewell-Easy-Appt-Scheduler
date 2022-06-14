@@ -16,15 +16,17 @@ import java.time.*;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
-//        stage.setTitle("Log In");
-//        stage.setScene(new Scene(root, 300, 200));
-//        stage.show();
-        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
+        stage.setTitle("Log In");
+        stage.setScene(new Scene(root, 300, 200));
+        stage.show();
+        System.out.println(" -- start(Stage stage) called from Main.java");
+
+       /* Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
         stage.setTitle("Main Menu");
         stage.setScene(new Scene(root, 1200, 700));
         stage.show();
-        System.out.println(" -- start(Stage stage) called from Main.java");
+        System.out.println(" -- start(Stage stage) called from Main.java");*/
     }
 
     public static void main(String[] args) throws SQLException {
