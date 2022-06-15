@@ -6,12 +6,12 @@
 
 <AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.LogInMenuController">
    <children>
-      <Label layoutX="121.0" layoutY="14.0" text="LogIn">
+      <Label fx:id="logInLabel" layoutX="121.0" layoutY="14.0" text="LogIn">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="ZoneLabel" layoutX="15.0" layoutY="160.0" prefHeight="17.0" prefWidth="150.0" text="Location" />
+      <Label fx:id="zoneLabel" layoutX="15.0" layoutY="160.0" prefHeight="17.0" prefWidth="150.0" text="Location" />
       <Button fx:id="displayMainMenuB" layoutX="204.0" layoutY="151.0" mnemonicParsing="false" onAction="#onActionSignIn" prefHeight="35.0" prefWidth="82.0" text="SignIn" />
       <TextField fx:id="userNameTxt" layoutX="91.0" layoutY="66.0" prefHeight="25.0" prefWidth="191.0" />
       <TextField fx:id="passwordTxt" layoutX="91.0" layoutY="100.0" prefHeight="25.0" prefWidth="191.0" />

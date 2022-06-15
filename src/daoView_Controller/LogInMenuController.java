@@ -17,27 +17,32 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LogInMenuController implements Initializable {
-    public Label ZoneLabel;
     public Button displayMainMenuB;
     public TextField userNameTxt;
     public TextField passwordTxt;
     public Label userNameLabel;
     public Label passwordLabel;
+    public Label logInLabel;
+    public Label zoneLabel;
+    ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Log In screen is initialized!");  // TODO pull location data and display it on the "Location" label
+        userNameLabel.setText(rb.getString("Username")); // todo add the rest
+        passwordLabel.setText(rb.getString("Password"));
+        displayMainMenuB.setText(rb.getString("SignIn"));
+        logInLabel.setText(rb.getString("LogIn"));
+        zoneLabel.setText(ZoneId.systemDefault().toString());
     }
 
     public void onActionSignIn(ActionEvent actionEvent) {
         System.out.println("Sign In button is clicked");
-
-        ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
-        if(Locale.getDefault().getLanguage().equals("fr")) {
 
             UserDAOImpl udao = new UserDAOImpl();
             ObservableList<User> userList = udao.getAllUsersOL();
@@ -50,11 +55,8 @@ public class LogInMenuController implements Initializable {
                 if (userName.isEmpty() || pw.isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle(rb.getString("Error"));
-                //    alert.setHeaderText(rb.getString("Fields must not be left blank."));
-                    alert.setHeaderText(rb.getString("Fields") + " " +  rb.getString("must") + " " + rb.getString("not") + " " + rb.getString("be") + " " + rb.getString("left") + " " + rb.getString("blank")+ ".");
-                //    alert.setContentText("Please enter a valid value for each text field.\nUser Name and Password must use characters.");
-                    alert.setContentText(rb.getString("Please") + " " + rb.getString("enter") + " " + rb.getString("a") + " " + rb.getString("valid") + " " + rb.getString("value") + " " + rb.getString("for") + " " +
-                            rb.getString("each") + " " + rb.getString("text") + " " + rb.getString("field") + ".");
+                    alert.setHeaderText(rb.getString("Fields"));
+                    alert.setContentText(rb.getString("Please"));
                             alert.showAndWait();
                 } else {
                     for (User u : userList){
@@ -73,11 +75,9 @@ public class LogInMenuController implements Initializable {
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle(rb.getString("Error"));
-                    //    alert.setHeaderText("Incorrect User Name or Password.");
-                        alert.setHeaderText(rb.getString("Incorrect") + " " + rb.getString("User") + " " + rb.getString("Name") + " " + rb.getString("or") + " " + rb.getString("Password") + ".");
-                    //    alert.setContentText("Please try again.");
-                        alert.setContentText(rb.getString("Please") + " " + rb.getString("try") + " " + rb.getString("again") + ".");
-                                alert.showAndWait();
+                        alert.setHeaderText(rb.getString("Incorrect"));
+                        alert.setContentText(rb.getString("PleaseTryAgain"));
+                        alert.showAndWait();
 
                         userNameTxt.setText("");
                         passwordTxt.setText("");
@@ -86,7 +86,7 @@ public class LogInMenuController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+
     }
 
 
