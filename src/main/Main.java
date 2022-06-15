@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.*;
@@ -20,22 +21,39 @@ import java.util.Scanner;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
-        stage.setTitle("Log In");
-        stage.setScene(new Scene(root, 300, 200));
-        stage.show();
-        System.out.println(" -- start(Stage stage) called from Main.java");
 
-       /* Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
-        stage.setTitle("Main Menu");
-        stage.setScene(new Scene(root, 1200, 700));
-        stage.show();
-        System.out.println(" -- start(Stage stage) called from Main.java");*/
+        ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
+        if(Locale.getDefault().getLanguage().equals("fr")) {
+
+            try{
+                Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
+                //    stage.setTitle("Log In");
+                stage.setTitle(rb.getString("Log") + " " + rb.getString("In"));
+                stage.setScene(new Scene(root, 300, 200));
+                stage.show();
+                System.out.println(" -- start(Stage stage) called from Main.java");
+
+           /* Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
+            stage.setTitle("Main Menu");
+            stage.setScene(new Scene(root, 1200, 700));
+            stage.show();
+            System.out.println(" -- start(Stage stage) called from Main.java");*/
+            } catch (IOException ex){
+                ex.printStackTrace();
+            }
+
+        }
+
     }
+
+
+
+
+
 
     public static void main(String[] args) throws SQLException {
 
-        /*Locale france = new Locale("fr", "FR");                   // from Malcolm's webinars
+        /*Locale france = new Locale("fr", "FR");                   // from Malcolm's webinars on localization
 
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter a language(fr): ");
@@ -48,18 +66,18 @@ public class Main extends Application {
             System.exit(0);
         }*/
 
-        /*ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
+        ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
 
         if(Locale.getDefault().getLanguage().equals("fr")) {
             System.out.println(rb.getString("hello") + " " + rb.getString("world"));
-        }*/
+        }
 
 
         //Locale.setDefault(new Locale("fr"));  // To test for French language from video "C195 Requirements - PART # 1 : Overview
         // And Section A.1 (Login Form) (09-11-2021)"
 
 
-        try{
+        /*try{
             ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
 
             if(Locale.getDefault().getLanguage().equals("fr")) {
@@ -67,7 +85,7 @@ public class Main extends Application {
             }
         } catch(MissingResourceException ex){
             ex.printStackTrace();
-        }
+        }*/
 
 
 
