@@ -12,6 +12,10 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.*;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class Main extends Application {
     @Override
@@ -30,31 +34,44 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
-        JDBC.openConnection();
 
-        //Customer customer = new Customer();  // if using DAO Pattern // to create an object:  type of object (name matches class type),
-                                                // variable name = new, constructor (name must match name of Class)
-        //CustomerDAOImpl.select();
-        //CustomerDAOImpl.in
+        /*Locale france = new Locale("fr", "FR");                   // from Malcolm's webinars
 
-        //CustomerDAOImpl customer = new CustomerDAOImpl();  // create new customer object in CustomerDAOImpl class
-    //    Customer customer = new Customer("Brandon", "12345 Main St.", "46037", "555-555-5555", 47);  // to add a customer use this
-        // Indiana's state int is 13.
-        //customer.insert(customer);
-    //    CustomerDAOImpl.insert(customer);
-        //CustomerDAOImpl.select();
+        Scanner keyboard = new Scanner(System.in);
+        System.out.print("Enter a language(fr): ");
+        String languageCode = keyboard.nextLine();
 
-        //CustomerDAOImpl.in
-        //CustomerDAOImpl.select(customer);
-        //CustomerDAOImpl.delete(3);
-        //CustomerDAOImpl.update(1, "Brandon");
+        if (languageCode.equals("fr")){
+            Locale.setDefault(france);
+        } else {
+            System.out.println("Language not supported.");
+            System.exit(0);
+        }*/
 
+        /*ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
+
+        if(Locale.getDefault().getLanguage().equals("fr")) {
+            System.out.println(rb.getString("hello") + " " + rb.getString("world"));
+        }*/
 
 
         //Locale.setDefault(new Locale("fr"));  // To test for French language from video "C195 Requirements - PART # 1 : Overview
         // And Section A.1 (Login Form) (09-11-2021)"
 
 
+        try{
+            ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
+
+            if(Locale.getDefault().getLanguage().equals("fr")) {
+                System.out.println(rb.getString("hello") + " " + rb.getString("world"));
+            }
+        } catch(MissingResourceException ex){
+            ex.printStackTrace();
+        }
+
+
+
+        JDBC.openConnection();
 
 
         // TimeZone info from TimeZone webinar
