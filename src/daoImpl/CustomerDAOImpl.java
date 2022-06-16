@@ -103,7 +103,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
     }*/
 
     @Override
-    public int delete(Customer customer) {  // TODO delete from appts first then customer. delete from appts where cust id = ?  delete from customers id = ?
+    public int delete(Customer customer) {  // TODO delete from appts first then customer. delete from appts where cust id = ?  delete from customers where cust id = ?
         try {
             String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);

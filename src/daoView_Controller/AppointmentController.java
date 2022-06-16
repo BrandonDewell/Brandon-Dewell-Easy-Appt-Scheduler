@@ -1,12 +1,10 @@
 package daoView_Controller;
 
 import daoImpl.ContactDAOImpl;
+import daoImpl.CountryDAOImpl;
 import daoImpl.CustomerDAOImpl;
-import daoImpl.FirstLevelDivisionDAOImpl;
-import daoModel.Contact;
-import daoModel.Country;
-import daoModel.Customer;
-import daoModel.User;
+import daoImpl.UserDAOImpl;
+import daoModel.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,33 +17,105 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentController implements Initializable {
+
+    private Appointment selectedAppointment;
+
     public Label appointmentLabel;
     public TextField appointmentIDTextField;
     public TextField titleTextField;
     public TextField locationTextField;
     public ComboBox<Contact> contactComboBox;
     public TextField descriptionTextField;
-    public ComboBox<String> typeComboBox;
+    public TextField typeTextField;
     public DatePicker startDateDatePicker;
     public ComboBox<Customer> customerIDComboBox;
     public ComboBox<User> userIDComboBox;
-    public ComboBox<Time> startTimeComboBox;
+    public ComboBox<LocalTime> startTimeComboBox;
     public DatePicker endDateDatePicker;
-    public ComboBox<Time> endTimeComboBox;
+    public ComboBox<LocalTime> endTimeComboBox;
     public Button saveButton;
     public Button cancelButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Nothing being done here.  -- initialize(URL url, ResourceBundle resourceBundle) called from AppointmentController.java");
+        System.out.println("-- initialize(URL url, ResourceBundle resourceBundle) called from AppointmentController.java");
+
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        customerIDComboBox.setItems(customerDAO.getAllCustomersOL());
+
+        UserDAOImpl userDAO = new UserDAOImpl();
+        userIDComboBox.setItems(userDAO.getAllUsersOL());
+
+        ContactDAOImpl contactDAO = new ContactDAOImpl();
+        contactComboBox.setItems(contactDAO.getAllContactsOL());
+
+
+        for(int i = 0; i < 24; i++){
+            startTimeComboBox.getItems().add(LocalTime.of(i, 0));
+        }
+
+        for(int i = 1; i < 24; i++){                                         // initialize i with 1 because I have decided that each appt will be an hour long, and if the start time is at 00:00, the end time must be 01:00 at the earliest.
+            endTimeComboBox.getItems().add(LocalTime.of(i, 0));
+            if(i == 23){
+                endTimeComboBox.getItems().add(LocalTime.of(0, 0));
+
+            }
+        }
     }
 
     public void onActionSave(ActionEvent actionEvent) {
-        System.out.println("Appointment save button clicked");
+        System.out.println("Appointment save button clicked.  -- onActionSave(ActionEvent actionEvent) called in AppointmentController.java\"");
+
+        /*try {
+
+            String title = titleTextField.getText();
+            Customer cust = customerIDComboBox.getValue();
+            User u = userIDComboBox.getValue();
+            String desc = descriptionTextField.getText();
+            String loc = locationTextField.getText();
+            Contact cont = contactComboBox.getValue();
+            String type = typeTextField.getText();
+            // Start Date date picker
+         //   Time start =  combo box  // TODO Am I going to need a Time Class?
+            // end time combo box
+            // end date date picker.  I was told I do not need this?
+
+*/
+
+           /* if(title.isBlank() || cust == null || u == null || desc.isBlank() || loc.isBlank() || cont == null || type.isBlank() || ){  // combo boxes use
+                // comboBox == null to do error checks instead of textfield.isBlank()
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Fields must not be left blank.\nA drop down selection must be made.");
+                alert.setContentText("Please enter a valid value for each text field.\nTitle, Description, Location, and Type " +
+                        "must use characters.\nPlease make a selection in the drop down boxes.\nSelect a date by clicking on the date chooser button.");
+                alert.showAndWait();
+            } else {
+                if (selectedAppointment == null) {  // Add situation
+                    Appointment a = new Appointment(0, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, 0, "", "");  // The customerId, countryId, division, and country parameters are not really important and
+                    // I don't care about that info so I can "leave" them blank.
+                    CustomerDAOImpl dao = new CustomerDAOImpl();
+                    dao.insert(c);  // TODO check insert code
+                } else{  // Update situation
+                    Customer c = new Customer(selectedAppointment.getCustomerId(), name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
+                    CustomerDAOImpl dao = new CustomerDAOImpl();
+                    dao.update(c);
+                }
+
+                Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 1200, 700);
+                stage.setTitle("Main Menu");
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
     }
 
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
@@ -57,7 +127,7 @@ public class AppointmentController implements Initializable {
             // therefore its a check on whether someone clicked a button.  result.get() checks to see what type of button is clicked, the ok button or cancel button.
             Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
             Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1200, 700);
+            Scene scene = new Scene(root, 1500, 700);
             stage.setTitle("Main Menu");
             stage.setScene(scene);
             stage.show();

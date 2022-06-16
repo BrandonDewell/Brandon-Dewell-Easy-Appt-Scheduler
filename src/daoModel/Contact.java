@@ -24,4 +24,8 @@ public class Contact {
         return email;
     }
 
+    @Override
+    public String toString(){
+        return String.valueOf(contactId) + " " + (contactName);
+    }
 }

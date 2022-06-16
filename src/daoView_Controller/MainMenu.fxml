@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.MainMenuController">
+<AnchorPane prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.MainMenuController">
    <children>
-      <TableView fx:id="custTable" layoutX="29.0" layoutY="144.0" prefHeight="200.0" prefWidth="1140.0">
+      <TableView fx:id="custTable" layoutX="40.0" layoutY="144.0" prefHeight="200.0" prefWidth="1422.0">
         <columns>
           <TableColumn fx:id="CRcustIDCol" editable="false" prefWidth="81.0" text="Customer_ID" />
           <TableColumn fx:id="CRcustNameCol" prefWidth="242.0" text="Customer Name" />
@@ -17,18 +17,21 @@
             <TableColumn fx:id="CRphoneNumCol" minWidth="7.0" prefWidth="163.0" text="Phone Number" />
         </columns>
       </TableView>
-      <TableView fx:id="apptTable" layoutX="32.0" layoutY="435.0" prefHeight="200.0" prefWidth="1140.0">
+      <TableView fx:id="apptTable" layoutX="40.0" layoutY="435.0" prefHeight="200.0" prefWidth="1422.0">
         <columns>
           <TableColumn fx:id="SAapptIDCol" editable="false" prefWidth="100.0" text="Appointment_ID" />
           <TableColumn fx:id="SAtitleCol" prefWidth="81.0" text="Title" />
             <TableColumn fx:id="SAdescriptionCol" prefWidth="128.0" text="Description" />
             <TableColumn fx:id="SAlocationCol" prefWidth="83.0" text="Location" />
+            <TableColumn fx:id="SAcontactNameCol" prefWidth="108.0" text="Contact Name" />
             <TableColumn fx:id="SAcontactCol" prefWidth="108.0" text="Contact" />
             <TableColumn fx:id="SAtypeCol" prefWidth="136.0" text="Type" />
             <TableColumn fx:id="SAsDATCol" prefWidth="140.0" text="Start Date and Time" />
             <TableColumn fx:id="SAeDATCol" prefWidth="140.0" text="End Date and Time" />
+            <TableColumn fx:id="SAcustNameCol" editable="false" prefWidth="101.0" text="Customer Name" />
             <TableColumn fx:id="SAcustIDCol" editable="false" prefWidth="101.0" text="Customer_ID" />
-            <TableColumn fx:id="SAuserIDCol" prefWidth="119.0" text="User_ID" />
+            <TableColumn fx:id="SAuserNameCol" prefWidth="100.0" text="User Name" />
+            <TableColumn fx:id="SAuserIDCol" prefWidth="100.0" text="User_ID" />
         </columns>
       </TableView>
       <Button fx:id="addCustomer" layoutX="832.0" layoutY="350.0" mnemonicParsing="false" onAction="#onActionAddCustomer" text="Add" />
@@ -45,7 +48,7 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label layoutX="540.0" layoutY="39.0" text="Main Menu">
+      <Label layoutX="690.0" layoutY="39.0" text="Main Menu">
          <font>
             <Font size="24.0" />
          </font>

@@ -37,10 +37,10 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
                 String desc = rs.getString("Description");
                 String loc = rs.getString("Location");
                 String type = rs.getString("Type");
-                String custName = rs.getString("Customer_Name");
+                String custName = rs.getString("Customer_Name");  // changed from customerId to
                 String userName = rs.getString("User_Name");
                 String contactName = rs.getString("Contact_Name");
-                Timestamp start = rs.getTimestamp("Start");
+                Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp
                 Timestamp end = rs.getTimestamp("End");
                 Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
 

@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
-
     Scene scene;
     public TableView<Customer> custTable;
     public TableColumn<Customer, Integer> CRcustIDCol;
@@ -39,11 +38,14 @@ public class MainMenuController implements Initializable {
     public TableColumn<Appointment, String> SAtitleCol;
     public TableColumn<Appointment, String> SAdescriptionCol;
     public TableColumn<Appointment, String> SAlocationCol;
+    public TableColumn<Appointment, String> SAcontactNameCol;
     public TableColumn<Appointment, Integer> SAcontactCol;
     public TableColumn<Appointment, String> SAtypeCol;
     public TableColumn<Appointment, LocalDateTime> SAsDATCol;
     public TableColumn<Appointment, LocalDateTime> SAeDATCol;
+    public TableColumn<Appointment, String> SAcustNameCol;
     public TableColumn<Appointment, Integer> SAcustIDCol;
+    public TableColumn<Appointment, String> SAuserNameCol;
     public TableColumn<Appointment, Integer> SAuserIDCol;
 
     public Button addCustomer;
@@ -79,12 +81,18 @@ public class MainMenuController implements Initializable {
         SAtitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         SAdescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         SAlocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        SAcontactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         SAcontactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         SAtypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        SAcustNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         SAcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        SAuserNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
         SAuserIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+
+
     }
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {

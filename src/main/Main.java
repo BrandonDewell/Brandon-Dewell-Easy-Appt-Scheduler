@@ -25,17 +25,17 @@ public class Main extends Application {
         ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
 
             try{
-                Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
+                /*Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
                 stage.setTitle(rb.getString("LogIn"));
                 stage.setScene(new Scene(root, 300, 200));
                 stage.show();
-                System.out.println(" -- start(Stage stage) called from Main.java");
-
-               /* Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
-                stage.setTitle("Main Menu");
-                stage.setScene(new Scene(root, 1200, 700));
-                stage.show();
                 System.out.println(" -- start(Stage stage) called from Main.java");*/
+
+                Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
+                stage.setTitle("Main Menu");
+                stage.setScene(new Scene(root, 1500, 700));
+                stage.show();
+                System.out.println(" -- start(Stage stage) called from Main.java");
             } catch (IOException ex){
                 ex.printStackTrace();
             }
@@ -58,7 +58,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
-        Locale.setDefault(new Locale("fr"));
+        Locale.setDefault(new Locale("en"));
         /*Locale france = new Locale("fr", "FR");                   // from Malcolm's webinars on localization
 
         Scanner keyboard = new Scanner(System.in);
@@ -130,6 +130,13 @@ public class Main extends Application {
 
         Timestamp ts = new Timestamp(System.currentTimeMillis());*/
 
+
+
+
+
+
+
+
           // Test insert() function from Malcom's webinar titled JDBC at 43 mins.
         /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","123 Main St", "90210", "317-696-8955",
                                                     ts, "Brandon Dewell", ts,"Brandon Dewell", 42);
@@ -173,6 +180,10 @@ public class Main extends Application {
          // Test another overloaded select function while using a bind variable from Malcom's webinar titled JDBC also at 1 hr 8 mins
         // 20 secs.
         //CustomersQuery.select(103);
+
+
+
+
 
 
         launch(args);  // many methods are called and basically loads the GUI's

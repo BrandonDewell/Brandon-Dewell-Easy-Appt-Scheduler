@@ -54,4 +54,9 @@ public class Customer {
         return divisionId;
     }
 
+    @Override
+    public String toString(){
+        return String.valueOf(customerId);
+    }
+
 }

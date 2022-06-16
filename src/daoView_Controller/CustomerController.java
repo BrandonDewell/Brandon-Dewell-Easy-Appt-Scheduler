@@ -66,12 +66,12 @@ public class CustomerController implements Initializable {
                         "Number must use characters.\nPlease make a selection in the drop down boxes.");
                 alert.showAndWait();
             } else {
-                if (selectedCustomer == null) {  // Add situation
+                if (selectedCustomer == null) {  // Nothing was selected so this is an Add Customer situation
                     Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");  // The customerId, countryId, division, and country parameters are not really important and
                     // I don't care about that info so I can "leave" them blank.
                     CustomerDAOImpl dao = new CustomerDAOImpl();
                     dao.insert(c);  // TODO check insert code
-                } else{  // Update situation
+                } else{  // Something WAS selected so this is an Update Customer situation
                     Customer c = new Customer(selectedCustomer.getCustomerId(), name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
                     CustomerDAOImpl dao = new CustomerDAOImpl();
                     dao.update(c);
@@ -79,7 +79,7 @@ public class CustomerController implements Initializable {
 
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 1200, 700);
+                Scene scene = new Scene(root, 1500, 700);
                 stage.setTitle("Main Menu");
                 stage.setScene(scene);
                 stage.show();
@@ -100,7 +100,7 @@ public class CustomerController implements Initializable {
             // therefore its a check on whether someone clicked a button.  result.get() checks to see what type of button is clicked, the ok button or cancel button.
             Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
             Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1200, 700);
+            Scene scene = new Scene(root, 1500, 700);
             stage.setTitle("Main Menu");
             stage.setScene(scene);
             stage.show();
@@ -108,7 +108,8 @@ public class CustomerController implements Initializable {
 
     }
 
-    public void onActionCountry(ActionEvent actionEvent) {
+    public void onActionCountry(ActionEvent actionEvent) {  // when country combo box has a value that is selected, this method sets the
+        // options in the state/prov combo box based on the country Id in the country combo box.
 
         Country c = countryComboBox.getValue();
         FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
