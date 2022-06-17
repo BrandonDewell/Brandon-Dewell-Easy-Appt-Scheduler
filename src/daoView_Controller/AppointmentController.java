@@ -1,9 +1,6 @@
 package daoView_Controller;
 
-import daoImpl.ContactDAOImpl;
-import daoImpl.CountryDAOImpl;
-import daoImpl.CustomerDAOImpl;
-import daoImpl.UserDAOImpl;
+import daoImpl.*;
 import daoModel.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -71,7 +69,7 @@ public class AppointmentController implements Initializable {
     public void onActionSave(ActionEvent actionEvent) {
         System.out.println("Appointment save button clicked.  -- onActionSave(ActionEvent actionEvent) called in AppointmentController.java\"");
 
-        /*try {
+        try {
 
             String title = titleTextField.getText();
             Customer cust = customerIDComboBox.getValue();
@@ -80,14 +78,13 @@ public class AppointmentController implements Initializable {
             String loc = locationTextField.getText();
             Contact cont = contactComboBox.getValue();
             String type = typeTextField.getText();
-            // Start Date date picker
-         //   Time start =  combo box  // TODO Am I going to need a Time Class?
-            // end time combo box
-            // end date date picker.  I was told I do not need this?
+            LocalDate sDate = startDateDatePicker.getValue();
+            LocalTime sTime =  startTimeComboBox.getValue();
+            LocalTime eTime = endTimeComboBox.getValue();
+            LocalDate eDate = endDateDatePicker.getValue();
 
-*/
 
-           /* if(title.isBlank() || cust == null || u == null || desc.isBlank() || loc.isBlank() || cont == null || type.isBlank() || ){  // combo boxes use
+            if(title.isBlank() || cust == null || u == null || desc.isBlank() || loc.isBlank() || cont == null || type.isBlank() || sDate == null || sTime == null || eTime == null || eDate == null){  // combo boxes use
                 // comboBox == null to do error checks instead of textfield.isBlank()
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -97,25 +94,26 @@ public class AppointmentController implements Initializable {
                 alert.showAndWait();
             } else {
                 if (selectedAppointment == null) {  // Add situation
-                    Appointment a = new Appointment(0, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, 0, "", "");  // The customerId, countryId, division, and country parameters are not really important and
+                    Appointment a = new Appointment(0, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sDate, sTime, eTime, eDate);  // The customerId, countryId, division, and country parameters are not really important and
                     // I don't care about that info so I can "leave" them blank.
-                    CustomerDAOImpl dao = new CustomerDAOImpl();
-                    dao.insert(c);  // TODO check insert code
-                } else{  // Update situation
-                    Customer c = new Customer(selectedAppointment.getCustomerId(), name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
-                    CustomerDAOImpl dao = new CustomerDAOImpl();
-                    dao.update(c);
+                    AppointmentDAOImpl dao = new AppointmentDAOImpl();
+                    dao.insert(a);  // TODO check insert code
+                } else {  // Update situation
+                    Appointment a = new Appointment(selectedAppointment.getApptId(), cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sDate, sTime, eTime, eDate);
+                    AppointmentDAOImpl dao = new AppointmentDAOImpl();
+                    dao.update(a);
                 }
 
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 1200, 700);
+                Scene scene = new Scene(root, 1500, 700);
                 stage.setTitle("Main Menu");
                 stage.setScene(scene);
                 stage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
@@ -145,7 +143,29 @@ public class AppointmentController implements Initializable {
         stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));
     }*/
 
+    public void sendAppointment(Appointment inAppointment) {
+        selectedAppointment = inAppointment;
 
+        appointmentIDTextField.setText(String.valueOf(selectedAppointment.getApptId()));
+        titleTextField.setText(String.valueOf(selectedAppointment.getTitle()));
+        locationTextField.setText(String.valueOf(selectedAppointment.getLocation()));
+        descriptionTextField.setText(String.valueOf(selectedAppointment.getDescription()));
+        typeTextField.setText(String.valueOf(selectedAppointment.getType()));
+
+        for(Contact c : contactComboBox.getItems()){
+            if (selectedAppointment.getContactId() == c.getContactId()){
+                contactComboBox.setValue(c);
+                break;
+            }
+        }
+
+        startDateDatePicker.setValue(selectedAppointment.getStart().toLocalDateTime().toLocalDate());
+
+        endDateDatePicker.setValue(selectedAppointment.getEnd().toLocalDateTime().toLocalDate());
+
+        startTimeComboBox.setValue(selectedAppointment.getStart().toLocalDateTime().toLocalTime());
+
+    }
 
 
 

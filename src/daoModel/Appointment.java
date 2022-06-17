@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Appointment {
     private int apptId, customerId, userId, contactId;
@@ -29,6 +31,9 @@ public class Appointment {
         this.contactName = contactName;
         this.start = start;
         this.end = end;
+    }
+
+    public Appointment(int apptId, int customerId, int userId, String desc, String loc, String contactName, String type, LocalDate sDate, LocalTime sTime, LocalTime eTime, LocalDate eDate) {
     }
 
     public String getCustomerName() {

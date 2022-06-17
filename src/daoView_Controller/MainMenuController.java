@@ -181,12 +181,36 @@ public class MainMenuController implements Initializable {
     public void onActionUpdateAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Appointment button clicked.  -- onActionUpdateAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
-        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Appointment.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle("Update Appointment");
-        stage.setScene(scene);
-        stage.show();
+        System.out.println("Update Customer button clicked.  -- onActionUpdateCustomer(ActionEvent actionEvent) called in MainMenuController.java");
+        Appointment temp = apptTable.getSelectionModel().getSelectedItem();
+          // 1. get the selected item and assign it to a temporary variable.
+
+        if (temp == null) {        // 2. check if temp is null, then if null pop up an error message box telling the user to make sure to select an item.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No selection was made");
+            alert.setContentText("Please select an appointment from the bottom table to update.");
+            alert.showAndWait();
+
+        }
+        else {                   // 3. else do the rest including sending data and loading the update customer stage.
+            FXMLLoader loader = new FXMLLoader();                                           // 4. created the FXMLLoader object.
+            loader.setLocation(getClass().getResource("/daoView_Controller/Appointment.fxml"));  // 5. let that loader object know which view to use.
+            loader.load();                                                                  // 6. load the object.
+
+            AppointmentController ApptController = loader.getController();  // 7. call the loader object's getController() method using the loader reference variable CustController.
+            // 8. use indexOf() to get the index of the selected item in the allParts observableList and assign it to tempIndex.  **** we dont use indexOf() with a database.
+
+            ApptController.sendAppointment(temp);        // 9. move the selected object to the controller
+            // and also move the index of the selected object.  ** we dont deal with the index.
+
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();                      // 10. then set the stage and scene
+            Parent root = loader.getRoot();
+            stage.setTitle("Update Appointment");
+            Scene scene = new Scene(root, 600, 600);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onActionDeleteAppointment(ActionEvent actionEvent) {
