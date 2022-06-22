@@ -216,7 +216,31 @@ public class MainMenuController implements Initializable {
     public void onActionDeleteAppointment(ActionEvent actionEvent) {
         System.out.println("Delete Appointment button clicked.  -- onActionDeleteAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
+        Appointment temp = apptTable.getSelectionModel().getSelectedItem();
+        if (temp == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No selection was made");
+            alert.setContentText("Please select an appointment from the bottom table to delete.");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm you would like to delete the selected " +
+                    "customer by clicking the OK button.");
+            alert.setTitle("Deleting a Customer");
+            alert.setHeaderText("Are you sure?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+                AppointmentDAOImpl adao = new AppointmentDAOImpl();
+                adao.delete(temp.getApptId());
+                apptTable.setItems(adao.getAllAppointmentsOL());
+
+                /*CustomerDAOImpl dao = new CustomerDAOImpl();
+                dao.delete(temp);  // tried casting customer object temp to customerDAOImpl object, but wont work.
+                custTable.setItems(dao.getAllCustomersOL());*/
+            }
+        }
     }
+
 
     public void onActionWeekView(ActionEvent actionEvent) {
         System.out.println("Week radio button clicked.  -- onActionWeekView(ActionEvent actionEvent) called in MainMenuController.java");

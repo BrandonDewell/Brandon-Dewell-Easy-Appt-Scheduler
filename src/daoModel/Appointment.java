@@ -47,15 +47,9 @@ public class Appointment {
     public Appointment(int apptId, int custId, int userId, int contactId, String title, String desc, String loc, String type, String custName, String userName, String contactName, LocalDateTime sLDT, LocalDateTime eLDT) {
     }
 
+
+
     // methods
-    public LocalDateTime getsLDT() {
-        return sLDT;
-    }
-
-    public LocalDateTime geteLDT() {
-        return eLDT;
-    }
-
     public String getCustomerName() {
         return customerName;
     }
@@ -107,5 +101,11 @@ public class Appointment {
     public int getContactId() {
         return contactId;
     }
+
+    public LocalDateTime getsLDT() {
+        return sLDT;
+    }
+
+    public LocalDateTime geteLDT() {return eLDT; }
 
 }

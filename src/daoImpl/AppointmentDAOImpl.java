@@ -62,6 +62,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         try {
             String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
             // values for the Customer_ID.
+
+            // UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Division_ID = ?, Postal_Code = ?, Phone = ? WHERE Customer_ID = ?
+
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, appointment.getTitle());
             ps.setString(2, appointment.getDescription());
@@ -140,20 +143,47 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     }
 
 
-    public int delete(int CustomerID) {
+    public int delete(int AppointmentID) {
 
         try {
-            String sql = "DELETE FROM APPOINTMENTS WHERE Customer_ID = ?";
+            String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
             PreparedStatement ps = null;
             ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, CustomerID);
+            ps.setInt(1, AppointmentID);
             int rowsAffected = ps.executeUpdate();
             System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int delete(int " +
-                    "CustomerID) in AppointmentDAOImpl.java");
+                    "AppointmentID) in AppointmentDAOImpl.java");
             return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
+
+    public int update(int apptId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
+        try {
+            String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";  // have to put in the first NULL to let mysql handle inputting
+            // values for the Customer_ID.
+
+            // "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Division_ID = ?, Postal_Code = ?, Phone = ? WHERE Customer_ID = ?"
+
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setTimestamp(5, Timestamp.valueOf(start));
+            ps.setTimestamp(6, Timestamp.valueOf(end));
+            ps.setInt(7, customerID);
+            ps.setInt(8, userID);
+            ps.setInt(9, contactID);
+            ps.setInt(10, apptId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
 }

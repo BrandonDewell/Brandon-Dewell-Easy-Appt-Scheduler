@@ -104,7 +104,7 @@ public class AppointmentController implements Initializable {
                 LocalDateTime eLDT = LocalDateTime.of(eDate, eTime);
 
                 if (selectedAppointment == null) {  // This is where the determination is made whether the add or update button was clicked in the main menu.  Nothing was selected so this is an Add Appointment situation.
-                    Appointment a = new Appointment(0, title, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sLDT, eLDT);  // The customerId, countryId, division, and country parameters are not really important and
+                    //Appointment a = new Appointment(0, title, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sLDT, eLDT);  // The customerId, countryId, division, and country parameters are not really important and
                     // I don't care about that info so I can "leave" them blank.
 
                     //AppointmentDAOImpl dao = new AppointmentDAOImpl();
@@ -112,12 +112,16 @@ public class AppointmentController implements Initializable {
                     //dao.insert(a);  // TODO check insert code
                     int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), cont.getContactId());
                     if (rowsAffected > 0){
-                        System.out.println("insert successful");
+                        System.out.println("**************************insert successful");
                     }
                 } else {  // Update situation
-                    Appointment a = new Appointment(selectedAppointment.getApptId(), title, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sDate, sTime, eDate, eTime);
+                   // Appointment a = new Appointment(selectedAppointment.getApptId(), title, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sDate, sTime, eDate, eTime);
                     //AppointmentDAOImpl dao = new AppointmentDAOImpl();
-                    dao.update(a);
+                   // dao.update(a);
+                    int rowsAffected = dao.update(selectedAppointment.getApptId(), title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), cont.getContactId());
+                    if (rowsAffected > 0){
+                        System.out.println("*************************update successful");
+                    }
                 }
 
 
