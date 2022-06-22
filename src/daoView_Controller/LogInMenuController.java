@@ -38,7 +38,7 @@ public class LogInMenuController implements Initializable {
         passwordLabel.setText(rb.getString("Password"));
         displayMainMenuB.setText(rb.getString("SignIn"));
         logInLabel.setText(rb.getString("LogIn"));
-        zoneLabel.setText(ZoneId.systemDefault().toString());
+        zoneLabel.setText(rb.getString("Location") + ZoneId.systemDefault().toString());
     }
 
     public void onActionSignIn(ActionEvent actionEvent) {

@@ -188,7 +188,7 @@ public class MainMenuController implements Initializable {
         if (temp == null) {        // 2. check if temp is null, then if null pop up an error message box telling the user to make sure to select an item.
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("No selection was made");
+            alert.setHeaderText("No selection was made.");
             alert.setContentText("Please select an appointment from the bottom table to update.");
             alert.showAndWait();
 

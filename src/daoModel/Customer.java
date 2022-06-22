@@ -56,7 +56,7 @@ public class Customer {
 
     @Override
     public String toString(){
-        return String.valueOf(customerId);
+        return String.valueOf(customerId) + " - " + (customerName);
     }
 
 }

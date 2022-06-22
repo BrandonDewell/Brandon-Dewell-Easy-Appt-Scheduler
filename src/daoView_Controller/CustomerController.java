@@ -66,7 +66,7 @@ public class CustomerController implements Initializable {
                         "Number must use characters.\nPlease make a selection in the drop down boxes.");
                 alert.showAndWait();
             } else {
-                if (selectedCustomer == null) {  // Nothing was selected so this is an Add Customer situation
+                if (selectedCustomer == null) {  // This is where the determination is made whether the add or update button was clicked in the main menu.  Nothing was selected so this is an Add Customer situation.
                     Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");  // The customerId, countryId, division, and country parameters are not really important and
                     // I don't care about that info so I can "leave" them blank.
                     CustomerDAOImpl dao = new CustomerDAOImpl();

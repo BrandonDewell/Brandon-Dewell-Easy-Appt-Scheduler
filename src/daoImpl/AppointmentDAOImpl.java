@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql interactions and observable lists here
 
@@ -37,11 +38,13 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
                 String desc = rs.getString("Description");
                 String loc = rs.getString("Location");
                 String type = rs.getString("Type");
-                String custName = rs.getString("Customer_Name");  // changed from customerId to
+                String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
                 String userName = rs.getString("User_Name");
                 String contactName = rs.getString("Contact_Name");
-                Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp
+                Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
                 Timestamp end = rs.getTimestamp("End");
+                LocalDateTime sLDT = start.toLocalDateTime();
+                LocalDateTime eLDT = end.toLocalDateTime();
                 Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
 
                 //Customer c = new Customer();
@@ -57,10 +60,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     public int insert(Appointment appointment) {
         try {
-            String sql = "INSERT INTO APPOINTMENTS VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL, NULL, NULL, NULL, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
+            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
             // values for the Customer_ID.
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);  // anytime there is a preparedStatement() called in a method, you must throw a SQLException
-            // in the header/signature of the method that calls the preparedStatement().
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, appointment.getTitle());
             ps.setString(2, appointment.getDescription());
             ps.setString(3, appointment.getLocation());
@@ -70,6 +72,28 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps.setInt(7, appointment.getCustomerId());
             ps.setInt(8, appointment.getUserId());
             ps.setInt(9, appointment.getContactId());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int insert(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
+        try {
+            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
+            // values for the Customer_ID.
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setTimestamp(5, Timestamp.valueOf(start));
+            ps.setTimestamp(6, Timestamp.valueOf(end));
+            ps.setInt(7, customerID);
+            ps.setInt(8, userID);
+            ps.setInt(9, contactID);
             int rowsAffected = ps.executeUpdate();
             return rowsAffected;
         } catch (SQLException ex) {
