@@ -20,7 +20,7 @@
       <TableView fx:id="apptTable" layoutX="40.0" layoutY="435.0" prefHeight="200.0" prefWidth="1422.0">
         <columns>
           <TableColumn fx:id="SAapptIDCol" editable="false" prefWidth="100.0" text="Appointment_ID" />
-          <TableColumn fx:id="SAtitleCol" prefWidth="81.0" text="Title" />
+          <TableColumn fx:id="SAtitleCol" prefWidth="72.0" text="Title" />
             <TableColumn fx:id="SAdescriptionCol" prefWidth="128.0" text="Description" />
             <TableColumn fx:id="SAlocationCol" prefWidth="83.0" text="Location" />
             <TableColumn fx:id="SAcontactNameCol" prefWidth="108.0" text="Contact Name" />

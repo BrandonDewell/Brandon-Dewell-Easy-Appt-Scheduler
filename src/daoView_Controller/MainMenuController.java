@@ -156,9 +156,19 @@ public class MainMenuController implements Initializable {
             alert.setHeaderText("Are you sure?");
             Optional<ButtonType> result = alert.showAndWait();
             if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+               /* CustomerDAOImpl tempCustDAO = new CustomerDAOImpl();
+                tempCustDAO.select(temp);*/
+
+
                 AppointmentDAOImpl adao = new AppointmentDAOImpl();
-                adao.delete(temp.getCustomerId());
+               // adao.select
+
+               // adao = (AppointmentDAOImpl) temp;  // can't cast temp to different object type
+                apptTable.refresh();
+                adao.deleteCustAppts(temp.getCustomerId());
+                //apptTable.();
                 apptTable.setItems(adao.getAllAppointmentsOL());
+
 
                 CustomerDAOImpl dao = new CustomerDAOImpl();
                 dao.delete(temp);  // tried casting customer object temp to customerDAOImpl object, but wont work.
@@ -232,6 +242,12 @@ public class MainMenuController implements Initializable {
             if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
                 AppointmentDAOImpl adao = new AppointmentDAOImpl();
                 adao.delete(temp.getApptId());
+
+                Alert alertInfo = new Alert(Alert.AlertType.INFORMATION, "Please click OK to continue.");
+                alertInfo.setTitle("Deleted");
+                alertInfo.setHeaderText("The Appointment ID number " + temp.getApptId() + " of type " + temp.getType() + " has been deleted.");
+                Optional<ButtonType> resultInfo = alertInfo.showAndWait();
+
                 apptTable.setItems(adao.getAllAppointmentsOL());
 
                 /*CustomerDAOImpl dao = new CustomerDAOImpl();
@@ -242,15 +258,26 @@ public class MainMenuController implements Initializable {
     }
 
 
-    public void onActionWeekView(ActionEvent actionEvent) {
+    public void onActionWeekView(ActionEvent actionEvent) throws SQLException {
         System.out.println("Week radio button clicked.  -- onActionWeekView(ActionEvent actionEvent) called in MainMenuController.java");
+
+        /*AppointmentDAOImpl adao = new AppointmentDAOImpl();
+        adao.selectWeekView();*/
+
     }
 
     public void onActionMonthView(ActionEvent actionEvent) {
         System.out.println("Month radio button clicked.  -- onActionMonthView(ActionEvent actionEvent) called in MainMenuController.java");
+
+        AppointmentDAOImpl adao = new AppointmentDAOImpl();
+        apptTable.setItems(adao.getAllAppointmentsOL());
+
     }
 
     public void onActionAllView(ActionEvent actionEvent) {
         System.out.println("All radio button clicked.  -- onActionAllView(ActionEvent actionEvent) called in MainMenuController.java");
+
+        AppointmentDAOImpl adao = new AppointmentDAOImpl();
+        apptTable.setItems(adao.getAllAppointmentsOL());
     }
 }

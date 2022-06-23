@@ -7,10 +7,7 @@ import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 
 public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql interactions and observable lists here
@@ -83,6 +80,11 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
+    @Override
+    public void select(Appointment appointment) {
+
+    }
+
     public int insert(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
         try {
             String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
@@ -105,7 +107,132 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
-    public void select(Appointment appointment) {
+    public void select() throws SQLException {
+
+        /*if (onActionWeekView.isS){
+
+        }
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            rs.getInt(1, AppointmentID);
+
+        ps.setString(2, Type);
+        int rowsAffected = ps.executeQuery();
+        System.out.println("The number of rows affected from the update() call is " + rowsAffected);
+        return rowsAffected;
+        }*/
+    }
+
+   /* public void selectWeekView(Timestamp start, Timestamp end) throws SQLException {
+
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?, End = ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, start);
+        ps.setTimestamp(2, end);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int apptId = rs.getInt("Appointment_ID");
+            int custId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+            String title = rs.getString("Title");
+            String desc = rs.getString("Description");
+            String loc = rs.getString("Location");
+            String type = rs.getString("Type");
+            String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
+            String userName = rs.getString("User_Name");
+            String contactName = rs.getString("Contact_Name");
+            start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
+            end = rs.getTimestamp("End");
+            LocalDateTime sLDT = start.toLocalDateTime();
+            LocalDateTime eLDT = end.toLocalDateTime();
+            Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+        }
+
+    }*/
+
+    public void selectWeekView() throws SQLException {
+
+        /*String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?, End = ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, start);
+        ps.setTimestamp(2, end);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int apptId = rs.getInt("Appointment_ID");
+            int custId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+            String title = rs.getString("Title");
+            String desc = rs.getString("Description");
+            String loc = rs.getString("Location");
+            String type = rs.getString("Type");
+            String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
+            String userName = rs.getString("User_Name");
+            String contactName = rs.getString("Contact_Name");
+            start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
+            end = rs.getTimestamp("End");
+            LocalDateTime sLDT = start.toLocalDateTime();
+            LocalDateTime eLDT = end.toLocalDateTime();
+            Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+        }*/
+
+    }
+
+    public void selectMonthView(Timestamp start, Timestamp end) throws SQLException {
+
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Start BETWEEN ?, ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, start);
+        ps.setTimestamp(2, end);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int apptId = rs.getInt("Appointment_ID");
+            int custId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+            String title = rs.getString("Title");
+            String desc = rs.getString("Description");
+            String loc = rs.getString("Location");
+            String type = rs.getString("Type");
+            String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
+            String userName = rs.getString("User_Name");
+            String contactName = rs.getString("Contact_Name");
+            start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
+            end = rs.getTimestamp("End");
+            LocalDateTime sLDT = start.toLocalDateTime();
+            LocalDateTime eLDT = end.toLocalDateTime();
+            Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+        }
+
+    }
+
+    public void selectAllView() throws SQLException {
+
+        String sql = "SELECT * FROM APPOINTMENTS";  // TODO look up video on how to adjust time and make comparisons among times.
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            int apptId = rs.getInt("Appointment_ID");
+            int custId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+            String title = rs.getString("Title");
+            String desc = rs.getString("Description");
+            String loc = rs.getString("Location");
+            String type = rs.getString("Type");
+            String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
+            String userName = rs.getString("User_Name");
+            String contactName = rs.getString("Contact_Name");
+            Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
+            Timestamp end = rs.getTimestamp("End");
+            LocalDateTime sLDT = start.toLocalDateTime();
+            LocalDateTime eLDT = end.toLocalDateTime();
+            Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+        }
+
     }
 
     @Override
@@ -152,7 +279,24 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps.setInt(1, AppointmentID);
             int rowsAffected = ps.executeUpdate();
             System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int delete(int " +
-                    "AppointmentID) in AppointmentDAOImpl.java");
+                    "AppointmentID) in AppointmentDAOImpl.java *******************************");
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int deleteCustAppts(int CustomerID) {
+
+        try {
+            String sql = "DELETE FROM APPOINTMENTS WHERE Customer_ID = ?";
+            PreparedStatement ps = null;
+            ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, CustomerID);
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int delete(int " +
+                    "AppointmentID) in AppointmentDAOImpl.java *******************************");
             return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();

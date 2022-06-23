@@ -72,6 +72,16 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
     }*/
 
     public void select(Customer customer) {
+       /* try {
+            String sql = "SELECT * FROM CUSTOMERS WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customer.getCustomerId());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return 0;
+        }*/
     }
 
     @Override
