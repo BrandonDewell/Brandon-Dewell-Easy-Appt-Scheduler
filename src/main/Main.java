@@ -138,8 +138,8 @@ public class Main extends Application {
 
 
           // Test insert() function from Malcom's webinar titled JDBC at 43 mins.
-        /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","123 Main St", "90210", "317-696-8955",
-                                                    ts, "Brandon Dewell", ts,"Brandon Dewell", 42);
+        /*int rowsAffected = CustomersQuery.insert("Brandon Dewell","123 Main St", "90210", "555-555-5555",
+                                                    ts, "Brandon Dewell", ts,"Brandon Dewell", 99);
 
         if(rowsAffected > 0){
             System.out.println("Insert successful!");

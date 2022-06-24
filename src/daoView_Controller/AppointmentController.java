@@ -54,18 +54,27 @@ public class AppointmentController implements Initializable {
         contactComboBox.setItems(contactDAO.getAllContactsOL());
 
 
-        for (int i = 0; i < 24; i++) {
+        /*for (int i = 0; i < 24; i++) {
             startTimeComboBox.getItems().add(LocalTime.of(i, 0));
         }
 
-        for (int i = 1; i < 24; i++) {                                         // initialize i with 1 because I have decided that each appt will be an hour long, and if the start time is at 00:00, the end time must be 01:00 at the earliest.
+        for (int i = 1; i < 24; i++) {                                         // initialize i with 1 because I have decided that each appt will be at least an hour long, and if the start time is at 00:00, the end time must be 01:00 at the earliest.
             endTimeComboBox.getItems().add(LocalTime.of(i, 0));
             if (i == 23) {
                 endTimeComboBox.getItems().add(LocalTime.of(0, 0));
 
             }
+        }*/
+
+        for (int i = 8; i < 22; i++) {  // 8am earliest appt start time up to 9pm latest appt start time.
+            startTimeComboBox.getItems().add(LocalTime.of(i, 0));
         }
+
+        for (int i = 9; i < 23; i++) {
+            endTimeComboBox.getItems().add(LocalTime.of(i, 0));
+            }
     }
+
 
     public void onActionSave(ActionEvent actionEvent) throws IOException {
         System.out.println("Appointment save button clicked.  -- onActionSave(ActionEvent actionEvent) called in AppointmentController.java\"");
@@ -99,6 +108,13 @@ public class AppointmentController implements Initializable {
                 alert.setContentText("Please enter a valid value for each text field.\nTitle, Description, Location, and Type " +
                         "must use characters.\nPlease make a selection in the drop down boxes.\nSelect a date by clicking on the date chooser button.");
                 alert.showAndWait();
+            } else if(sTime.isAfter(eTime) || sTime.equals(eTime)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Appointment start time must be before the appointment end time.\nStart and end times of an appointment must not be the same.");
+                alert.setContentText("Please choose a correct value for each drop-down box.");
+                alert.showAndWait();
+
             } else {
                 LocalDateTime sLDT = LocalDateTime.of(sDate, sTime);
                 LocalDateTime eLDT = LocalDateTime.of(eDate, eTime);
@@ -108,8 +124,8 @@ public class AppointmentController implements Initializable {
                     // I don't care about that info so I can "leave" them blank.
 
                     //AppointmentDAOImpl dao = new AppointmentDAOImpl();
-                    //TODO change time and date separate entries into a datetime object here before inserting in to the DB
-                    //dao.insert(a);  // TODO check insert code
+
+                    //dao.insert(a);
                     int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), cont.getContactId());
                     if (rowsAffected > 0){
                         System.out.println("**************************insert successful");
@@ -203,6 +219,5 @@ public class AppointmentController implements Initializable {
         endTimeComboBox.setValue(selectedAppointment.getEnd().toLocalDateTime().toLocalTime());
 
     }
-
 
 }

@@ -2,12 +2,13 @@ package daoImpl;
 
 import daoInt.IAppointmentDAO;
 import daoModel.Appointment;
-import daoModel.Customer;
 import helper.JDBC;
+import helper.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql interactions and observable lists here
@@ -18,10 +19,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         ObservableList<Appointment> allAppointmentsOL = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
-                    "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";
-
-            // "SELECT Appointment_ID, Title, Appointments.Customer_ID, Appointments.User_ID, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments"
+            String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
+                         "FROM Appointments, Customers, Users, Contacts " +
+                         "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";
 
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -35,16 +35,15 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
                 String desc = rs.getString("Description");
                 String loc = rs.getString("Location");
                 String type = rs.getString("Type");
-                String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
+                String custName = rs.getString("Customer_Name");
                 String userName = rs.getString("User_Name");
                 String contactName = rs.getString("Contact_Name");
-                Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
+                Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?  Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
                 Timestamp end = rs.getTimestamp("End");
                 LocalDateTime sLDT = start.toLocalDateTime();
                 LocalDateTime eLDT = end.toLocalDateTime();
                 Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
-
-                //Customer c = new Customer();
+                //System.out.println("Timestamp start = " + start);   // Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
                 allAppointmentsOL.add(a);
             }
         } catch (SQLException e) {
@@ -57,8 +56,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     public int insert(Appointment appointment) {
         try {
-            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
-            // values for the Customer_ID.
+            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Division_ID = ?, Postal_Code = ?, Phone = ? WHERE Customer_ID = ?
 
@@ -112,7 +110,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         /*if (onActionWeekView.isS){
 
         }
-        String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
@@ -125,9 +123,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         }*/
     }
 
-   /* public void selectWeekView(Timestamp start, Timestamp end) throws SQLException {
+   /* public void selectWeekViewOL(Timestamp start, Timestamp end) throws SQLException {
 
-        String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?, End = ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?, End = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setTimestamp(1, start);
         ps.setTimestamp(2, end);
@@ -153,12 +151,19 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     }*/
 
-    public void selectWeekView() throws SQLException {
+    public ObservableList<Appointment> selectWeekViewOL() throws SQLException {
 
-        /*String sql = "SELECT * FROM APPOINTMENTS WHERE Start = ?, End = ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        int currentDay = LocalDate.now().getDayOfWeek().getValue();
+        ObservableList<Appointment> weekApptsOL = FXCollections.observableArrayList();
+
+        //String sql = "SELECT * FROM APPOINTMENTS WHERE MONTH(Start) = ?";
+        //String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
+                //"WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND MONTH(Start) = ?";
+
+        String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
+                "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARWEEK (start, 1) = YEARWEEK (CURDATE(), 1)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setTimestamp(1, start);
-        ps.setTimestamp(2, end);
+       // ps.setInt(1, currentDay);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int apptId = rs.getInt("Appointment_ID");
@@ -172,18 +177,22 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
             String userName = rs.getString("User_Name");
             String contactName = rs.getString("Contact_Name");
-            start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
-            end = rs.getTimestamp("End");
+            Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
+            Timestamp end = rs.getTimestamp("End");
             LocalDateTime sLDT = start.toLocalDateTime();
             LocalDateTime eLDT = end.toLocalDateTime();
             Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
-        }*/
+
+            weekApptsOL.add(a);
+        }
+
+        return weekApptsOL;
 
     }
 
-    public void selectMonthView(Timestamp start, Timestamp end) throws SQLException {
+    /*public void selectMonthViewOL(Timestamp start, Timestamp end) throws SQLException {
 
-        String sql = "SELECT * FROM APPOINTMENTS WHERE Start BETWEEN ?, ?";  // TODO look up video on how to adjust time and make comparisons among times.
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Start BETWEEN ?, ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setTimestamp(1, start);
         ps.setTimestamp(2, end);
@@ -206,12 +215,57 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             LocalDateTime eLDT = end.toLocalDateTime();
             Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
         }
+       // adao.getAllAppointmentsOL();
+    }*/
 
+    public ObservableList<Appointment> selectMonthViewOL() throws SQLException {
+
+       // int currentMonth = LocalDate.now().getMonth().getValue();
+        ObservableList<Appointment> monthApptsOL = FXCollections.observableArrayList();
+
+        String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
+                "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";
+
+        //String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
+        //        "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARMONTH(start, 1) = YEARMONTH (CURDATE(), 1)";
+
+
+
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        //ps.setInt(1, currentMonth);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int apptId = rs.getInt("Appointment_ID");
+            int custId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+            String title = rs.getString("Title");
+            String desc = rs.getString("Description");
+            String loc = rs.getString("Location");
+            String type = rs.getString("Type");
+            String custName = rs.getString("Customer_Name");
+            String userName = rs.getString("User_Name");
+            String contactName = rs.getString("Contact_Name");
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            LocalDateTime sLDT = start.toLocalDateTime();
+            LocalDateTime eLDT = end.toLocalDateTime();
+
+            if(Utility.isCurrentMonth(start.toLocalDateTime().toLocalDate())){    // cascading method call
+                Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+                monthApptsOL.add(a);
+            }
+
+
+
+        }
+
+        return monthApptsOL;
     }
 
     public void selectAllView() throws SQLException {
 
-        String sql = "SELECT * FROM APPOINTMENTS";  // TODO look up video on how to adjust time and make comparisons among times.
+        String sql = "SELECT * FROM APPOINTMENTS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
@@ -223,10 +277,10 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             String desc = rs.getString("Description");
             String loc = rs.getString("Location");
             String type = rs.getString("Type");
-            String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
+            String custName = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
             String contactName = rs.getString("Contact_Name");
-            Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
+            Timestamp start = rs.getTimestamp("Start");
             Timestamp end = rs.getTimestamp("End");
             LocalDateTime sLDT = start.toLocalDateTime();
             LocalDateTime eLDT = end.toLocalDateTime();
@@ -295,8 +349,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, CustomerID);
             int rowsAffected = ps.executeUpdate();
-            System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int delete(int " +
-                    "AppointmentID) in AppointmentDAOImpl.java *******************************");
+            System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int deleteCustAppts(int " +
+                    "CustomerID) in AppointmentDAOImpl.java *******************************");
             return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();

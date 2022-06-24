@@ -70,7 +70,7 @@ public class CustomerController implements Initializable {
                     Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");  // The customerId, countryId, division, and country parameters are not really important and
                     // I don't care about that info so I can "leave" them blank.
                     CustomerDAOImpl dao = new CustomerDAOImpl();
-                    dao.insert(c);  // TODO check insert code
+                    dao.insert(c);
                 } else{  // Something WAS selected so this is an Update Customer situation
                     Customer c = new Customer(selectedCustomer.getCustomerId(), name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
                     CustomerDAOImpl dao = new CustomerDAOImpl();

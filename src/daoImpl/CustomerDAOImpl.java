@@ -61,7 +61,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
         return 0;
     }
 
-    /*public static int insert(String fruitName, int colorId) throws SQLException {  // TODO Malcolm's webinar titled JDBC at 33 minutes.  Why don't we use this version?
+    /*public static int insert(String fruitName, int colorId) throws SQLException {
         String sql = "INSERT INTO FRUITS (Fruit_Name, Color_ID) VALUES (?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, fruitName);
@@ -113,7 +113,7 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
     }*/
 
     @Override
-    public int delete(Customer customer) {  // TODO delete from appts first then customer. delete from appts where cust id = ?  delete from customers where cust id = ?
+    public int delete(Customer customer) {
         try {
             String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);

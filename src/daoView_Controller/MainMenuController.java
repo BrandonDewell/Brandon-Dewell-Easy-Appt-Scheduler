@@ -156,22 +156,14 @@ public class MainMenuController implements Initializable {
             alert.setHeaderText("Are you sure?");
             Optional<ButtonType> result = alert.showAndWait();
             if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
-               /* CustomerDAOImpl tempCustDAO = new CustomerDAOImpl();
-                tempCustDAO.select(temp);*/
-
 
                 AppointmentDAOImpl adao = new AppointmentDAOImpl();
-               // adao.select
-
-               // adao = (AppointmentDAOImpl) temp;  // can't cast temp to different object type
                 apptTable.refresh();
                 adao.deleteCustAppts(temp.getCustomerId());
-                //apptTable.();
                 apptTable.setItems(adao.getAllAppointmentsOL());
 
-
                 CustomerDAOImpl dao = new CustomerDAOImpl();
-                dao.delete(temp);  // tried casting customer object temp to customerDAOImpl object, but wont work.
+                dao.delete(temp);
                 custTable.setItems(dao.getAllCustomersOL());
             }
         }
@@ -261,16 +253,16 @@ public class MainMenuController implements Initializable {
     public void onActionWeekView(ActionEvent actionEvent) throws SQLException {
         System.out.println("Week radio button clicked.  -- onActionWeekView(ActionEvent actionEvent) called in MainMenuController.java");
 
-        /*AppointmentDAOImpl adao = new AppointmentDAOImpl();
-        adao.selectWeekView();*/
+        AppointmentDAOImpl adao = new AppointmentDAOImpl();
+        apptTable.setItems(adao.selectWeekViewOL());
 
     }
 
-    public void onActionMonthView(ActionEvent actionEvent) {
+    public void onActionMonthView(ActionEvent actionEvent) throws SQLException {
         System.out.println("Month radio button clicked.  -- onActionMonthView(ActionEvent actionEvent) called in MainMenuController.java");
 
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
-        apptTable.setItems(adao.getAllAppointmentsOL());
+        apptTable.setItems(adao.selectMonthViewOL());
 
     }
 

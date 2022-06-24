@@ -34,7 +34,7 @@ public class LogInMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        userNameLabel.setText(rb.getString("Username")); // todo add the rest
+        userNameLabel.setText(rb.getString("Username"));
         passwordLabel.setText(rb.getString("Password"));
         displayMainMenuB.setText(rb.getString("SignIn"));
         logInLabel.setText(rb.getString("LogIn"));
