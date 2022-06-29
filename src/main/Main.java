@@ -25,17 +25,17 @@ public class Main extends Application {
         ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
 
             try{
-                /*Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
+                Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
                 stage.setTitle(rb.getString("LogIn"));
                 stage.setScene(new Scene(root, 400, 200));
                 stage.show();
-                System.out.println(" -- start(Stage stage) called from Main.java");*/
+                System.out.println(" -- start(Stage stage) called from Main.java");
 
-                Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
+               /* Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                 stage.setTitle("Main Menu");
                 stage.setScene(new Scene(root, 1500, 700));
                 stage.show();
-                System.out.println(" -- start(Stage stage) called from Main.java");
+                System.out.println(" -- start(Stage stage) called from Main.java");*/
             } catch (IOException ex){
                 ex.printStackTrace();
             }
@@ -98,16 +98,16 @@ public class Main extends Application {
         JDBC.openConnection();
 
 
-        // TimeZone info from TimeZone webinar
-        // System.out.println(ZoneId.systemDefault());  // Displays Time Zone in Java
+        /* TimeZone info from TimeZone webinar
+         System.out.println(ZoneId.systemDefault());  // Displays Time Zone in Java
 
-        // ZoneId.getAvailableZoneIds().stream().sorted().forEach(System.out::println);  // Displays a list of all the available Time
-        // Zones supported by JDK 17.
+         ZoneId.getAvailableZoneIds().stream().sorted().forEach(System.out::println);  // Displays a list of all the available Time
+         Zones supported by JDK 17.
+        System.out.println("************************************************************************");
+         ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);  // same as
+         above but with a Time Zone filter for America.
 
-        // ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);  // same as
-        // above but with a Time Zone filter for America.
-
-        /*LocalDate myLD = LocalDate.of(2022, 03, 17);  // use a combo box to replace the things to the right of
+        LocalDate myLD = LocalDate.of(2022, 03, 17);  // use a combo box or date picker to replace the things to the right of
         // the equals sign so the info is inputted by the user.  we are adding this manually here instead.
         LocalTime myLT = LocalTime.of(22, 0);  // same comment as above.
         LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);  // creates a LocalDateTime object

@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,7 +54,8 @@ public class LogInMenuController implements Initializable {
                     alert.setTitle(rb.getString("Error"));
                     alert.setHeaderText(rb.getString("Fields"));
                     alert.setContentText(rb.getString("Please"));
-                            alert.showAndWait();
+                    ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText(rb.getString("OK"));
+                    alert.showAndWait();
                 } else {
                     for (User u : userList){
                         if ((u.getUserName().equals(userName)) && (u.getPassword().equals(pw))){
@@ -77,6 +75,7 @@ public class LogInMenuController implements Initializable {
                         alert.setTitle(rb.getString("Error"));
                         alert.setHeaderText(rb.getString("Incorrect"));
                         alert.setContentText(rb.getString("PleaseTryAgain"));
+                        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText(rb.getString("OK"));
                         alert.showAndWait();
 
                         userNameTxt.setText("");

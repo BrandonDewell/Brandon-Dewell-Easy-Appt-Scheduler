@@ -8,11 +8,11 @@ import java.time.LocalTime;
 public class Appointment {
     private int apptId, customerId, userId, contactId;
     private String title, description, location, type, customerName, userName, contactName;
-    private Timestamp start, end;
-    private LocalDateTime sLDT, eLDT;
+    private LocalDateTime start, end;
+    //private LocalDateTime sLDT, eLDT;
 
     // constructor
-    public Appointment(int apptId, int customerId, int userId, int contactId, String title, String description, String location, String type, String customerName, String userName, String contactName, Timestamp start, Timestamp end) {
+    public Appointment(int apptId, int customerId, int userId, int contactId, String title, String description, String location, String type, String customerName, String userName, String contactName, LocalDateTime start, LocalDateTime end) {
         this.apptId = apptId;
         this.customerId = customerId;
         this.userId = userId;
@@ -37,9 +37,9 @@ public class Appointment {
 
     }
 
-    public Appointment(int apptId, int custId, int userId, int contactId, String title, String desc, String loc, String type, String custName, String userName, String contactName, LocalDateTime sLDT, LocalDateTime eLDT) {
-    }
 
+    public Appointment(int apptId, int custId, int userId, int contactId, String title, String desc, String loc, String type, String custName, String userName, String contactName, Timestamp start, Timestamp end) {
+    }
 
 
     // methods
@@ -75,11 +75,11 @@ public class Appointment {
         return type;
     }
 
-    public Timestamp getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public Timestamp getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
@@ -95,10 +95,10 @@ public class Appointment {
         return contactId;
     }
 
-    public LocalDateTime getsLDT() {
-        return sLDT;
+    /*public LocalDateTime getsLDT() {
+        return start;
     }
 
-    public LocalDateTime geteLDT() {return eLDT; }
+    public LocalDateTime geteLDT() {return end; }*/
 
 }

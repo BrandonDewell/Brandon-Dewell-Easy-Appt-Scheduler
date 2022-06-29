@@ -1,7 +1,10 @@
 package daoView_Controller;
 
 import daoImpl.*;
-import daoModel.*;
+import daoModel.Appointment;
+import daoModel.Contact;
+import daoModel.Customer;
+import daoModel.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,10 +16,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -66,14 +69,19 @@ public class AppointmentController implements Initializable {
             }
         }*/
 
-        for (int i = 8; i < 22; i++) {  // 8am earliest appt start time up to 9pm latest appt start time.
+        for (int i = 0; i < 23; i++) {  // 8am earliest appt start time up to 9pm latest appt start time.  TODO make sure these times are translated to local times first before putting them into the combo box.  Business is open from 8am - 10pm EST 7 days a week.
             startTimeComboBox.getItems().add(LocalTime.of(i, 0));
         }
 
-        for (int i = 9; i < 23; i++) {
+        for (int i = 1; i < 24; i++) {
             endTimeComboBox.getItems().add(LocalTime.of(i, 0));
+            if (i == 23) {
+                endTimeComboBox.getItems().add(LocalTime.of(0, 0));
+
             }
-    }
+            }
+        }
+
 
 
     public void onActionSave(ActionEvent actionEvent) throws IOException {
@@ -86,7 +94,7 @@ public class AppointmentController implements Initializable {
             User u = userIDComboBox.getValue();
             String desc = descriptionTextField.getText();
             String loc = locationTextField.getText();
-            Contact cont = contactComboBox.getValue();
+            Contact contact = contactComboBox.getValue();
             String type = typeTextField.getText();
             LocalDate sDate = startDateDatePicker.getValue();
             LocalTime sTime = startTimeComboBox.getValue();
@@ -95,12 +103,12 @@ public class AppointmentController implements Initializable {
 
 
             AppointmentDAOImpl dao = new AppointmentDAOImpl();
-           /* int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), cont.getContactId());
+           /* int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
             if (rowsAffected > 0){
                 System.out.println("insert successful");
             }*/
 
-            if (title.isBlank() || cust == null || u == null || desc.isBlank() || loc.isBlank() || cont == null || type.isBlank() || sDate == null || sTime == null || eDate == null || eTime == null) {  // combo boxes use
+            if (title.isBlank() || cust == null || u == null || desc.isBlank() || loc.isBlank() || contact == null || type.isBlank() || sDate == null || sTime == null || eDate == null || eTime == null) {  // combo boxes use
                 // comboBox == null to do error checks instead of textfield.isBlank()
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -115,28 +123,35 @@ public class AppointmentController implements Initializable {
                 alert.setContentText("Please choose a correct value for each drop-down box.");
                 alert.showAndWait();
 
-            } else {
+            } /*else if (     // TODO take timezone i am in and convert to eastern time manually.  make a zoneddatetime object, convert to eastern time.  I can do a check on the inputted dates/times using popup windows, and make them use only .
+                    LocalDateTime ldt =
+                    ZonedDateTime zdt = ZonedDateTime.of
+                )*/
+
+            else {
                 LocalDateTime sLDT = LocalDateTime.of(sDate, sTime);
                 LocalDateTime eLDT = LocalDateTime.of(eDate, eTime);
 
+                //ZonedDateTime zdt = sLDT.atZone();  // TODO what is the zone ID that I have to pass into the atZone method?
+
                 if (selectedAppointment == null) {  // This is where the determination is made whether the add or update button was clicked in the main menu.  Nothing was selected so this is an Add Appointment situation.
-                    //Appointment a = new Appointment(0, title, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sLDT, eLDT);  // The customerId, countryId, division, and country parameters are not really important and
+                    //Appointment a = new Appointment(0, title, cust.getCustomerId(), u.getUserId(), desc, loc, contact.getContactName(), type, sLDT, eLDT);  // The customerId, countryId, division, and country parameters are not really important and
                     // I don't care about that info so I can "leave" them blank.
 
                     //AppointmentDAOImpl dao = new AppointmentDAOImpl();
 
                     //dao.insert(a);
-                    int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), cont.getContactId());
+                    int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
                     if (rowsAffected > 0){
-                        System.out.println("**************************insert successful");
+                        System.out.println("**************************appt insert successful");
                     }
                 } else {  // Update situation
-                   // Appointment a = new Appointment(selectedAppointment.getApptId(), title, cust.getCustomerId(), u.getUserId(), desc, loc, cont.getContactName(), type, sDate, sTime, eDate, eTime);
+                   // Appointment a = new Appointment(selectedAppointment.getApptId(), title, cust.getCustomerId(), u.getUserId(), desc, loc, contact.getContactName(), type, sDate, sTime, eDate, eTime);
                     //AppointmentDAOImpl dao = new AppointmentDAOImpl();
                    // dao.update(a);
-                    int rowsAffected = dao.update(selectedAppointment.getApptId(), title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), cont.getContactId());
+                    int rowsAffected = dao.update(selectedAppointment.getApptId(), title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
                     if (rowsAffected > 0){
-                        System.out.println("*************************update successful");
+                        System.out.println("*************************appt update successful");
                     }
                 }
 
@@ -175,11 +190,6 @@ public class AppointmentController implements Initializable {
         ContactDAOImpl contactDAO = new ContactDAOImpl();
         contactComboBox.setItems(contactDAO.getAllContactsOL());
     }
-    /*public void onActionCountry(ActionEvent actionEvent) {
-        Country c = countryComboBox.getValue();
-        FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
-        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));
-    }*/
 
     public void sendAppointment (Appointment inAppointment){
         selectedAppointment = inAppointment;
@@ -209,15 +219,24 @@ public class AppointmentController implements Initializable {
             }
         }
 
+        startDateDatePicker.setValue(selectedAppointment.getStart().toLocalDate());
 
-        startDateDatePicker.setValue(selectedAppointment.getStart().toLocalDateTime().toLocalDate());
+        endDateDatePicker.setValue(selectedAppointment.getEnd().toLocalDate());
 
-        endDateDatePicker.setValue(selectedAppointment.getEnd().toLocalDateTime().toLocalDate());
+        startTimeComboBox.setValue(selectedAppointment.getStart().toLocalTime());
 
-        startTimeComboBox.setValue(selectedAppointment.getStart().toLocalDateTime().toLocalTime());
-
-        endTimeComboBox.setValue(selectedAppointment.getEnd().toLocalDateTime().toLocalTime());
+        endTimeComboBox.setValue(selectedAppointment.getEnd().toLocalTime());
 
     }
 
+    public void onActionStartDate(ActionEvent actionEvent) {
+
+        /*LocalDate dpStart = startDateDatePicker.getValue();  // TODO can I create an observable list of datepicker dates to get the end date to automatically be set to the start date?  should I just get rid of the end date date picker and its label?
+        DatePicker dpEnd = new DatePicker();
+        endDateDatePicker.setItems(dpStart);*/
+
+        /*Country c = countryComboBox.getValue();
+        FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
+        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));*/
+    }
 }

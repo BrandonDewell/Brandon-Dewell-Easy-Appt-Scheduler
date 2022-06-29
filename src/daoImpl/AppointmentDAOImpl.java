@@ -38,11 +38,13 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
                 String custName = rs.getString("Customer_Name");
                 String userName = rs.getString("User_Name");
                 String contactName = rs.getString("Contact_Name");
-                Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?  Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
-                Timestamp end = rs.getTimestamp("End");
-                LocalDateTime sLDT = start.toLocalDateTime();
-                LocalDateTime eLDT = end.toLocalDateTime();
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();  // use localdatetime instead of timestamp?  Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                /*LocalDateTime sLDT = start.toLocalDateTime();
+                LocalDateTime eLDT = end.toLocalDateTime();*/
                 Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+
+
                 //System.out.println("Timestamp start = " + start);   // Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
                 allAppointmentsOL.add(a);
             }
@@ -56,7 +58,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     public int insert(Appointment appointment) {
         try {
-            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Division_ID = ?, Postal_Code = ?, Phone = ? WHERE Customer_ID = ?
 
@@ -65,8 +68,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps.setString(2, appointment.getDescription());
             ps.setString(3, appointment.getLocation());
             ps.setString(4, appointment.getType());
-            ps.setTimestamp(5, appointment.getStart());
-            ps.setTimestamp(6, appointment.getEnd());
+            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
+            ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
             ps.setInt(7, appointment.getCustomerId());
             ps.setInt(8, appointment.getUserId());
             ps.setInt(9, appointment.getContactId());
@@ -85,7 +88,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     public int insert(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
         try {
-            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
+            String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  // have to put in the first NULL to let mysql handle inputting
             // values for the Customer_ID.
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, title);
@@ -160,8 +164,10 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         //String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
                 //"WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND MONTH(Start) = ?";
 
-        String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
-                "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARWEEK (start, 1) = YEARWEEK (CURDATE(), 1)";
+        String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
+                     "FROM Appointments, Customers, Users, Contacts " +
+                     "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARWEEK (start, 1) = YEARWEEK (CURDATE(), 1)";
+        // This sql statement is using syntax manipulation of SQL vs a different approach of using syntax manipulation of Java.  If I were to do this with Java, I would use the WeekFields Class.
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
        // ps.setInt(1, currentDay);
         ResultSet rs = ps.executeQuery();
@@ -177,12 +183,11 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             String custName = rs.getString("Customer_Name");  // changed from customerId to customer_name
             String userName = rs.getString("User_Name");
             String contactName = rs.getString("Contact_Name");
-            Timestamp start = rs.getTimestamp("Start");  // use localdatetime instead of timestamp?
-            Timestamp end = rs.getTimestamp("End");
-            LocalDateTime sLDT = start.toLocalDateTime();
-            LocalDateTime eLDT = end.toLocalDateTime();
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();  // use localdatetime instead of timestamp?  Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                /*LocalDateTime sLDT = start.toLocalDateTime();
+                LocalDateTime eLDT = end.toLocalDateTime();*/
             Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
-
             weekApptsOL.add(a);
         }
 
@@ -223,13 +228,12 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
        // int currentMonth = LocalDate.now().getMonth().getValue();
         ObservableList<Appointment> monthApptsOL = FXCollections.observableArrayList();
 
-        String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
-                "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";
+        String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
+                     "FROM Appointments, Customers, Users, Contacts " +
+                     "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";
 
         //String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End FROM Appointments, Customers, Users, Contacts " +
         //        "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARMONTH(start, 1) = YEARMONTH (CURDATE(), 1)";
-
-
 
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         //ps.setInt(1, currentMonth);
@@ -246,18 +250,16 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             String custName = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
             String contactName = rs.getString("Contact_Name");
-            Timestamp start = rs.getTimestamp("Start");
-            Timestamp end = rs.getTimestamp("End");
-            LocalDateTime sLDT = start.toLocalDateTime();
-            LocalDateTime eLDT = end.toLocalDateTime();
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();  // use localdatetime instead of timestamp?  Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                /*LocalDateTime sLDT = start.toLocalDateTime();
+                LocalDateTime eLDT = end.toLocalDateTime();*/
 
-            if(Utility.isCurrentMonth(start.toLocalDateTime().toLocalDate())){    // cascading method call
+
+            if(Utility.isCurrentMonth(start.toLocalDate()) == true){    // "start.toLocalDateTime().toLocalDate()" is what you would call doing a "cascading method call" or somthing similar.  - from meeting with Juan 6/24 at 9:15am.
                 Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
                 monthApptsOL.add(a);
             }
-
-
-
         }
 
         return monthApptsOL;
@@ -280,10 +282,10 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             String custName = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
             String contactName = rs.getString("Contact_Name");
-            Timestamp start = rs.getTimestamp("Start");
-            Timestamp end = rs.getTimestamp("End");
-            LocalDateTime sLDT = start.toLocalDateTime();
-            LocalDateTime eLDT = end.toLocalDateTime();
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();  // use localdatetime instead of timestamp?  Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                /*LocalDateTime sLDT = start.toLocalDateTime();
+                LocalDateTime eLDT = end.toLocalDateTime();*/
             Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
         }
 
@@ -298,7 +300,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     public int delete(Appointment appointment) {
 
         try {
-            String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
+            String sql = "DELETE FROM APPOINTMENTS " +
+                         "WHERE Appointment_ID = ?";
             PreparedStatement ps = null;
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, appointment.getApptId());
@@ -314,7 +317,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
 
     public static int update(int AppointmentID, String Type) throws SQLException {  // this function updates the appointment type
-        String sql = "UPDATE APPOINTMENTS SET Type = ? WHERE Appointment_ID = ?";
+        String sql = "UPDATE APPOINTMENTS " +
+                     "SET Type = ? " +
+                     "WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, AppointmentID);
         ps.setString(2, Type);
@@ -327,7 +332,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     public int delete(int AppointmentID) {
 
         try {
-            String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
+            String sql = "DELETE FROM APPOINTMENTS " +
+                         "WHERE Appointment_ID = ?";
             PreparedStatement ps = null;
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, AppointmentID);
@@ -344,7 +350,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     public int deleteCustAppts(int CustomerID) {
 
         try {
-            String sql = "DELETE FROM APPOINTMENTS WHERE Customer_ID = ?";
+            String sql = "DELETE FROM APPOINTMENTS " +
+                         "WHERE Customer_ID = ?";
             PreparedStatement ps = null;
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, CustomerID);
@@ -360,7 +367,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     public int update(int apptId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
         try {
-            String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";  // have to put in the first NULL to let mysql handle inputting
+            String sql = "UPDATE APPOINTMENTS " +
+                         "SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? " +
+                         "WHERE Appointment_ID = ?";  // have to put in the first NULL to let mysql handle inputting
             // values for the Customer_ID.
 
             // "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Division_ID = ?, Postal_Code = ?, Phone = ? WHERE Customer_ID = ?"

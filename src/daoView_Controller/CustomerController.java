@@ -134,7 +134,7 @@ public class CustomerController implements Initializable {
         }
 
         FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
-        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(selectedCustomer.getCountryId()));
+        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(selectedCustomer.getCountryId()));  // this narrows down the state/providence drop down choices to only be those available for the specific country already selected.
 
         for(FirstLevelDivision f : stateProvinceComboBox.getItems()){
             if(selectedCustomer.getDivisionId() == f.getDivisionId()){

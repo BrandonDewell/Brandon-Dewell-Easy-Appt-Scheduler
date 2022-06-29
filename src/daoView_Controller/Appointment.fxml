@@ -29,33 +29,12 @@
             </rowConstraints>
             <children>
                 <Label text="Appointment_ID" />
+                <TextField fx:id="appointmentIDTextField" disable="true" editable="false" maxWidth="150.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
                 <Label text="Title" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin></Label>
-                <TextField fx:id="appointmentIDTextField" disable="true" editable="false" maxWidth="150.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
                 <TextField fx:id="titleTextField" maxWidth="150.0" GridPane.columnIndex="3" />
-                <Label prefHeight="17.0" prefWidth="67.0" text="Description" GridPane.rowIndex="2" />
-                <Label text="Location" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin></Label>
-                <TextField fx:id="locationTextField" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Label text="Contact" GridPane.rowIndex="3" />
-            <ComboBox fx:id="contactComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="descriptionTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Type" GridPane.columnIndex="2" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <DatePicker fx:id="startDateDatePicker" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Start Date" GridPane.rowIndex="4" />
-            <Label text="Start Time" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
             <Label text="Customer_ID" GridPane.rowIndex="1" />
             <ComboBox fx:id="customerIDComboBox" onAction="#onActionCustomerID" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="User_ID" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -64,6 +43,28 @@
                </GridPane.margin>
             </Label>
             <ComboBox fx:id="userIDComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <Label prefHeight="17.0" prefWidth="67.0" text="Description" GridPane.rowIndex="2" />
+            <TextField fx:id="descriptionTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label text="Location" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="40.0" />
+               </GridPane.margin></Label>
+                <TextField fx:id="locationTextField" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Contact" GridPane.rowIndex="3" />
+            <ComboBox fx:id="contactComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Type" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="40.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="typeTextField" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label text="Start Date" GridPane.rowIndex="4" />
+            <DatePicker fx:id="startDateDatePicker" maxWidth="150.0" onAction="#onActionStartDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Start Time" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="40.0" />
+               </GridPane.margin>
+            </Label>
             <ComboBox fx:id="startTimeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Label text="End Date" GridPane.rowIndex="5" />
             <DatePicker fx:id="endDateDatePicker" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -73,7 +74,6 @@
                </GridPane.margin>
             </Label>
             <ComboBox fx:id="endTimeComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <TextField fx:id="typeTextField" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             </children>
         </GridPane>
         <Button fx:id="saveButton" layoutX="392.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionSave" text="Save" />
