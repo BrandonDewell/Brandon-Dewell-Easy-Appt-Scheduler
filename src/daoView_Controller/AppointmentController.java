@@ -5,6 +5,9 @@ import daoModel.Appointment;
 import daoModel.Contact;
 import daoModel.Customer;
 import daoModel.User;
+import helper.Utility;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,10 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -57,11 +57,16 @@ public class AppointmentController implements Initializable {
         contactComboBox.setItems(contactDAO.getAllContactsOL());
 
 
-        /*for (int i = 0; i < 24; i++) {
+        ZoneId osZId = ZoneId.systemDefault();
+        ZoneId businessZId =  ZoneId.of("America/New_York");
+        startTimeComboBox.setItems(Utility.generateDynamicTimeList(osZId, businessZId, LocalTime.of(8,0), 13));
+        endTimeComboBox.setItems(Utility.generateDynamicTimeList(osZId, businessZId, LocalTime.of(9,0), 13));
+
+        /*for (int i = 0; i < 23; i++) {  // 8am earliest appt start time up to 9pm latest appt start time.
             startTimeComboBox.getItems().add(LocalTime.of(i, 0));
         }
 
-        for (int i = 1; i < 24; i++) {                                         // initialize i with 1 because I have decided that each appt will be at least an hour long, and if the start time is at 00:00, the end time must be 01:00 at the earliest.
+        for (int i = 1; i < 24; i++) {  // initialize i with 1 because I have decided that each appt will be at least an hour long, and if the start time is at 00:00, the end time must be 01:00 at the earliest.
             endTimeComboBox.getItems().add(LocalTime.of(i, 0));
             if (i == 23) {
                 endTimeComboBox.getItems().add(LocalTime.of(0, 0));
@@ -69,19 +74,7 @@ public class AppointmentController implements Initializable {
             }
         }*/
 
-        for (int i = 0; i < 23; i++) {  // 8am earliest appt start time up to 9pm latest appt start time.  TODO make sure these times are translated to local times first before putting them into the combo box.  Business is open from 8am - 10pm EST 7 days a week.
-            startTimeComboBox.getItems().add(LocalTime.of(i, 0));
-        }
-
-        for (int i = 1; i < 24; i++) {
-            endTimeComboBox.getItems().add(LocalTime.of(i, 0));
-            if (i == 23) {
-                endTimeComboBox.getItems().add(LocalTime.of(0, 0));
-
-            }
-            }
-        }
-
+    }
 
 
     public void onActionSave(ActionEvent actionEvent) throws IOException {
