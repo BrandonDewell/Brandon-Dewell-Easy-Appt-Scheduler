@@ -35,7 +35,7 @@
         </columns>
       </TableView>
       <Button fx:id="CancelButton" layoutX="865.0" layoutY="591.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
-      <Button layoutX="455.0" layoutY="111.0" mnemonicParsing="false" text="Click to get Result" />
+      <Button fx:id="resultButton" layoutX="455.0" layoutY="111.0" mnemonicParsing="false" onAction="#onActionResult" text="Click to get Result" />
       <Separator layoutX="14.0" layoutY="158.0" prefHeight="0.0" prefWidth="966.0" />
       <Separator layoutX="14.0" layoutY="443.0" prefHeight="3.0" prefWidth="966.0" />
    </children>

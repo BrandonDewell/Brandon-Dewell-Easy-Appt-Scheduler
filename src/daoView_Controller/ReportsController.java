@@ -101,7 +101,7 @@ public class ReportsController implements Initializable {
         ObservableList<Appointment> filteredAppointmentsOL = FXCollections.observableArrayList();
 
         Contact c = contactComboBox.getValue();
-        /*if(c == null){
+        if(c == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Fields must not be left blank.\nA drop down selection must be made.");
@@ -110,7 +110,7 @@ public class ReportsController implements Initializable {
             alert.showAndWait();
 
             return;
-        }*/
+        }
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         for(Appointment a : adao.getAllAppointmentsOL()){
             if(a.getContactId() == c.getContactId()){
@@ -118,6 +118,16 @@ public class ReportsController implements Initializable {
             }
         }
         ApptsByContactTable.setItems(filteredAppointmentsOL);
+
+
+    }
+
+    public void onActionResult(ActionEvent actionEvent) {
+
+        String month = monthComboBox.getValue();
+        String type = typeComboBox.getValue();
+        int numb = AppointmentDAOImpl.numberByMonthAndType(month, type);
+        ResultLabel.setText("The total = " + Integer.toString(numb));
 
     }
 

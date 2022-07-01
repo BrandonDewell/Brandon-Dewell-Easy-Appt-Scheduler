@@ -105,6 +105,25 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     }
 
+    public static int numberByMonthAndType(String month, String type){
+        try {
+            String sql = "SELECT COUNT(*) " +
+                    "FROM client_schedule.appointments " +
+                    "WHERE monthname(Start) = ? AND TYPE = ?";
+           // SELECT COUNT(*) FROM client_schedule.appointments WHERE monthname(Start) = 'May' AND type = 'Planning Session';
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setString(1, month);
+            ps.setString(2, type);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
 
     public int insert(Appointment appointment) {
