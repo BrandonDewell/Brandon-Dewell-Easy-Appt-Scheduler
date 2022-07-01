@@ -2,9 +2,8 @@ package daoView_Controller;
 
 import daoImpl.AppointmentDAOImpl;
 import daoImpl.ContactDAOImpl;
-import daoImpl.UserDAOImpl;
+import daoModel.Appointment;
 import daoModel.Contact;
-import helper.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,10 +13,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -28,34 +29,45 @@ public class ReportsController implements Initializable {
     public Label ResultLabel;
 
     public ComboBox<Contact> contactComboBox;
-    public TableView ApptsByContactTable;
-    public TableColumn ApptIDCol;
-    public TableColumn TitleCol;
-    public TableColumn TypeCol;
-    public TableColumn DescCol;
-    public TableColumn SDATCol;
-    public TableColumn EDATCol;
-    public TableColumn CustIDCol;
+    public TableView<Appointment> ApptsByContactTable;
+    public TableColumn<Appointment, Integer> ApptIDCol;
+    public TableColumn<Appointment, String> TitleCol;
+    public TableColumn<Appointment, String> TypeCol;
+    public TableColumn<Appointment, String> DescCol;
+    public TableColumn<Appointment, LocalDateTime> SDATCol;
+    public TableColumn<Appointment, LocalDateTime> EDATCol;
+    public TableColumn<Appointment, Integer> CustIDCol;
 
-    public TableView ContactNameEmailTable;
-    public TableColumn ContactNameCol;
-    public TableColumn EmailCol;
+    public TableView<Contact> ContactNameEmailTable;
+    public TableColumn<Contact, String> ContactNameCol;
+    public TableColumn<Contact, String> EmailCol;
 
     public Button CancelButton;
-    public ObservableList<String> MonthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+    public ObservableList<String> monthOL = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Reports is initialized  -- initialize(URL url, ResourceBundle resourceBundle) called from ReportsController.java");
 
         AppointmentDAOImpl dao = new AppointmentDAOImpl();
+        monthComboBox.setItems(monthOL);
         typeComboBox.setItems(dao.getAllAppointmentTypesOL());
+       // ResultLabel.setText(dao.g);
 
         ContactDAOImpl contactDAO = new ContactDAOImpl();
         contactComboBox.setItems(contactDAO.getAllContactsOL());
+        ApptsByContactTable.setItems(dao.getAllAppointmentsOL());
+        ApptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptId"));
+        TitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        DescCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        SDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        EDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        CustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
-        monthComboBox.setItems(MonthList);
-
+        ContactNameEmailTable.setItems(contactDAO.getAllContactsOL());
+        ContactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        EmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
 
     }
 
@@ -85,5 +97,30 @@ public class ReportsController implements Initializable {
     }
 
     public void onActionContact(ActionEvent actionEvent) {
+
+        ObservableList<Appointment> filteredAppointmentsOL = FXCollections.observableArrayList();
+
+        Contact c = contactComboBox.getValue();
+        /*if(c == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Fields must not be left blank.\nA drop down selection must be made.");
+            alert.setContentText("Please enter a valid value for each text field.\nTitle, Description, Location, and Type " +
+                    "must use characters.\nPlease make a selection in the drop down boxes.\nSelect a date by clicking on the date chooser button.");
+            alert.showAndWait();
+
+            return;
+        }*/
+        AppointmentDAOImpl adao = new AppointmentDAOImpl();
+        for(Appointment a : adao.getAllAppointmentsOL()){
+            if(a.getContactId() == c.getContactId()){
+                filteredAppointmentsOL.add(a);
+            }
+        }
+        ApptsByContactTable.setItems(filteredAppointmentsOL);
+
     }
+
+    // SELECT monthname(start) FROM client_schedule.appointments;
+    // select now() from dual;
 }
