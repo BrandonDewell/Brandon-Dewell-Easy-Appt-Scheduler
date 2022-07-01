@@ -2,6 +2,7 @@ package daoImpl;
 
 import daoInt.IAppointmentDAO;
 import daoModel.Appointment;
+import daoModel.Contact;
 import helper.JDBC;
 import helper.Utility;
 import javafx.collections.FXCollections;
@@ -54,6 +55,56 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
         return allAppointmentsOL;
     }
+
+
+    public ObservableList<String> getAllAppointmentTypesOL() {
+        ObservableList<String> allAppointmentTypesOL = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Distinct type FROM client_schedule.appointments";
+
+                    /*"SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
+                            "FROM Appointments, Customers, Users, Contacts " +
+                            "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";*/
+
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                String type = rs.getString("Type");
+
+
+
+                //System.out.println("Timestamp start = " + start);   // Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
+                allAppointmentTypesOL.add(type);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allAppointmentTypesOL;
+
+       /* try {
+            String sql = "SELECT * FROM CONTACTS";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int contactID = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
+                String email = rs.getString("Email");
+                Contact c = new Contact(contactID, contactName, email);
+                contactsOL.add(c);
+            }
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return contactsOL;*/
+
+    }
+
 
 
     public int insert(Appointment appointment) {
@@ -392,5 +443,6 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         }
         return 0;
     }
+
 
 }

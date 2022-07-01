@@ -59,8 +59,8 @@ public class AppointmentController implements Initializable {
 
         ZoneId osZId = ZoneId.systemDefault();
         ZoneId businessZId =  ZoneId.of("America/New_York");
-        startTimeComboBox.setItems(Utility.generateDynamicTimeList(osZId, businessZId, LocalTime.of(8,0), 13));
-        endTimeComboBox.setItems(Utility.generateDynamicTimeList(osZId, businessZId, LocalTime.of(9,0), 13));
+        startTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(8,0), 13));
+        endTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(9,0), 13));
 
         /*for (int i = 0; i < 23; i++) {  // 8am earliest appt start time up to 9pm latest appt start time.
             startTimeComboBox.getItems().add(LocalTime.of(i, 0));
@@ -115,17 +115,15 @@ public class AppointmentController implements Initializable {
                 alert.setHeaderText("Appointment start time must be before the appointment end time.\nStart and end times of an appointment must not be the same.");
                 alert.setContentText("Please choose a correct value for each drop-down box.");
                 alert.showAndWait();
-
-            } /*else if (     // TODO take timezone i am in and convert to eastern time manually.  make a zoneddatetime object, convert to eastern time.  I can do a check on the inputted dates/times using popup windows, and make them use only .
-                    LocalDateTime ldt =
-                    ZonedDateTime zdt = ZonedDateTime.of
-                )*/
-
-            else {
+            } else if(sDate.isAfter(eDate)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("The appointment must end on the same day as the start date or later.");  // TODO how do I implement the scenario where the time zone is in London and the appt time is right around midnight going into the next day?
+                alert.setContentText("Please choose a correct value for each date.");
+                alert.showAndWait();
+            } else {
                 LocalDateTime sLDT = LocalDateTime.of(sDate, sTime);
                 LocalDateTime eLDT = LocalDateTime.of(eDate, eTime);
-
-                //ZonedDateTime zdt = sLDT.atZone();  // TODO what is the zone ID that I have to pass into the atZone method?
 
                 if (selectedAppointment == null) {  // This is where the determination is made whether the add or update button was clicked in the main menu.  Nothing was selected so this is an Add Appointment situation.
                     //Appointment a = new Appointment(0, title, cust.getCustomerId(), u.getUserId(), desc, loc, contact.getContactName(), type, sLDT, eLDT);  // The customerId, countryId, division, and country parameters are not really important and
@@ -224,6 +222,10 @@ public class AppointmentController implements Initializable {
 
     public void onActionStartDate(ActionEvent actionEvent) {
 
+        //if(startDateDatePicker.getValue() < endDateDatePicker.){
+
+        }
+
         /*LocalDate dpStart = startDateDatePicker.getValue();  // TODO can I create an observable list of datepicker dates to get the end date to automatically be set to the start date?  should I just get rid of the end date date picker and its label?
         DatePicker dpEnd = new DatePicker();
         endDateDatePicker.setItems(dpStart);*/
@@ -231,5 +233,5 @@ public class AppointmentController implements Initializable {
         /*Country c = countryComboBox.getValue();
         FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
         stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));*/
-    }
+
 }

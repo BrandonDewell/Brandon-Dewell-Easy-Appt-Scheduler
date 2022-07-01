@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.ReportsController">
+   <children>
+      <Label layoutX="469.0" layoutY="29.0" text="Reports">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="50.0" layoutY="84.0" text="Total number of appointments by Month and Type:" />
+      <ComboBox fx:id="monthComboBox" layoutX="347.0" layoutY="80.0" onAction="#onActionMonth" prefWidth="150.0" promptText="Choose a month" />
+      <ComboBox fx:id="typeComboBox" layoutX="521.0" layoutY="80.0" onAction="#onActionType" prefWidth="150.0" promptText="Choose a type" />
+      <Label fx:id="ResultLabel" layoutX="691.0" layoutY="84.0" text="The Result = " />
+      <Label layoutX="50.0" layoutY="176.0" text="Schedule of appointments by contact:" />
+      <ComboBox fx:id="contactComboBox" layoutX="272.0" layoutY="172.0" onAction="#onActionContact" prefWidth="150.0" promptText="Choose a contact" />
+      <TableView fx:id="ApptsByContactTable" layoutX="50.0" layoutY="224.0" prefHeight="200.0" prefWidth="900.0">
+        <columns>
+          <TableColumn fx:id="ApptIDCol" prefWidth="100.0" text="Appointment_ID" />
+          <TableColumn fx:id="TitleCol" prefWidth="100.0" text="Title" />
+            <TableColumn fx:id="TypeCol" prefWidth="100.0" text="Type" />
+            <TableColumn fx:id="DescCol" prefWidth="100.0" text="Description" />
+            <TableColumn fx:id="SDATCol" prefWidth="200.0" text="Start Date and Time" />
+            <TableColumn fx:id="EDATCol" prefWidth="200.0" text="End Date and Time" />
+            <TableColumn fx:id="CustIDCol" prefWidth="100.0" text="Customer_ID" />
+        </columns>
+      </TableView>
+      <Label layoutX="50.0" layoutY="466.0" text="All contacts and their email addresses:" />
+      <TableView fx:id="ContactNameEmailTable" layoutX="272.0" layoutY="466.0" prefHeight="150.0" prefWidth="400.0">
+        <columns>
+          <TableColumn fx:id="ContactNameCol" prefWidth="200.0" text="Contact Name" />
+          <TableColumn fx:id="EmailCol" prefWidth="200.0" text="Email Address" />
+        </columns>
+      </TableView>
+      <Button fx:id="CancelButton" layoutX="865.0" layoutY="591.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
+   </children>
+</AnchorPane>

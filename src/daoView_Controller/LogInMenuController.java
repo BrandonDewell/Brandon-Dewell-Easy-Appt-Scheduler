@@ -59,18 +59,18 @@ public class LogInMenuController implements Initializable {
                 } else {
                     for (User u : userList){
                         if ((u.getUserName().equals(userName)) && (u.getPassword().equals(pw))){
-                            userFound = true;
+                            userFound = true; // get the user id and report it to use
                             break;
                         }
                     }
-                    if (userFound){
+                    if (userFound){  // TODO write to a file for a GOOD login attempt.  know user id and do 15 min alert check .  get all appts with user id  check each if the start time is > now, and start is < now + 15 min.  do this before loading next screen.
                         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         Scene scene = new Scene(root, 1500, 700);
                         stage.setTitle("Main Menu");
                         stage.setScene(scene);
                         stage.show();
-                    } else {
+                    } else {  // TODO write to a file for a bad login attempt
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle(rb.getString("Error"));
                         alert.setHeaderText(rb.getString("Incorrect"));

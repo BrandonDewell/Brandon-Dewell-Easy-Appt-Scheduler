@@ -1,8 +1,12 @@
 package helper;
 
+import daoModel.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.*;
 
 public class Utility {
@@ -45,16 +49,59 @@ public class Utility {
 
     // Here is another way of setting up the time list to adjust the available times for scheduling appointments based on the user's timezone:
 
-    /*public static ObservableList<LocalTime> generateDynamicTimeListOL(ZoneId osZId, ZoneId businessZId, LocalTime businessHourStart, int workHours) {
+    public static ObservableList<LocalTime> generateDynamicTimeListOL(ZoneId osZId, ZoneId businessZId, LocalTime businessHourStart, int workHours) {
         ObservableList<LocalTime> timeList = FXCollections.observableArrayList();
         ZonedDateTime businessZDT = ZonedDateTime.of(LocalDate.now(), businessHourStart, businessZId);  // today's date, business hour that it opens at, and eastern time.
         ZonedDateTime localZDT = businessZDT.withZoneSameInstant(osZId);
 
         for(int i = 0; i <= workHours; i++){
             timeList.add(localZDT.toLocalTime());
-            localZDT.plusHours(1);  // this has the built in functionality to work with days as it is coming from a zoneddatetime object.  This way doesn't need to worry about the if i< 24 and if i > 23 from above
+            localZDT = localZDT.plusHours(1);  // this has the built in functionality to work with days as it is coming from a zoneddatetime object.  This way doesn't need to worry about the if i< 24 and if i > 23 from above
         }
         return timeList;
+
+    }
+
+    /*public static ObservableList<Month> getAllMonthsOL() {
+        ObservableList<Month> allMonthsOL = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
+                    "FROM Appointments, Customers, Users, Contacts " +
+                    "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID";
+
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int apptId = rs.getInt("Appointment_ID");
+                int custId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+                String title = rs.getString("Title");
+                String desc = rs.getString("Description");
+                String loc = rs.getString("Location");
+                String type = rs.getString("Type");
+                String custName = rs.getString("Customer_Name");
+                String userName = rs.getString("User_Name");
+                String contactName = rs.getString("Contact_Name");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();  // use localdatetime instead of timestamp?  Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                *//*LocalDateTime sLDT = start.toLocalDateTime();
+                LocalDateTime eLDT = end.toLocalDateTime();*//*
+                Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+
+
+                //System.out.println("Timestamp start = " + start);   // Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
+                //allMonthsOL.add(a.);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allMonthsOL;
+    }
+
 
     }*/
 

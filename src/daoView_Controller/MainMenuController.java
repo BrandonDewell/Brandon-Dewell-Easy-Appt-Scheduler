@@ -268,4 +268,15 @@ public class MainMenuController implements Initializable {
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         apptTable.setItems(adao.getAllAppointmentsOL());
     }
+
+    public void onActionViewReports(ActionEvent actionEvent) throws IOException {
+        System.out.println("Reports button clicked.  -- onActionViewReports(ActionEvent actionEvent) called in MainMenuController.java");
+
+        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Reports.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 650);
+        stage.setTitle("Reports");
+        stage.setScene(scene);
+        stage.show();
+    }
 }

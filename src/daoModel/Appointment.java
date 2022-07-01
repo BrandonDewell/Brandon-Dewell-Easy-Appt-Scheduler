@@ -101,4 +101,9 @@ public class Appointment {
 
     public LocalDateTime geteLDT() {return end; }*/
 
+    @Override
+    public String toString(){
+        return (type);
+    }
+
 }
