@@ -96,13 +96,9 @@ public class AppointmentController implements Initializable {
 
 
             AppointmentDAOImpl dao = new AppointmentDAOImpl();
-           /* int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
-            if (rowsAffected > 0){
-                System.out.println("insert successful");
-            }*/
 
-            if (title.isBlank() || cust == null || u == null || desc.isBlank() || loc.isBlank() || contact == null || type.isBlank() || sDate == null || sTime == null || eDate == null || eTime == null) {  // combo boxes use
-                // comboBox == null to do error checks instead of textfield.isBlank()
+            if (title.isBlank() || cust == null || u == null || desc.isBlank() || loc.isBlank() || contact == null || type.isBlank() || sDate == null || sTime == null || eDate == null || eTime == null) {
+                // comboBoxes use comboBox == null to do error checks instead of textfield.isBlank()
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Fields must not be left blank.\nA drop down selection must be made.");
@@ -118,28 +114,83 @@ public class AppointmentController implements Initializable {
             } else if(sDate.isAfter(eDate)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setHeaderText("The appointment must end on the same day as the start date or later.");  // TODO how do I implement the scenario where the time zone is in London and the appt time is right around midnight going into the next day?
+                alert.setHeaderText("The appointment must end on the same day as the start date or later.");
                 alert.setContentText("Please choose a correct value for each date.");
                 alert.showAndWait();
             } else {
                 LocalDateTime sLDT = LocalDateTime.of(sDate, sTime);
                 LocalDateTime eLDT = LocalDateTime.of(eDate, eTime);
 
-                if (selectedAppointment == null) {  // This is where the determination is made whether the add or update button was clicked in the main menu.  Nothing was selected so this is an Add Appointment situation.
-                    //Appointment a = new Appointment(0, title, cust.getCustomerId(), u.getUserId(), desc, loc, contact.getContactName(), type, sLDT, eLDT);  // The customerId, countryId, division, and country parameters are not really important and
-                    // I don't care about that info so I can "leave" them blank.
+                // This is where the determination is made whether the add or update button was clicked in the main menu.
+                if (selectedAppointment == null) {  // Add Appointment situation (does an insert) since no appointment was selected on the main menu and sent over to this screen.
 
-                    //AppointmentDAOImpl dao = new AppointmentDAOImpl();
+                    // appt overlap check
+                    ObservableList<Appointment> allAppts = dao.getAllAppointmentsOL();
+                    boolean isOverlap = false;
 
-                    //dao.insert(a);
+                    for(Appointment a : allAppts){
+                        if (a.getCustomerId() == (cust.getCustomerId()) ) {
+
+                            if (a.getStart().isEqual(sLDT)){  // start dates/times for both appointments are the same, creating an overlap.
+                                isOverlap = true;
+                            }
+
+                            if (a.getStart().isBefore(sLDT) && a.getEnd().isAfter(sLDT)){  // the new appointment starts within the start and end time of the already scheduled appt, creating an overlap.
+                                isOverlap = true;
+                            }
+
+                            if (a.getStart().isAfter(sLDT) && a.getEnd().isBefore(eLDT)){  // the new appointment starts before and ends after the start and end time of the already scheduled appt, creating an overlap.
+                                isOverlap = true;
+                            }
+                        } else {
+                            // throw up error popup
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Appointments for the same customer must not overlap.");
+                            alert.setContentText("Please choose a correct value for each date and time.");
+                            alert.showAndWait();
+                        }
+
+                    }
+
                     int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
                     if (rowsAffected > 0){
                         System.out.println("**************************appt insert successful");
                     }
-                } else {  // Update situation
-                   // Appointment a = new Appointment(selectedAppointment.getApptId(), title, cust.getCustomerId(), u.getUserId(), desc, loc, contact.getContactName(), type, sDate, sTime, eDate, eTime);
-                    //AppointmentDAOImpl dao = new AppointmentDAOImpl();
-                   // dao.update(a);
+
+                } else {  // Update situation because a selection was made in the main menu.
+
+                    // appt overlap check
+                    ObservableList<Appointment> allAppts = dao.getAllAppointmentsOL();
+                    boolean isOverlap = false;
+
+                    for(Appointment a : allAppts){
+                        if (a.getCustomerId() == selectedAppointment.getCustomerId()){
+
+                            if (a.getStart().isEqual(selectedAppointment.getStart())){  // start dates/times for both appointments are the same, creating an overlap.
+                                isOverlap = true;
+                            }
+
+                            if (a.getStart().isBefore(selectedAppointment.getStart()) && a.getEnd().isAfter(selectedAppointment.getStart())){  // the new appointment starts within the start and end time of the already scheduled appt, creating an overlap.
+                                isOverlap = true;
+                            }
+
+                            if (a.getStart().isAfter(selectedAppointment.getStart()) && a.getEnd().isBefore(selectedAppointment.getEnd())){  // the new appointment starts before and ends after the start and end time of the already scheduled appt, creating an overlap.
+                                isOverlap = true;
+                            }
+                        } else {
+                            // throw up error popup
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Appointments for the same customer must not overlap.");
+                            alert.setContentText("Please choose a correct value for each date and time.");
+                            alert.showAndWait();
+                        }
+
+                    }
+
+                }
+
                     int rowsAffected = dao.update(selectedAppointment.getApptId(), title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
                     if (rowsAffected > 0){
                         System.out.println("*************************appt update successful");
@@ -154,7 +205,7 @@ public class AppointmentController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
 
-            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
