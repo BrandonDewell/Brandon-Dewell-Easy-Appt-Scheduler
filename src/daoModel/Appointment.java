@@ -6,9 +6,19 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Appointment {
-    private int apptId, customerId, userId, contactId;
-    private String title, description, location, type, customerName, userName, contactName;
-    private LocalDateTime start, end;
+    private int apptId;
+    private int customerId;
+    private int userId;
+    private int contactId;
+    private String title;
+    private String description;
+    private String location;
+    private String type;
+    private String customerName;
+    private String userName;
+    private String contactName;
+    private LocalDateTime start;
+    private LocalDateTime end;
     //private LocalDateTime sLDT, eLDT;
 
     // constructor

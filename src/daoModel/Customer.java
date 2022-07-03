@@ -2,8 +2,16 @@ package daoModel;
 
 public class Customer {
     // class variables/fields
-    private int customerId, divisionId, countryId;
-    private String customerName, address, postalCode, phone, division, country;
+    private int customerId;
+    private int divisionId;
+    private int countryId;
+    private String customerName;
+    private String address;
+    private String postalCode;
+    private String phone;
+    private String division;
+    private String country;
+
 
     // constructor/methods
     public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, int countryId, String division, String country) {

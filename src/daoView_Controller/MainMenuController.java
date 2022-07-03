@@ -73,6 +73,7 @@ public class MainMenuController implements Initializable {
         CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         CRcountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        custTable.getSortOrder().addAll(CRcustIDCol);
 
         AppointmentDAOImpl a = new AppointmentDAOImpl();
 
@@ -90,6 +91,7 @@ public class MainMenuController implements Initializable {
         SAcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         SAuserNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
         SAuserIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        apptTable.getSortOrder().addAll(SAapptIDCol);
 
 
 

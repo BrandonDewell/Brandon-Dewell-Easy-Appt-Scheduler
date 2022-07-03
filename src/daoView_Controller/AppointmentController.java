@@ -1,12 +1,14 @@
 package daoView_Controller;
 
-import daoImpl.*;
+import daoImpl.AppointmentDAOImpl;
+import daoImpl.ContactDAOImpl;
+import daoImpl.CustomerDAOImpl;
+import daoImpl.UserDAOImpl;
 import daoModel.Appointment;
 import daoModel.Contact;
 import daoModel.Customer;
 import daoModel.User;
 import helper.Utility;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +21,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -56,23 +61,10 @@ public class AppointmentController implements Initializable {
         ContactDAOImpl contactDAO = new ContactDAOImpl();
         contactComboBox.setItems(contactDAO.getAllContactsOL());
 
-
         ZoneId osZId = ZoneId.systemDefault();
         ZoneId businessZId =  ZoneId.of("America/New_York");
         startTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(8,0), 13));
         endTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(9,0), 13));
-
-        /*for (int i = 0; i < 23; i++) {  // 8am earliest appt start time up to 9pm latest appt start time.
-            startTimeComboBox.getItems().add(LocalTime.of(i, 0));
-        }
-
-        for (int i = 1; i < 24; i++) {  // initialize i with 1 because I have decided that each appt will be at least an hour long, and if the start time is at 00:00, the end time must be 01:00 at the earliest.
-            endTimeComboBox.getItems().add(LocalTime.of(i, 0));
-            if (i == 23) {
-                endTimeComboBox.getItems().add(LocalTime.of(0, 0));
-
-            }
-        }*/
 
     }
 
@@ -126,76 +118,108 @@ public class AppointmentController implements Initializable {
 
                     // appt overlap check
                     ObservableList<Appointment> allAppts = dao.getAllAppointmentsOL();
-                    boolean isOverlap = false;
+                    boolean isOverlap = false;  // AKA a sentinal
 
                     for(Appointment a : allAppts){
-                        if (a.getCustomerId() == (cust.getCustomerId()) ) {
+                       // if (a.getCustomerId() == (cust.getCustomerId()) ) {
+
+
 
                             if (a.getStart().isEqual(sLDT)){  // start dates/times for both appointments are the same, creating an overlap.
                                 isOverlap = true;
+                                break;
+
                             }
 
                             if (a.getStart().isBefore(sLDT) && a.getEnd().isAfter(sLDT)){  // the new appointment starts within the start and end time of the already scheduled appt, creating an overlap.
                                 isOverlap = true;
+                                break;
+
                             }
 
                             if (a.getStart().isAfter(sLDT) && a.getEnd().isBefore(eLDT)){  // the new appointment starts before and ends after the start and end time of the already scheduled appt, creating an overlap.
                                 isOverlap = true;
+                                break;
+
                             }
-                        } else {
+
+
+
+
+                        }
                             // throw up error popup
+                        if(isOverlap) {
+
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
                             alert.setHeaderText("Appointments for the same customer must not overlap.");
                             alert.setContentText("Please choose a correct value for each date and time.");
                             alert.showAndWait();
+
+                        } else {
+                            int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
+                            if (rowsAffected > 0){
+                                System.out.println("**************************appt insert successful");
+                            }
+
                         }
 
+
                     }
 
-                    int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
-                    if (rowsAffected > 0){
-                        System.out.println("**************************appt insert successful");
-                    }
 
-                } else {  // Update situation because a selection was made in the main menu.
+
+
+                else {  // Update situation because a selection was made in the main menu.
 
                     // appt overlap check
                     ObservableList<Appointment> allAppts = dao.getAllAppointmentsOL();
-                    boolean isOverlap = false;
+                    boolean isOverlap = false;  // AKA a sentinal
 
                     for(Appointment a : allAppts){
-                        if (a.getCustomerId() == selectedAppointment.getCustomerId()){
+                        // if ((a.getCustomerId() == selectedAppointment.getCustomerId()) && (a.getApptId() == selectedAppointment.getApptId())){
 
                             if (a.getStart().isEqual(selectedAppointment.getStart())){  // start dates/times for both appointments are the same, creating an overlap.
                                 isOverlap = true;
+                                break;
+
                             }
 
                             if (a.getStart().isBefore(selectedAppointment.getStart()) && a.getEnd().isAfter(selectedAppointment.getStart())){  // the new appointment starts within the start and end time of the already scheduled appt, creating an overlap.
                                 isOverlap = true;
+                                break;
+
                             }
 
                             if (a.getStart().isAfter(selectedAppointment.getStart()) && a.getEnd().isBefore(selectedAppointment.getEnd())){  // the new appointment starts before and ends after the start and end time of the already scheduled appt, creating an overlap.
                                 isOverlap = true;
+                                break;
+
                             }
-                        } else {
-                            // throw up error popup
+                            if(isOverlap){
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
                             alert.setHeaderText("Appointments for the same customer must not overlap.");
                             alert.setContentText("Please choose a correct value for each date and time.");
                             alert.showAndWait();
-                        }
+
+                            }  else {
+
+                                int rowsAffected2 = dao.update(selectedAppointment.getApptId(), title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
+                                if (rowsAffected2 > 0) {
+                                    System.out.println("*************************appt update successful");
+                                }
+                            }
+
 
                     }
 
+
+
                 }
 
-                    int rowsAffected = dao.update(selectedAppointment.getApptId(), title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
-                    if (rowsAffected > 0){
-                        System.out.println("*************************appt update successful");
-                    }
-                }
+
+
 
 
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
@@ -204,7 +228,7 @@ public class AppointmentController implements Initializable {
                 stage.setTitle("Main Menu");
                 stage.setScene(scene);
                 stage.show();
-
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
