@@ -51,6 +51,9 @@ public class Appointment {
     public Appointment(int apptId, int custId, int userId, int contactId, String title, String desc, String loc, String type, String custName, String userName, String contactName, Timestamp start, Timestamp end) {
     }
 
+    public Appointment(int change, int appointment_id) {
+    }
+
 
     // methods
     public String getCustomerName() {

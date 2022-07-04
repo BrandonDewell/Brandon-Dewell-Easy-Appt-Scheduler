@@ -73,7 +73,7 @@ public class MainMenuController implements Initializable {
         CRpostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         CRcountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         CRphoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        custTable.getSortOrder().addAll(CRcustIDCol);
+        custTable.getSortOrder().addAll(CRcustNameCol);
 
         AppointmentDAOImpl a = new AppointmentDAOImpl();
 
@@ -92,9 +92,6 @@ public class MainMenuController implements Initializable {
         SAuserNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
         SAuserIDCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         apptTable.getSortOrder().addAll(SAapptIDCol);
-
-
-
     }
 
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
@@ -253,6 +250,7 @@ public class MainMenuController implements Initializable {
 
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         apptTable.setItems(adao.selectWeekViewOL());
+        apptTable.getSortOrder().addAll(SAapptIDCol);
 
     }
 
@@ -261,6 +259,7 @@ public class MainMenuController implements Initializable {
 
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         apptTable.setItems(adao.selectMonthViewOL());
+        apptTable.getSortOrder().addAll(SAapptIDCol);
 
     }
 
@@ -269,6 +268,7 @@ public class MainMenuController implements Initializable {
 
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         apptTable.setItems(adao.getAllAppointmentsOL());
+        apptTable.getSortOrder().addAll(SAapptIDCol);
     }
 
     public void onActionViewReports(ActionEvent actionEvent) throws IOException {

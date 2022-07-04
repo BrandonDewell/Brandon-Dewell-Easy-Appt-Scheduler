@@ -63,8 +63,8 @@ public class AppointmentController implements Initializable {
 
         ZoneId osZId = ZoneId.systemDefault();
         ZoneId businessZId =  ZoneId.of("America/New_York");
-        startTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(8,0), 13));
-        endTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(9,0), 13));
+        startTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(8,0), 52));
+        endTimeComboBox.setItems(Utility.generateDynamicTimeListOL(osZId, businessZId, LocalTime.of(8,15), 52));
 
     }
 
@@ -118,13 +118,10 @@ public class AppointmentController implements Initializable {
 
                     // appt overlap check
                     ObservableList<Appointment> allAppts = dao.getAllAppointmentsOL();
-                    boolean isOverlap = false;  // AKA a sentinal
+                    boolean isOverlap = false;  // AKA a sentinel
 
                     for(Appointment a : allAppts){
                        // if (a.getCustomerId() == (cust.getCustomerId()) ) {
-
-
-
                             if (a.getStart().isEqual(sLDT)){  // start dates/times for both appointments are the same, creating an overlap.
                                 isOverlap = true;
                                 break;
@@ -143,10 +140,7 @@ public class AppointmentController implements Initializable {
 
                             }
 
-
-
-
-                        }
+                    }
                             // throw up error popup
                         if(isOverlap) {
 
@@ -164,7 +158,6 @@ public class AppointmentController implements Initializable {
 
                         }
 
-
                     }
 
 
@@ -174,7 +167,7 @@ public class AppointmentController implements Initializable {
 
                     // appt overlap check
                     ObservableList<Appointment> allAppts = dao.getAllAppointmentsOL();
-                    boolean isOverlap = false;  // AKA a sentinal
+                    boolean isOverlap = false;  // AKA a sentinel
 
                     for(Appointment a : allAppts){
                         // if ((a.getCustomerId() == selectedAppointment.getCustomerId()) && (a.getApptId() == selectedAppointment.getApptId())){
@@ -197,11 +190,12 @@ public class AppointmentController implements Initializable {
 
                             }
                             if(isOverlap){
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Error");
-                            alert.setHeaderText("Appointments for the same customer must not overlap.");
-                            alert.setContentText("Please choose a correct value for each date and time.");
-                            alert.showAndWait();
+
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error");
+                                alert.setHeaderText("Appointments must not overlap.");
+                                alert.setContentText("Please choose a correct value for each date and time.");
+                                alert.showAndWait();
 
                             }  else {
 
@@ -211,16 +205,9 @@ public class AppointmentController implements Initializable {
                                 }
                             }
 
-
                     }
 
-
-
                 }
-
-
-
-
 
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -301,7 +288,7 @@ public class AppointmentController implements Initializable {
 
         }
 
-        /*LocalDate dpStart = startDateDatePicker.getValue();  // TODO can I create an observable list of datepicker dates to get the end date to automatically be set to the start date?  should I just get rid of the end date date picker and its label?
+        /*LocalDate dpStart = startDateDatePicker.getValue();
         DatePicker dpEnd = new DatePicker();
         endDateDatePicker.setItems(dpStart);*/
 

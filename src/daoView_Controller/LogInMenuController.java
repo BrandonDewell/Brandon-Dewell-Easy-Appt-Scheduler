@@ -1,6 +1,8 @@
 package daoView_Controller;
 
+import daoImpl.AppointmentDAOImpl;
 import daoImpl.UserDAOImpl;
+import daoModel.Appointment;
 import daoModel.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,8 +16,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LogInMenuController implements Initializable {
@@ -42,8 +48,10 @@ public class LogInMenuController implements Initializable {
         System.out.println("Sign In button is clicked");
 
             UserDAOImpl udao = new UserDAOImpl();
+            AppointmentDAOImpl adao = new AppointmentDAOImpl();
             ObservableList<User> userList = udao.getAllUsersOL();
             boolean userFound = false;
+            boolean upcomingAppt = false;
 
             try {
                 String userName = userNameTxt.getText();
@@ -64,6 +72,31 @@ public class LogInMenuController implements Initializable {
                         }
                     }
                     if (userFound){  // TODO write to a file for a GOOD login attempt.  know user id and do 15 min alert check .  get all appts with user id  check each if the start time is > now, and start is < now + 15 min.  do this before loading next screen.
+
+                       Appointment a = AppointmentDAOImpl.upcomingApptInfo();
+                        if(a == null){
+
+                            Alert alertInfo = new Alert(Alert.AlertType.INFORMATION, "Please click OK to continue.");
+                            alertInfo.setTitle("No upcoming appointments");
+                            alertInfo.setHeaderText("There are no upcoming appointments within the next 15 minutes.");
+                            Optional<ButtonType> resultInfo = alertInfo.showAndWait();
+
+                        } else {
+
+                            int apptId = a.getApptId();
+                           // int minBetween = a.get
+                            LocalDate apptDate = a.getStart().toLocalDate();
+                            LocalTime apptTime = a.getStart().toLocalTime();
+
+                            Alert alertInfo = new Alert(Alert.AlertType.INFORMATION, "Please click OK to continue.");
+                            alertInfo.setTitle("An appointment found");
+                            alertInfo.setHeaderText("The Appointment ID number " + apptId + " scheduled for today's date " + apptDate + " and the time " + apptTime + " is coming up soon.");
+                            Optional<ButtonType> resultInfo = alertInfo.showAndWait();
+                        }
+
+                      //  alertInfo.setHeaderText("The Appointment ID number " + temp.getApptId() + " of type " + temp.getType() + " has been deleted.");
+
+
                         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         Scene scene = new Scene(root, 1500, 700);
@@ -83,6 +116,8 @@ public class LogInMenuController implements Initializable {
                     }
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
 

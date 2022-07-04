@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql interactions and observable lists here
 
@@ -119,7 +121,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
         String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
                      "FROM Appointments, Customers, Users, Contacts " +
-                     "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARWEEK (start, 1) = YEARWEEK (CURDATE(), 1)";
+                     "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARWEEK (start, 0) = YEARWEEK (curDate(), 0)";
         // This sql statement is using syntax manipulation of SQL vs a different approach of using syntax manipulation of Java.  If I were to do this with Java, I would use the WeekFields Class.
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
        // ps.setInt(1, currentDay);
@@ -465,4 +467,29 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
+    public static Appointment upcomingApptInfo() throws SQLException {
+        //try {
+            String sql = "SELECT * " +
+                    "FROM client_schedule.appointments " +
+                    "WHERE Start between now() AND date_add(now(), interval 15 minute)";
+                  //  "date_format(Start, '%Y-%m-%d') = curDate() AND Start >= curTime() limit 1";  //%Y year as a numeric 4 digit value, %m month name as a numeric value (00 to 12), %d day of the month as a numeric value (0 to 31)
+            // curDate() returns "YYYY-MM-DD" (string) or YYYYMMDD (numeric), curTime() returns "HH-MM-SS" (string) or as HHMMSS.uuuuuu (numeric), limit 1 returns the first record.
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                LocalDateTime sLDT = rs.getTimestamp("Start").toLocalDateTime();
+                if (sLDT.toLocalDate().equals(LocalDate.now())) {
+                    long minBetween = ChronoUnit.MINUTES.between(LocalTime.now().truncatedTo(ChronoUnit.MINUTES), sLDT);
+                    return new Appointment((int)minBetween, rs.getInt("Appointment_ID"));
+                } else {
+                    return null;
+                }
+            }
+
+       /* } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        return null;
+    }
 }

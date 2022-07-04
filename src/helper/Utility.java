@@ -45,14 +45,20 @@ public class Utility {
 
     // Here is another way of setting up the time list to adjust the available times for scheduling appointments based on the user's timezone:
 
-    public static ObservableList<LocalTime> generateDynamicTimeListOL(ZoneId osZId, ZoneId businessZId, LocalTime businessHourStart, int workHours) {
+    public static ObservableList<LocalTime> generateDynamicTimeListOL(ZoneId osZId, ZoneId businessZId, LocalTime businessHourStart, int workQuarterHours) {
         ObservableList<LocalTime> timeList = FXCollections.observableArrayList();
         ZonedDateTime businessZDT = ZonedDateTime.of(LocalDate.now(), businessHourStart, businessZId);  // today's date, business hour that it opens at, and eastern time.
         ZonedDateTime localZDT = businessZDT.withZoneSameInstant(osZId);
 
-        for(int i = 0; i <= workHours; i++){
+        /*for(int i = 0; i <= workHours; i++){          // this version uses whole hours only.
             timeList.add(localZDT.toLocalTime());
             localZDT = localZDT.plusHours(1);  // this has the built in functionality to work with days as it is coming from a zoneddatetime object.  This way doesn't need to worry about the if i< 24 and if i > 23 from above
+        }
+        return timeList;*/
+
+        for(int i = 0; i <= workQuarterHours; i++){
+            timeList.add(localZDT.toLocalTime());
+            localZDT = localZDT.plusMinutes(15);  // this has the built in functionality to work with days as it is coming from a zoneddatetime object.  This way doesn't need to worry about the if i< 24 and if i > 23 from above
         }
         return timeList;
 
