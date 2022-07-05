@@ -468,10 +468,10 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     }
 
     public static Appointment upcomingApptInfo() throws SQLException {
-        //try {
+
             String sql = "SELECT * " +
                     "FROM client_schedule.appointments " +
-                    "WHERE Start between now() AND date_add(now(), interval 15 minute)";
+                    "WHERE Start between now() AND date_add(now(), interval 15 minute)";  //DATE_ADD(date, INTERVAL value addunit)
                   //  "date_format(Start, '%Y-%m-%d') = curDate() AND Start >= curTime() limit 1";  //%Y year as a numeric 4 digit value, %m month name as a numeric value (00 to 12), %d day of the month as a numeric value (0 to 31)
             // curDate() returns "YYYY-MM-DD" (string) or YYYYMMDD (numeric), curTime() returns "HH-MM-SS" (string) or as HHMMSS.uuuuuu (numeric), limit 1 returns the first record.
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -479,17 +479,14 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
             if (rs.next()) {
                 LocalDateTime sLDT = rs.getTimestamp("Start").toLocalDateTime();
-                if (sLDT.toLocalDate().equals(LocalDate.now())) {
-                    long minBetween = ChronoUnit.MINUTES.between(LocalTime.now().truncatedTo(ChronoUnit.MINUTES), sLDT);
-                    return new Appointment((int)minBetween, rs.getInt("Appointment_ID"));
+                if (sLDT.toLocalDate().equals(LocalDate.now())) {  // check to see if the dates match
+                   // long minBetween = ChronoUnit.MINUTES.between(LocalTime.now().truncatedTo(ChronoUnit.MINUTES), sLDT);  // anything smaller than minutes (seconds, milliseconds, etc) is set to zero, then compares that with sLDT
+                    return new Appointment(rs.getInt("Appointment_ID"), sLDT);
                 } else {
                     return null;
                 }
             }
 
-       /* } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
         return null;
     }
 }
