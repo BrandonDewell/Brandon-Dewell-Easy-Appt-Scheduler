@@ -87,9 +87,7 @@ public class Appointment {
         return type;
     }
 
-    public LocalDateTime getStart() {
-        return start;
-    }
+    public LocalDateTime getStart() { return start; }
 
     public LocalDateTime getEnd() {
         return end;
@@ -105,6 +103,14 @@ public class Appointment {
 
     public int getContactId() {
         return contactId;
+    }
+
+    public String getStartString() {
+        return start.toLocalDate().toString() + " " + start.toLocalTime().toString();
+    }
+
+    public String getEndString() {
+        return end.toLocalDate().toString() + " " + end.toLocalTime().toString();
     }
 
     /*public LocalDateTime getsLDT() {

@@ -18,12 +18,12 @@
       <ComboBox fx:id="contactComboBox" layoutX="272.0" layoutY="172.0" onAction="#onActionContact" prefWidth="150.0" promptText="Choose a contact" />
       <TableView fx:id="ApptsByContactTable" layoutX="50.0" layoutY="224.0" prefHeight="200.0" prefWidth="900.0">
         <columns>
-          <TableColumn fx:id="ApptIDCol" prefWidth="100.0" text="Appointment_ID" />
-          <TableColumn fx:id="TitleCol" prefWidth="100.0" text="Title" />
-            <TableColumn fx:id="TypeCol" prefWidth="100.0" text="Type" />
+          <TableColumn fx:id="ApptIDCol" prefWidth="120.0" text="Appointment_ID" />
+          <TableColumn fx:id="TitleCol" prefWidth="95.0" text="Title" />
+            <TableColumn fx:id="TypeCol" prefWidth="120.0" text="Type" />
             <TableColumn fx:id="DescCol" prefWidth="100.0" text="Description" />
-            <TableColumn fx:id="SDATCol" prefWidth="200.0" text="Start Date and Time" />
-            <TableColumn fx:id="EDATCol" prefWidth="200.0" text="End Date and Time" />
+            <TableColumn fx:id="SDATCol" prefWidth="180.0" text="Start Date and Time" />
+            <TableColumn fx:id="EDATCol" prefWidth="180.0" text="End Date and Time" />
             <TableColumn fx:id="CustIDCol" prefWidth="100.0" text="Customer_ID" />
         </columns>
       </TableView>

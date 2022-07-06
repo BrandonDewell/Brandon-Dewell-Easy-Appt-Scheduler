@@ -14,15 +14,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;  // may need to be import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static java.time.ZoneId.systemDefault;
 
 public class LogInMenuController implements Initializable {
     public Button displayMainMenuB;
@@ -41,7 +47,7 @@ public class LogInMenuController implements Initializable {
         passwordLabel.setText(rb.getString("Password"));
         displayMainMenuB.setText(rb.getString("SignIn"));
         logInLabel.setText(rb.getString("LogIn"));
-        zoneLabel.setText(rb.getString("Location") + ZoneId.systemDefault().toString());
+        zoneLabel.setText(rb.getString("Location") + systemDefault().toString());
     }
 
     public void onActionSignIn(ActionEvent actionEvent) {
@@ -59,7 +65,7 @@ public class LogInMenuController implements Initializable {
 
                 if (userName.isEmpty() || pw.isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(rb.getString("Error"));
+                    alert.setTitle(rb.getString("Error"));  // the key does the translation
                     alert.setHeaderText(rb.getString("Fields"));
                     alert.setContentText(rb.getString("Please"));
                     ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText(rb.getString("OK"));
@@ -68,36 +74,40 @@ public class LogInMenuController implements Initializable {
                     for (User u : userList){
                         if ((u.getUserName().equals(userName)) && (u.getPassword().equals(pw))){
                             userFound = true; // get the user id and report it to use
-                            break;
+                            break;  // breaks out of the for loop
                         }
                     }
-                    if (userFound){  // TODO write to a file for a GOOD login attempt.  know user id and do 15 min alert check .  get all appts with user id  check each if the start time is > now, and start is < now + 15 min.  do this before loading next screen.
+                    Date date = new Date();
+                    String loginAttempt = "src/files/login_activity.txt";
+                    FileWriter appendLoginAttempt = new FileWriter(loginAttempt, true);  // for appending of login auditing
+
+                    if (userFound){  // TODO know user id and do 15 min alert check .  get all appts with user id  check each if the start time is > now, and start is < now + 15 min.  do this before loading next screen.
+
+                        // login auditing
+                        PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
+                        loginAudit.println("User " + userName + " successfully logged in on " + date);
+                        loginAudit.close();
 
                        Appointment a = AppointmentDAOImpl.upcomingApptInfo();  // returns minutes between now and the appt time, and the apptId, and assigns those to a.
-                        if(a == null) {
 
+                        // 15 minute alert check
+                        if(a == null) {
                             Alert alertInfo = new Alert(Alert.AlertType.INFORMATION, "Please click OK to continue.");
-                            alertInfo.setTitle("No upcoming appointments");
+                            alertInfo.setTitle("No upcoming appointments.");
                             alertInfo.setHeaderText("There are no upcoming appointments within the next 15 minutes.");
                             Optional<ButtonType> resultInfo = alertInfo.showAndWait();
 
                         } else {
 
                             int apptId = a.getApptId();
-                           // int minBetween = a.get
-                            // LocalDate apptDate = a.getStart().toLocalDate();
                             LocalTime apptTime = a.getStart().toLocalTime();
 
                             Alert alertInfo = new Alert(Alert.AlertType.INFORMATION, "Please click OK to continue.");
-                            alertInfo.setTitle("An appointment found");
-                            //alertInfo.setHeaderText("The Appointment ID number " + apptId + " scheduled for today's date " + apptDate + " and the time " + apptTime + " is coming up soon.");
+                            alertInfo.setTitle("An upcoming appointment was found.");
                             alertInfo.setHeaderText("The Appointment ID number " + apptId + " scheduled for today's date " + LocalDate.now() + " and the time " + apptTime + " is coming up soon.");
 
                             Optional<ButtonType> resultInfo = alertInfo.showAndWait();
                         }
-
-                      //  alertInfo.setHeaderText("The Appointment ID number " + temp.getApptId() + " of type " + temp.getType() + " has been deleted.");
-
 
                         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -105,7 +115,13 @@ public class LogInMenuController implements Initializable {
                         stage.setTitle("Main Menu");
                         stage.setScene(scene);
                         stage.show();
-                    } else {  // TODO write to a file for a bad login attempt
+                    } else {
+
+                        // login auditing
+                        PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
+                        loginAudit.println("User " + userName + " had a failed log-in attempt on " + date);
+                        loginAudit.close();
+
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle(rb.getString("Error"));
                         alert.setHeaderText(rb.getString("Incorrect"));

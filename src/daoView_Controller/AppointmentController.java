@@ -122,8 +122,17 @@ public class AppointmentController implements Initializable {
                 // appt overlap check
                 ObservableList<Appointment> allAppts = dao.getAllAppointmentsOL();
                 boolean isOverlap = false;  // AKA a sentinel
+                int apptid = 0;
+                if(selectedAppointment != null){
+                    apptid = selectedAppointment.getApptId();
+                }
 
                 for (Appointment a : allAppts) {
+
+                    if(a.getApptId() == apptid) {  // if apptid found, ignore it
+                        continue;
+                    }
+
                     if (a.getStart().isEqual(sLDT) || a.getEnd().isEqual(eLDT)) {  // a.getStart() gets the DB appts and compares those start times to the start time being inputted.  In this situation the start dates/times for both appointments being compared
                         // are the same, creating an overlap.  ex:  DB 1pm start time = user input 1pm start time    OR    DB 2pm end time = user input 2pm end time.
                         isOverlap = true;

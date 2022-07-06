@@ -85,8 +85,10 @@ public class MainMenuController implements Initializable {
         SAcontactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         SAcontactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         SAtypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+       // SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("startString"));  // replaced start with startString to get rid of the T in the tableview for the date and time
+       // SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("endString"));  // replaced end with endString to get rid of the T in the tableview for the date and time
         SAcustNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         SAcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         SAuserNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));

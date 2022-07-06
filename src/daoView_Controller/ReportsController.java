@@ -61,9 +61,13 @@ public class ReportsController implements Initializable {
         TitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         DescCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        SDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        EDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+       // SDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        SDATCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
+       // EDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        EDATCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
         CustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        ApptsByContactTable.getSortOrder().addAll(ApptIDCol);
+
 
         ContactNameEmailTable.setItems(contactDAO.getAllContactsOL());
         ContactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
@@ -118,6 +122,7 @@ public class ReportsController implements Initializable {
             }
         }
         ApptsByContactTable.setItems(filteredAppointmentsOL);
+        ApptsByContactTable.getSortOrder().addAll(ApptIDCol);
 
 
     }
@@ -126,6 +131,14 @@ public class ReportsController implements Initializable {
 
         String month = monthComboBox.getValue();
         String type = typeComboBox.getValue();
+        if((month == null) || (type == null)){            // this section only applies if we MUST have both a month selection made and a type selection made.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Please make a selection from each box.");
+            alert.setContentText("Please make a selection for each of the drop-down boxes in the top section.");
+            alert.showAndWait();
+            return;
+        }
         int numb = AppointmentDAOImpl.numberByMonthAndType(month, type);
         ResultLabel.setText("The total = " + Integer.toString(numb));
 
