@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.MainMenuController">
+<AnchorPane prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.MainMenuController">
    <children>
       <TableView fx:id="custTable" layoutX="40.0" layoutY="144.0" prefHeight="200.0" prefWidth="1422.0">
         <columns>
@@ -25,7 +30,7 @@
             <TableColumn fx:id="SAlocationCol" prefWidth="74.0" text="Location" />
             <TableColumn fx:id="SAcontactNameCol" prefWidth="108.0" text="Contact Name" />
             <TableColumn fx:id="SAcontactCol" prefWidth="50.0" text="Contact" />
-            <TableColumn fx:id="SAtypeCol" prefWidth="128.0" text="Type" />
+            <TableColumn fx:id="SAtypeCol" prefWidth="116.0" text="Type" />
             <TableColumn fx:id="SAsDATCol" prefWidth="140.0" text="Start Date and Time" />
             <TableColumn fx:id="SAeDATCol" prefWidth="140.0" text="End Date and Time" />
             <TableColumn fx:id="SAcustNameCol" editable="false" prefWidth="200.0" text="Customer Name" />

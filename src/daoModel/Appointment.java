@@ -1,6 +1,9 @@
 package daoModel;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Appointment {
     private int apptId;
@@ -35,7 +38,7 @@ public class Appointment {
         this.end = end;
     }
 
-    /*public Appointment(int apptId, String title, int customerId, int userId, String desc, String loc, String contactName, String type, LocalDate sDate, LocalTime sTime, LocalDate eDate, LocalTime eTime) {
+    public Appointment(int apptId, String title, int customerId, int userId, String desc, String loc, String contactName, String type, LocalDate sDate, LocalTime sTime, LocalDate eDate, LocalTime eTime) {
     }
 
     public Appointment(int apptId, String title, int customerId, int userId, String desc, String loc, String contactName, String type, LocalDateTime sLDT, LocalDateTime eLDT) {
@@ -43,7 +46,7 @@ public class Appointment {
     }
 
     public Appointment(int apptId, int custId, int userId, int contactId, String title, String desc, String loc, String type, String custName, String userName, String contactName, Timestamp start, Timestamp end) {
-    }*/
+    }
 
     public Appointment(int apptId, LocalDateTime start) {
         this.apptId = apptId;
