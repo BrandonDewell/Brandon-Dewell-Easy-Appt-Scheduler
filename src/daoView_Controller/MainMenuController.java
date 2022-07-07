@@ -283,4 +283,9 @@ public class MainMenuController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void onActionExit(ActionEvent actionEvent) {
+            System.exit(0);
+        }
+
 }

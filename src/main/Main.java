@@ -52,7 +52,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
-        Locale.setDefault(new Locale("en"));
+     //   Locale.setDefault(new Locale("fr"));  // to do some testing with languages.
+
+
+
+
         /*Locale france = new Locale("fr", "FR");                   // from Malcolm's webinars on localization
 
         Scanner keyboard = new Scanner(System.in);

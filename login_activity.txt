@@ -1,0 +1,13 @@
+User test successfully logged in on 2022-07-06 14:50:22.0
+User test had a failed log-in attempt on 2022-07-06 19:08:38.0
+User test successfully logged in on 2022-07-06 19:09:01.0
+User a had a failed log-in attempt on 2022-07-06 19:31:54.8425579
+User a had a failed log-in attempt on 2022-07-06 19:34:32.796824800 EDT
+User test successfully logged in on 2022-07-06 23:37:32.202661800 UTC
+User test successfully logged in on 2022-07-06 23:46:24.41248000 UTC
+User test successfully logged in on 2022-07-07 13:05:50.216091400 UTC
+User test successfully logged in on 2022-07-07 13:18:41.508983500 UTC
+User admin successfully logged in on 2022-07-07 13:26:05.700977700 UTC
+User test successfully logged in on 2022-07-07 13:44:37.390478900 UTC
+User test successfully logged in on 2022-07-07 14:41:29.439607000 UTC
+User test successfully logged in on 2022-07-07 14:43:46.893037200 UTC

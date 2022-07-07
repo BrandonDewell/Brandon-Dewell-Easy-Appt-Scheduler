@@ -16,14 +16,13 @@ import javafx.stage.Stage;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;  // may need to be import java.io.*;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -77,16 +76,24 @@ public class LogInMenuController implements Initializable {
                             break;  // breaks out of the for loop
                         }
                     }
-                    Date date = new Date();
-                    String loginAttempt = "src/files/login_activity.txt";
-                    FileWriter appendLoginAttempt = new FileWriter(loginAttempt, true);  // for appending of login auditing
+                   // Timestamp time = Timestamp.from(ZonedDateTime.now().toInstant());
+                  //  Timestamp time = Timestamp.from(ZonedDateTime.now().toInstant());
+                    ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
+                    ZonedDateTime zdtUTC = zdt.withZoneSameInstant(ZoneId.of("UTC"));
+                    String time = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnn z" ).format(zdtUTC);  // TODO will this work or does it need to be a timestamp?  requirement C from rubric.  Also, am I saving it to the right location?
+                    // appending of login auditing
+                    String loginAttempt = "login_activity.txt";
+                    FileWriter appendLoginAttempt = new FileWriter(loginAttempt, true);
 
-                    if (userFound){  // TODO know user id and do 15 min alert check .  get all appts with user id  check each if the start time is > now, and start is < now + 15 min.  do this before loading next screen.
+                    if (userFound){
 
                         // login auditing
                         PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
-                        loginAudit.println("User " + userName + " successfully logged in on " + date);
+                        loginAudit.println("User " + userName + " successfully logged in on " + time);
                         loginAudit.close();
+
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();  // get the stage early here at this point.
+                        stage.hide();  // hide the stage from being shown in the background when the 15 minute appt pop up comes up.
 
                        Appointment a = AppointmentDAOImpl.upcomingApptInfo();  // returns minutes between now and the appt time, and the apptId, and assigns those to a.
 
@@ -109,8 +116,10 @@ public class LogInMenuController implements Initializable {
                             Optional<ButtonType> resultInfo = alertInfo.showAndWait();
                         }
 
+                        // load the main menu window
                         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
-                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    //  Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();  // I moved this to line 95 to get the stage early so I can hide it (which was done on line 96) from being in the background of the 15 minute
+                                                                                                        // pop up alert instead of showing it in the background while the alert was up.
                         Scene scene = new Scene(root, 1500, 700);
                         stage.setTitle("Main Menu");
                         stage.setScene(scene);
@@ -119,7 +128,7 @@ public class LogInMenuController implements Initializable {
 
                         // login auditing
                         PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
-                        loginAudit.println("User " + userName + " had a failed log-in attempt on " + date);
+                        loginAudit.println("User " + userName + " had a failed log-in attempt on " + time);
                         loginAudit.close();
 
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -138,64 +147,6 @@ public class LogInMenuController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
     }
-
-
-
-    // copy of above before language changes are made
-
-
-
-
-    /*public void onActionSignIn(ActionEvent actionEvent) {
-        System.out.println("Sign In button is clicked");
-
-            UserDAOImpl udao = new UserDAOImpl();
-            ObservableList<User> userList = udao.getAllUsersOL();
-            boolean userFound = false;
-
-            try {
-                String userName = userNameTxt.getText();
-                String pw = passwordTxt.getText();
-
-                if (userName.isEmpty() || pw.isEmpty()) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(rb.getString("Error"));
-                    alert.setHeaderText(rb.getString("Fields must not be left blank."));
-                    alert.setContentText("Please enter a valid value for each text field.\nUser Name and Password must use characters.");
-                    alert.showAndWait();
-                } else {
-                    for (User u : userList){
-                        if ((u.getUserName().equals(userName)) && (u.getPassword().equals(pw))){
-                            userFound = true;
-                            break;
-                        }
-                    }
-                    if (userFound){
-                        Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
-                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                        Scene scene = new Scene(root, 1200, 700);
-                        stage.setTitle("Main Menu");
-                        stage.setScene(scene);
-                        stage.show();
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Incorrect User Name or Password");
-                        alert.setContentText("Please try again.");
-                        alert.showAndWait();
-
-                        userNameTxt.setText("");
-                        passwordTxt.setText("");
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
-
-
 
 }

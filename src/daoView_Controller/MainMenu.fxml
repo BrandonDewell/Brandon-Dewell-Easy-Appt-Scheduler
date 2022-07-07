@@ -67,5 +67,6 @@
       <RadioButton fx:id="monthRB" layoutX="512.0" layoutY="401.0" mnemonicParsing="false" onAction="#onActionMonthView" text="Month" toggleGroup="$timePeriod" />
       <RadioButton fx:id="allRB" layoutX="587.0" layoutY="401.0" mnemonicParsing="false" onAction="#onActionAllView" selected="true" text="All" toggleGroup="$timePeriod" />
       <Button fx:id="reportsButton" layoutX="1365.0" layoutY="74.0" mnemonicParsing="false" onAction="#onActionViewReports" text="Reports" />
+      <Button fx:id="exitButton" layoutX="1422.0" layoutY="655.0" mnemonicParsing="false" onAction="#onActionExit" text="Exit" />
    </children>
 </AnchorPane>

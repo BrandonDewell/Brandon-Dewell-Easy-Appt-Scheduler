@@ -129,7 +129,7 @@ public class AppointmentController implements Initializable {
 
                 for (Appointment a : allAppts) {
 
-                    if(a.getApptId() == apptid) {  // if apptid found, ignore it
+                    if(a.getApptId() == apptid) {  // TODO if apptid found, ignore it.  Add another customer if case if this comes back from evaluators.  ex: add another if statement if(a.getCustId != custid) { continue; }
                         continue;
                     }
 
