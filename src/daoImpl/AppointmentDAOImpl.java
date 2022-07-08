@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 
 public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql interactions and observable lists here
 
@@ -112,7 +110,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     public ObservableList<Appointment> selectWeekViewOL() throws SQLException {
 
-        int currentDay = LocalDate.now().getDayOfWeek().getValue();
+      //  int currentDay = LocalDate.now().getDayOfWeek().getValue();
         ObservableList<Appointment> weekApptsOL = FXCollections.observableArrayList();
 
         //String sql = "SELECT * FROM APPOINTMENTS WHERE MONTH(Start) = ?";

@@ -107,11 +107,11 @@ public class Appointment {
 
     public String getStartString() {
         return start.toLocalDate().toString() + " " + start.toLocalTime().toString();
-    }
+    }  // TODO use as lambda
 
     public String getEndString() {
         return end.toLocalDate().toString() + " " + end.toLocalTime().toString();
-    }
+    }  // TODO use as lambda
 
     /*public LocalDateTime getsLDT() {
         return start;

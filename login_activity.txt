@@ -11,3 +11,14 @@ User admin successfully logged in on 2022-07-07 13:26:05.700977700 UTC
 User test successfully logged in on 2022-07-07 13:44:37.390478900 UTC
 User test successfully logged in on 2022-07-07 14:41:29.439607000 UTC
 User test successfully logged in on 2022-07-07 14:43:46.893037200 UTC
+User test successfully logged in on 2022-07-07 16:54:12.332646800 UTC
+User test successfully logged in on 2022-07-07 19:05:11.556132400 UTC
+User test had a failed log-in attempt on 2022-07-07 19:18:52.245591600 UTC
+User test successfully logged in on 2022-07-07 19:18:57.594603200 UTC
+User test successfully logged in on 2022-07-07 19:24:42.590715500 UTC
+User admin successfully logged in on 2022-07-07 19:28:15.962398300 UTC
+User test successfully logged in on 2022-07-08 12:16:27.181430400 UTC
+User admin successfully logged in on 2022-07-08 12:24:12.750993600 UTC
+User test successfully logged in on 2022-07-08 12:25:17.797644600 UTC
+User test successfully logged in on 2022-07-08 14:54:42.851864300 UTC
+User admin successfully logged in on 2022-07-08 14:57:02.43539500 UTC

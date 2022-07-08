@@ -1,5 +1,6 @@
 package main;
 
+import daoInt.FISqlSelAll;
 import helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -17,6 +17,29 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
+
+        /*  // lambdas
+
+        public abstract interface SquareInterface {  // could name these interfaces ReportsInterface, SchedulingInterface, NotificationInterface, etc.
+            int squareNumber(int n);
+        }
+
+        SquareInterface variable = parameter -> expression;
+
+        variable.squareNumber(5);  // use where there are no where or for clauses*/
+
+
+
+        //Lambda expression that returns a value
+        /*FIGetRecords message = s -> "Hello " + s;
+        System.out.println(message.getMessage("Brandon"));*/
+        FISqlSelAll sqlAll = s -> "SELECT * FROM " + s;
+        sqlAll.getSqlAll("USERS");
+
+
+
+
+
 
             try{
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));  // 5/12 11:15am this gets the login page loaded
@@ -51,7 +74,7 @@ public class Main extends Application {
 
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
      //   Locale.setDefault(new Locale("fr"));  // to do some testing with languages.
 
 

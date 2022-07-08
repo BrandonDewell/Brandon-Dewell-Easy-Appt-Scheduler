@@ -99,10 +99,10 @@ public class ReportsController implements Initializable {
 
     public void onActionType(ActionEvent actionEvent) {
     }
-
+  // declare lambda here in javadoc.  it implements filter id
     public void onActionContact(ActionEvent actionEvent) {
 
-        ObservableList<Appointment> filteredAppointmentsOL = FXCollections.observableArrayList();
+       // ObservableList<Appointment> filteredAppointmentsOL = FXCollections.observableArrayList();
 
         Contact c = contactComboBox.getValue();
         if(c == null){
@@ -115,12 +115,21 @@ public class ReportsController implements Initializable {
 
             return;
         }
-        AppointmentDAOImpl adao = new AppointmentDAOImpl();
+        /*AppointmentDAOImpl adao = new AppointmentDAOImpl();  // making this into a lambda
         for(Appointment a : adao.getAllAppointmentsOL()){
             if(a.getContactId() == c.getContactId()){
                 filteredAppointmentsOL.add(a);
             }
-        }
+        }*/
+        AppointmentDAOImpl adao = new AppointmentDAOImpl();
+        ObservableList<Appointment> filteredAppointmentsOL = adao.getAllAppointmentsOL().filtered(a -> {
+            if(a.getContactId() == c.getContactId()){
+                return true;
+            }
+            return false;
+        });
+
+
         ApptsByContactTable.setItems(filteredAppointmentsOL);
         ApptsByContactTable.getSortOrder().addAll(ApptIDCol);
 

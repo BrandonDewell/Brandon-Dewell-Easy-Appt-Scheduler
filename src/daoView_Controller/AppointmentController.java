@@ -4,6 +4,7 @@ import daoImpl.AppointmentDAOImpl;
 import daoImpl.ContactDAOImpl;
 import daoImpl.CustomerDAOImpl;
 import daoImpl.UserDAOImpl;
+import daoInt.FISqlSelAll;
 import daoModel.Appointment;
 import daoModel.Contact;
 import daoModel.Customer;
@@ -56,7 +57,13 @@ public class AppointmentController implements Initializable {
         customerIDComboBox.setItems(customerDAO.getAllCustomersOL());
 
         UserDAOImpl userDAO = new UserDAOImpl();
-        userIDComboBox.setItems(userDAO.getAllUsersOL());
+        userIDComboBox.setItems(userDAO.getAllUsersOL());  // TODO Trying to use a lambda here, but failed.
+        /*FIGetRecords uList = () -> {
+
+        }*/
+        //userIDComboBox.setItems(uList);
+        /*FIGetRecords message = s -> "Hello " + s;
+        System.out.println(message.getMessage("Brandon"));*/
 
         ContactDAOImpl contactDAO = new ContactDAOImpl();
         contactComboBox.setItems(contactDAO.getAllContactsOL());

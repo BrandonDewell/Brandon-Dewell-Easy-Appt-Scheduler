@@ -1,5 +1,6 @@
 package daoImpl;
 
+import daoInt.FISqlSelAll;
 import daoInt.IUserDAO;
 import daoModel.User;
 import helper.JDBC;
@@ -11,14 +12,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAOImpl implements IUserDAO {
-
+// TODO description of the lambda goes in the javadoc block here.
     @Override
     public ObservableList<User> getAllUsersOL() {
 
         ObservableList<User> usersOL = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM USERS";
+           // String sql = "SELECT * FROM USERS";  // I am replacing this with a lambda.  Not sure why as it seems simpler to just type it out as done here.
+            FISqlSelAll sqlAll = s -> "SELECT * FROM " + s;  // TODO I used a lambda here, it works, but why even use it here?
+            String sql = sqlAll.getSqlAll("USERS");
+            System.out.println("Lambda sqlAll used.");
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

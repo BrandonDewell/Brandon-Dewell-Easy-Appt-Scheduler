@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
-    Scene scene;
     public TableView<Customer> custTable;
     public TableColumn<Customer, Integer> CRcustIDCol;
     public TableColumn<Customer, String> CRcustNameCol;
@@ -86,9 +85,9 @@ public class MainMenuController implements Initializable {
         SAcontactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         SAtypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
        // SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("startString"));  // replaced start with startString to get rid of the T in the tableview for the date and time
+        SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("startString"));  // replaced start with startString to get rid of the T in the tableview's start column for the date and time.
        // SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-        SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("endString"));  // replaced end with endString to get rid of the T in the tableview for the date and time
+        SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("endString"));  // replaced end with endString to get rid of the T in the tableview's end column for the date and time.
         SAcustNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         SAcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         SAuserNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
@@ -140,7 +139,7 @@ public class MainMenuController implements Initializable {
         }
     }
 
-    public void onActionDeleteCustomer(ActionEvent actionEvent) throws SQLException {
+    public void onActionDeleteCustomer(ActionEvent actionEvent) {
         System.out.println("Delete Customer button clicked.  -- onActionDeleteCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
         Customer temp = custTable.getSelectionModel().getSelectedItem();
@@ -235,8 +234,8 @@ public class MainMenuController implements Initializable {
                 Alert alertInfo = new Alert(Alert.AlertType.INFORMATION, "Please click OK to continue.");
                 alertInfo.setTitle("Deleted");
                 alertInfo.setHeaderText("The Appointment ID number " + temp.getApptId() + " of type " + temp.getType() + " has been deleted.");
-                Optional<ButtonType> resultInfo = alertInfo.showAndWait();
-
+               // Optional<ButtonType> resultInfo = alertInfo.showAndWait();
+                alertInfo.showAndWait();
                 apptTable.setItems(adao.getAllAppointmentsOL());
 
                 /*CustomerDAOImpl dao = new CustomerDAOImpl();
