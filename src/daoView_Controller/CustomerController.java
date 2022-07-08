@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** This class takes user input values and adds or updates customers. */
 public class CustomerController implements Initializable {
 
     private Customer selectedCustomer;
@@ -35,6 +36,10 @@ public class CustomerController implements Initializable {
     public Button cancelButton;
     public Label customerLabel;
 
+    /** This initialize method is the first method to load in this class and it sets up the country combo box with its observable list.
+     @param url The url.
+     @param resourceBundle The resourceBundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("  -- initialize(URL url, ResourceBundle resourceBundle) called from CustomerController.java");
@@ -44,10 +49,17 @@ public class CustomerController implements Initializable {
 
     }
 
+    /** This event handler method for the Save button saves a customer.
+     It has try/catch statements for ignoring IOException errors. It displays ALERT pop up windows with information on correct input values
+     when the user enters incorrect data.  User entered data is checked for empty fields and combo boxes and an Alert pop up window
+     is applied if found, awaiting the user's correction.  If a customer is being updated the information is automatically entered
+     into the appropriate locations, otherwise a customer is being added and those locations are empty.  The controller performs the update
+     or insert into the database and sends the user back to the Main Menu.
+     @param actionEvent An event from an action.
+     */
     public void onActionSave(ActionEvent actionEvent) {
         System.out.println("Customer save button clicked.  -- onActionSave(ActionEvent actionEvent) called in CustomerController.java");
-  // from meeting with Wanda on 6/6 at 8am: get all the info from the customer fields and save in an object. ************************
-        //Customer customer = new Customer();
+
         try {
 
             String name = customerNameTextField.getText();
@@ -91,6 +103,9 @@ public class CustomerController implements Initializable {
 
     }
 
+    /** This event handler method for the Cancel button applies an Alert pop up window and if the user clicks OK, loads the main menu.
+     @param actionEvent An event from an action.
+     */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         System.out.println("Customer cancel button clicked.  -- onActionCancel(ActionEvent actionEvent) called in CustomerController.java");
 
@@ -108,8 +123,10 @@ public class CustomerController implements Initializable {
 
     }
 
-    public void onActionCountry(ActionEvent actionEvent) {  // when country combo box has a value that is selected, this method sets the
-        // options in the state/prov combo box based on the country Id in the country combo box.
+    /** This event handler method sets the options in the State/Providence combo box based on when a Country has been selected in this combo box.
+     * @param actionEvent  An event from an action.
+     * */
+    public void onActionCountry(ActionEvent actionEvent) {
 
         Country c = countryComboBox.getValue();
         FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
@@ -117,6 +134,9 @@ public class CustomerController implements Initializable {
 
     }
 
+    /** This method receives a reference for a customer object and sets its values to text for text fields and combo boxes.
+     @param inCustomer The customer that is sent.
+     */
     public void sendCustomer(Customer inCustomer) {
         selectedCustomer = inCustomer;
 

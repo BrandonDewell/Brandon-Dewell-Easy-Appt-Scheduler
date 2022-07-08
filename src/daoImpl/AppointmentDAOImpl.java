@@ -14,8 +14,12 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/** This method implements an Interface and provides methods to do SQL calls to the database. */
 public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql interactions and observable lists here
 
+/** This method gets an Observable List via a SQL call to the database.
+    @return Returns the allAppointmentsOL observable list of Appointment objects.
+ */
     @Override
     public ObservableList<Appointment> getAllAppointmentsOL() {
 
@@ -58,7 +62,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return allAppointmentsOL;
     }
 
-
+    /** This method gets an Observable List via a SQL call to the database.
+     @return Returns the allAppointmentTypesOL observable list of string objects based on their type.
+     */
     public ObservableList<String> getAllAppointmentTypesOL() {
         ObservableList<String> allAppointmentTypesOL = FXCollections.observableArrayList();
 
@@ -107,7 +113,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     }
 
-
+    /** This method gets an Observable List via a SQL call to the database.
+     @return Returns the weekApptsOL observable list of appointment objects based on the current week.
+     */
     public ObservableList<Appointment> selectWeekViewOL() throws SQLException {
 
       //  int currentDay = LocalDate.now().getDayOfWeek().getValue();
@@ -176,6 +184,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
        // adao.getAllAppointmentsOL();
     }*/
 
+    /** This method gets an Observable List via a SQL call to the database.
+     @return Returns the monthApptsOL observable list of appointment objects based on the current month.
+     */
     public ObservableList<Appointment> selectMonthViewOL() throws SQLException {
 
        // int currentMonth = LocalDate.now().getMonth().getValue();
@@ -218,6 +229,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return monthApptsOL;
     }
 
+    /** This method gets an Observable List via a SQL call to the database.
+     */
     public void selectAllView() throws SQLException {
 
         String sql = "SELECT * FROM APPOINTMENTS";
@@ -243,6 +256,11 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         }
     }
 
+    /** This method gets an Observable List via a SQL call to the database.
+     @param month The month inputted.
+     @param type The type of appointment inputted.
+     @return If information is found, it returns the count (an int) of the number of results otherwise returns -1.
+     */
     public static int numberByMonthAndType(String month, String type){  // This is static because my goal is to not create an instance.
         // I only want to return a number.
         try {
@@ -262,6 +280,10 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return -1;
     }
 
+    /** This method inserts an appointment via a SQL call to the database.
+     @param appointment The appointment object to be inserted.
+     @return Returns the rowsAffected as an int or the int 0.
+     */
     public int insert(Appointment appointment) {
         try {
             String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
@@ -287,6 +309,18 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
+    /** This method inserts an appointment via a SQL call to the database.
+     @param title The title to be inserted.
+     @param description The description to be inserted.
+     @param location The location to be inserted.
+     @param type The type to be inserted.
+     @param start The start LocalDateTime object to be inserted.
+     @param end The end LocalDateTime object to be inserted.
+     @param customerID The customerID to be inserted.
+     @param userID The userID to be inserted.
+     @param contactID The contactId to be inserted.
+     @return Returns the rowsAffected as an int or the int 0.
+     */
     public int insert(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
         try {
             String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
@@ -311,13 +345,15 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     }
 
 
-
+    /** This method selects an appointment via a SQL call to the database.
+     @param appointment The appointment object to be selected. */
     @Override
     public void select(Appointment appointment) {
 
     }
 
-    public void select() throws SQLException {
+    /** This method selects an appointment. */
+     public void select() throws SQLException {
 
         /*if (onActionWeekView.isS){
 
@@ -363,11 +399,18 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     }*/
 
+    /** This method updates an appointment object via a SQL call to the database.
+     @param appointment The appointment object to be updated.
+     @return The int 0 returned. */
     @Override
     public int update(Appointment appointment) {
         return 0;
     }
 
+    /** This method updates an appointment object via a SQL call to the database.
+     @param AppointmentID The AppointmentID int to be updated.
+     @param Type The Type string to be updated.
+     @return rowsAffected The number of rows the SQL statment worked on and returned as an int. */
     public static int update(int AppointmentID, String Type) throws SQLException {  // this function updates the appointment type
         String sql = "UPDATE APPOINTMENTS " +
                 "SET Type = ? " +
@@ -380,6 +423,19 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return rowsAffected;
     }
 
+    /** This method updates an appointment object via a SQL call to the database.
+     @param apptId The apptId int to be updated.
+     @param title The title to be inserted.
+     @param description The description to be inserted.
+     @param location The location to be inserted.
+     @param type The type to be inserted.
+     @param start The start LocalDateTime object to be inserted.
+     @param end The end LocalDateTime object to be inserted.
+     @param customerID The customerID to be inserted.
+     @param userID The userID to be inserted.
+     @param contactID The contactId to be inserted.
+     @return Returns the rowsAffected as an int or the int 0.
+     */
     public int update(int apptId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
         try {
             String sql = "UPDATE APPOINTMENTS " +
@@ -408,8 +464,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
-
-
+    /** This method deletes an appointment object via a SQL call to the database.
+     @param appointment The appointment object with a matching appointmentID to be deleted.
+     @return Returns the rowsAffected as an int or the int 0. */
     @Override
     public int delete(Appointment appointment) {
 
@@ -429,6 +486,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
+    /** This method deletes an appointment object via a SQL call to the database.
+     @param AppointmentID The AppointmentID of the appointment to be deleted.
+     @return Returns the rowsAffected as an int or the int 0. */
     public int delete(int AppointmentID) {
 
         try {
@@ -447,6 +507,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
+    /** This method deletes an appointment object via a SQL call to the database.
+     @param CustomerID The CustomerID of the appointment to be deleted.
+     @return Returns the rowsAffected as an int or the int 0. */
     public int deleteCustAppts(int CustomerID) {
 
         try {
@@ -465,6 +528,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         return 0;
     }
 
+    /** This method provides upcoming information on whether there is an upcoming appointment in the next 15 minutes via a SQL call to the database.
+     @return Returns the appointmentID and time if found, otherwise returns null. */
     public static Appointment upcomingApptInfo() throws SQLException {
 
             String sql = "SELECT * " +
@@ -487,4 +552,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
         return null;
     }
+
+    // SELECT monthname(start) FROM client_schedule.appointments;
+    // select now() from dual;
+
 }

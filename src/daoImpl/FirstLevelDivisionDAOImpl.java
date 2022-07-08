@@ -10,8 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/** This method implements an Interface and provides a method to do a SQL call to the database. */
 public class FirstLevelDivisionDAOImpl implements IFirstLevelDivisionDAO {
 
+    /** This method gets an Observable List via a SQL call to the database.
+     @return Returns the firstLevelDivisionsOL observable list of FirstLevelDivision objects.
+     */
     @Override
     public ObservableList<FirstLevelDivision> getAllFirstLevelDivisionsOL(int countryId) {
 

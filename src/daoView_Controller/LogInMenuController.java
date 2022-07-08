@@ -19,16 +19,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static java.time.ZoneId.systemDefault;
 
+/** This class shows the user's local time zone as text on the window, takes user input values and logs in the user if correct values were
+ entered, appends an entry to a .txt file if the attempt successfully logged in or not, puts up a pop up window for a failed log in,
+ allowing the user to try again, and alerts the user to whether or not there is a scheduled appointment in the next 15 minutes. This
+ window and its pop-up alerts are translated to French or English based on the user's computer language settings.
+ */
 public class LogInMenuController implements Initializable {
     public Button displayMainMenuB;
     public TextField userNameTxt;
@@ -39,24 +42,32 @@ public class LogInMenuController implements Initializable {
     public Label zoneLabel;
     ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
 
-
+    /** This initialize method is the first method to load in this class.  It sets up the time zone label with the local time zone information
+     on the user's computer, and allows English or French translation based on the user's computer language settings.
+     @param url The url.
+     @param resourceBundle The resourceBundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userNameLabel.setText(rb.getString("Username"));
         passwordLabel.setText(rb.getString("Password"));
         displayMainMenuB.setText(rb.getString("SignIn"));
         logInLabel.setText(rb.getString("LogIn"));
-        zoneLabel.setText(rb.getString("Location") + systemDefault().toString());
+        //zoneLabel.setText(rb.getString("Location") + systemDefault().toString());
+        zoneLabel.setText(rb.getString("Location") + systemDefault());
+
     }
 
+    /** This event handler method shows the current time zone of the user's computer.  It allows the user to sign in and checks
+      those credentials with the database via a SQL call.  Correct and incorrect attempts are logged.  When logged in, an pop up
+      alerts the user to whether or not an appointment is scheduled in the next 15 minutes.
+     */
     public void onActionSignIn(ActionEvent actionEvent) {
         System.out.println("Sign In button is clicked");
 
             UserDAOImpl udao = new UserDAOImpl();
-            AppointmentDAOImpl adao = new AppointmentDAOImpl();
             ObservableList<User> userList = udao.getAllUsersOL();
             boolean userFound = false;
-            boolean upcomingAppt = false;
 
             try {
                 String userName = userNameTxt.getText();
@@ -80,7 +91,7 @@ public class LogInMenuController implements Initializable {
                   //  Timestamp time = Timestamp.from(ZonedDateTime.now().toInstant());
                     ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
                     ZonedDateTime zdtUTC = zdt.withZoneSameInstant(ZoneId.of("UTC"));
-                    String time = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnn z" ).format(zdtUTC);  // TODO will this work or does it need to be a timestamp?  requirement C from rubric.  Also, am I saving it to the right location?
+                    String time = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnn z" ).format(zdtUTC);
                     // appending of login auditing
                     String loginAttempt = "login_activity.txt";
                     FileWriter appendLoginAttempt = new FileWriter(loginAttempt, true);
@@ -142,11 +153,8 @@ public class LogInMenuController implements Initializable {
                         passwordTxt.setText("");
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
+            } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
     }
-
 }

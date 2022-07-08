@@ -4,7 +4,6 @@ import daoImpl.AppointmentDAOImpl;
 import daoImpl.ContactDAOImpl;
 import daoImpl.CustomerDAOImpl;
 import daoImpl.UserDAOImpl;
-import daoInt.FISqlSelAll;
 import daoModel.Appointment;
 import daoModel.Contact;
 import daoModel.Customer;
@@ -29,6 +28,7 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** This class takes user input values and adds or updates appointments. */
 public class AppointmentController implements Initializable {
 
     private Appointment selectedAppointment;
@@ -49,6 +49,10 @@ public class AppointmentController implements Initializable {
     public Button saveButton;
     public Button cancelButton;
 
+    /** This initialize method is the first method to load in this class and it sets up combo boxes with observable lists.
+     @param url The url.
+     @param resourceBundle The resourceBundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("-- initialize(URL url, ResourceBundle resourceBundle) called from AppointmentController.java");
@@ -57,13 +61,7 @@ public class AppointmentController implements Initializable {
         customerIDComboBox.setItems(customerDAO.getAllCustomersOL());
 
         UserDAOImpl userDAO = new UserDAOImpl();
-        userIDComboBox.setItems(userDAO.getAllUsersOL());  // TODO Trying to use a lambda here, but failed.
-        /*FIGetRecords uList = () -> {
-
-        }*/
-        //userIDComboBox.setItems(uList);
-        /*FIGetRecords message = s -> "Hello " + s;
-        System.out.println(message.getMessage("Brandon"));*/
+        userIDComboBox.setItems(userDAO.getAllUsersOL());
 
         ContactDAOImpl contactDAO = new ContactDAOImpl();
         contactComboBox.setItems(contactDAO.getAllContactsOL());
@@ -75,8 +73,15 @@ public class AppointmentController implements Initializable {
 
     }
 
-
-    public void onActionSave(ActionEvent actionEvent) throws IOException {
+    /** This event handler method for the Save button saves an appointment.
+     It has try statements for checking for input errors by the user and a catch statement for IOExceptions.  It displays Alert pop up windows
+     with information on correct input values when the user enters incorrect data.  If an appointment is being updated the information
+     is automatically entered into the appropriate locations, otherwise an appointment is being added and those locations are empty.  The
+     controller checks if there is an overlap in the time of a previously scheduled appointment and displays a popup error if so,
+     otherwise it performs the update or insert into the database and sends the user back to the Main Menu.
+     @param actionEvent An event from an action.
+     */
+    public void onActionSave(ActionEvent actionEvent) {
         System.out.println("Appointment save button clicked.  -- onActionSave(ActionEvent actionEvent) called in AppointmentController.java\"");
 
         try {
@@ -107,18 +112,21 @@ public class AppointmentController implements Initializable {
                         Please make a selection in the drop down boxes.
                         Select a date by clicking on the calendar icon.""");
                 alert.showAndWait();
+                return;
             } else if (sTime.isAfter(eTime) || sTime.equals(eTime)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Appointment start time must be before the appointment end time.\nStart and end times of an appointment must not be the same.");
                 alert.setContentText("Please choose a correct value for each drop-down box.");
                 alert.showAndWait();
+                return;
             } else if (sDate.isAfter(eDate)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("The appointment must end on the same day as the start date or later.");
                 alert.setContentText("Please choose a correct value for each date.");
                 alert.showAndWait();
+                return;
             } else {
                 LocalDateTime sLDT = LocalDateTime.of(sDate, sTime);
                 LocalDateTime eLDT = LocalDateTime.of(eDate, eTime);
@@ -247,6 +255,9 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /** This event handler method for the Cancel button applies an Alert pop up window and if the user clicks OK, loads the main menu.
+     @param actionEvent An event from an action.
+     */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         System.out.println("Appointment cancel button clicked");
 
@@ -263,12 +274,17 @@ public class AppointmentController implements Initializable {
         }
     }
 
-    public void onActionCustomerID(ActionEvent actionEvent) throws IOException {
-        Customer c = customerIDComboBox.getValue();
+    /** This event handler method for the customer combo box displays the observable list of customers.
+     @param actionEvent An event from an action.
+     */
+    public void onActionCustomerID(ActionEvent actionEvent) {
         ContactDAOImpl contactDAO = new ContactDAOImpl();
         contactComboBox.setItems(contactDAO.getAllContactsOL());
     }
 
+    /** This method receives a reference for an appointment object and sets its values to text for text fields,  combo boxes, and date picker boxes.
+     @param inAppointment The appointment that is sent.
+     */
     public void sendAppointment(Appointment inAppointment) {
         selectedAppointment = inAppointment;
 
@@ -307,8 +323,11 @@ public class AppointmentController implements Initializable {
 
     }
 
+    /** This event handler method for the Start Date date picker box assigns a date to the text field part of the box when a date
+        is chosen from the drop down calendar.
+     @param actionEvent  An event from an action. */
     public void onActionStartDate(ActionEvent actionEvent) {
-
+        System.out.println("onActionStartDate event handler activated.");
         //if(startDateDatePicker.getValue() < endDateDatePicker.){
 
     }

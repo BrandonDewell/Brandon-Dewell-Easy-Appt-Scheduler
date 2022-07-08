@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** This class creates an app that displays lists of customers and appointments. */
 public class MainMenuController implements Initializable {
 
     public TableView<Customer> custTable;
@@ -58,6 +59,11 @@ public class MainMenuController implements Initializable {
     public RadioButton allRB;
     public ToggleGroup timePeriod;
 
+    /** This initialize method is the first method to load in this class.
+     It sets the Customer and Appointment tables with data from observable lists.
+     @param url The url.
+     @param resourceBundle The resourceBundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         System.out.println("Main Menu is initialized  -- initialize(URL url, ResourceBundle resourceBundle) called from MainMenuController.java");
@@ -95,8 +101,11 @@ public class MainMenuController implements Initializable {
         apptTable.getSortOrder().addAll(SAapptIDCol);
     }
 
+    /** This event handler method loads the Customer window without sending any data over.
+     @param actionEvent An event from an action.
+     */
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
-        System.out.println("Add Customer button clicked.  -- onActionAddCustomer(ActionEvent actionEvent) called in MainMenuController.java");  // to test that the event handler is working
+        System.out.println("Add Customer button clicked.  -- onActionAddCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -106,6 +115,10 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /** This event handler method loads the Customer window and sends that customer's associated data over.  It checks if a
+      selection was made and if not puts up an alert pop up window giving instructions to make a selection first.
+     @param actionEvent An event from an action.
+     */
     public void onActionUpdateCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Customer button clicked.  -- onActionUpdateCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -139,6 +152,12 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    /** This event handler method checks if a customer is selected from the top table and if not alerts the user with a pop up window
+      giving instructions to select a customer.  When a customer is selected and this button is clicked, another alert window pops up
+     confirming the choice of deleting a customer and their appointments (if any are scheduled) as a final precaution.  When confirmed,
+     both the customer and any associated appointments with that customer are deleted.
+     @param actionEvent An event from an action.
+     */
     public void onActionDeleteCustomer(ActionEvent actionEvent) {
         System.out.println("Delete Customer button clicked.  -- onActionDeleteCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -151,7 +170,7 @@ public class MainMenuController implements Initializable {
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm you would like to delete the selected " +
-                    "customer by clicking the OK button.");
+                    "customer and their appointments (if any) by clicking the OK button.");
             alert.setTitle("Deleting a Customer");
             alert.setHeaderText("Are you sure?");
             Optional<ButtonType> result = alert.showAndWait();
@@ -169,6 +188,9 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    /** This event handler method loads the Appointment window without sending any data over.
+     @param actionEvent An event from an action.
+     */
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("Add Appointment button clicked.  -- onActionAddAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -180,6 +202,10 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /** This event handler method loads the Appointment window and sends that appointment's associated data over.  It checks if a
+     selection was made and if not puts up an alert pop up window giving instructions to make a selection first.
+     @param actionEvent An event from an action.
+     */
     public void onActionUpdateAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Appointment button clicked.  -- onActionUpdateAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -211,6 +237,11 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /** This event handler method checks if an appointment is selected from the bottom table and if not alerts the user with a pop up window
+     giving instructions to select an appointment.  When an appointment is selected and this button is clicked, another alert window pops up
+     confirming the choice of deleting an appointment as a final precaution.  When confirmed the appointment is deleted.
+     @param actionEvent An event from an action.
+     */
     public void onActionDeleteAppointment(ActionEvent actionEvent) {
         System.out.println("Delete Appointment button clicked.  -- onActionDeleteAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -245,7 +276,10 @@ public class MainMenuController implements Initializable {
         }
     }
 
-
+    /** This event handler method for the Week radio button calls another method to check the database for appointments scheduled
+     in the current week and displays only those filtered appointments in the bottom table.
+     @param actionEvent An event from an action.
+     */
     public void onActionWeekView(ActionEvent actionEvent) throws SQLException {
         System.out.println("Week radio button clicked.  -- onActionWeekView(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -255,6 +289,10 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /** This event handler method for the Month radio button calls another method to check the database for appointments scheduled in
+     the current month and displays only those filtered appointments in the bottom table.
+     @param actionEvent An event from an action.
+     */
     public void onActionMonthView(ActionEvent actionEvent) throws SQLException {
         System.out.println("Month radio button clicked.  -- onActionMonthView(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -264,6 +302,10 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /** This event handler method for the All radio button calls another method to check the database for all of the appointments
+     scheduled and displays those in the bottom table.
+     @param actionEvent An event from an action.
+     */
     public void onActionAllView(ActionEvent actionEvent) {
         System.out.println("All radio button clicked.  -- onActionAllView(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -272,6 +314,9 @@ public class MainMenuController implements Initializable {
         apptTable.getSortOrder().addAll(SAapptIDCol);
     }
 
+    /** This event handler method for the Reports button loads the Reports menu window.
+     @param actionEvent An event from an action.
+     */
     public void onActionViewReports(ActionEvent actionEvent) throws IOException {
         System.out.println("Reports button clicked.  -- onActionViewReports(ActionEvent actionEvent) called in MainMenuController.java");
 
@@ -283,6 +328,9 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /** This event handler method for the Exit button closes the program.
+     @param actionEvent An event from an action.
+     */
     public void onActionExit(ActionEvent actionEvent) {
             System.exit(0);
         }

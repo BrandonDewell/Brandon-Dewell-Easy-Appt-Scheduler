@@ -10,8 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CustomerDAOImpl implements ICustomerDAO {  // write sql interactions and observable lists here
+/** This method implements an Interface and provides methods to do  SQL calls to the database. */
+public class CustomerDAOImpl implements ICustomerDAO {
 
+    /** This method gets an Observable List via a SQL call to the database.
+     @return Returns the allCustomersOL observable list of Customer objects.
+     */
     public ObservableList<Customer> getAllCustomersOL() {
 
         ObservableList<Customer> allCustomersOL = FXCollections.observableArrayList();
@@ -43,7 +47,10 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
         return allCustomersOL;
     }
 
-
+    /** This method inserts a customer via a SQL call to the database.
+     @param customer The customer object to be inserted.
+     @return Returns the rowsAffected as an int or the int 0.
+     */
     public int insert(Customer customer) {
         try {
             String sql = "INSERT INTO CUSTOMERS VALUES (NULL, ?, ?, ?, ?, NULL, NULL, NULL, NULL, ?)";
@@ -71,19 +78,17 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
         return rowsAffected;
     }*/
 
+    /** This method selects a customer via a SQL call to the database.
+     @param customer The customer object to be selected.
+     */
     public void select(Customer customer) {
-       /* try {
-            String sql = "SELECT * FROM CUSTOMERS WHERE Customer_ID = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, customer.getCustomerId());
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return 0;
-        }*/
+
     }
 
+    /** This method updates a customer via a SQL call to the database.
+     @param customer The customer object to be updated.
+     @return Returns the rowsAffected as an int or the int 0.
+     */
     @Override
     public int update(Customer customer) {
         try {
@@ -103,15 +108,24 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
         }
     }
 
-    /*public static int update(int fruitId, String fruitName) throws SQLException {
-        String sql = "UPDATE FRUITS SET Fruit_ID = ? WHERE FruitName = ?";
+    /** This method updates a customer via a SQL call to the database.
+     @param CustomerID The customerID int to be matched in the database to do the update.
+     @param CustomerName The customer name string to be matched in the database to do the update.
+     @return Returns the rowsAffected as an int or the int 0.
+     */
+    public static int update(int CustomerID, String CustomerName) throws SQLException {  // this function updates the customer name
+        String sql = "UPDATE CUSTOMERS SET Customer_Name = ? WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, fruitId);
-        ps.setString(2, fruitName);
+        ps.setString(1, CustomerName);
+        ps.setInt(2, CustomerID);
         int rowsAffected = ps.executeUpdate();
+        System.out.println("The number of rows affected from the update() call is " + rowsAffected);
         return rowsAffected;
-    }*/
+    }
 
+    /** This method deletes an appointment object via a SQL call to the database.
+     @param customer The customer object with a matching customerID in the database to be deleted.
+     @return Returns the rowsAffected as an int or the int 0. */
     @Override
     public int delete(Customer customer) {
         try {
@@ -128,16 +142,9 @@ public class CustomerDAOImpl implements ICustomerDAO {  // write sql interaction
         }
     }
 
-    public static int update(int CustomerID, String CustomerName) throws SQLException {  // this function updates the customer name
-        String sql = "UPDATE CUSTOMERS SET Customer_Name = ? WHERE Customer_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, CustomerName);
-        ps.setInt(2, CustomerID);
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("The number of rows affected from the update() call is " + rowsAffected);
-        return rowsAffected;
-    }
-
+    /** This method deletes an appointment object via a SQL call to the database.
+     @param CustomerID The customerId int with a matching customerID in the database to be deleted.
+     @return Returns the rowsAffected as an int. */
     public int delete(int CustomerID) throws SQLException {
         String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

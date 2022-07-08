@@ -10,8 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/** This method implements an Interface and provides a method to do a SQL call to the database. */
 public class CountryDAOImpl implements ICountryDAO {
 
+    /** This method gets an Observable List via a SQL call to the database.
+     @return Returns the countriesOL observable list of Country objects.
+     */
     @Override
     public ObservableList<Country> getAllCountriesOL() {
 
@@ -32,7 +36,6 @@ public class CountryDAOImpl implements ICountryDAO {
         catch (SQLException ex){
             ex.printStackTrace();
         }
-
         return countriesOL;
     }
 
