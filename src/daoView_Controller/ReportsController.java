@@ -118,6 +118,7 @@ public class ReportsController implements Initializable {
 
     /** This event handler method for the Contact combo box has an observable list of contacts to make a selection from.  It utilizes a
      lambda expression to filter the list based on the contact ID selected from the combo box, and displays that filtered list in the table.
+     @param actionEvent An event from an action.
      */
     public void onActionContact(ActionEvent actionEvent) {
 
@@ -128,8 +129,11 @@ public class ReportsController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Fields must not be left blank.\nA drop down selection must be made.");
-            alert.setContentText("Please enter a valid value for each text field.\nTitle, Description, Location, and Type " +
-                    "must use characters.\nPlease make a selection in the drop down boxes.\nSelect a date by clicking on the date chooser button.");
+            alert.setContentText("""
+                    Please enter a valid value for each text field.
+                    Title, Description, Location, and Type must use characters.
+                    Please make a selection in the drop down boxes.
+                    Select a date by clicking on the date chooser button.""");
             alert.showAndWait();
 
             return;
@@ -154,6 +158,7 @@ public class ReportsController implements Initializable {
 
     /** This event handler method for the Cancel button applies an Alert pop up window and if the user clicks OK, loads the main menu.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         System.out.println("Reports cancel button clicked");

@@ -103,6 +103,7 @@ public class MainMenuController implements Initializable {
 
     /** This event handler method loads the Customer window without sending any data over.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("Add Customer button clicked.  -- onActionAddCustomer(ActionEvent actionEvent) called in MainMenuController.java");
@@ -118,6 +119,7 @@ public class MainMenuController implements Initializable {
     /** This event handler method loads the Customer window and sends that customer's associated data over.  It checks if a
       selection was made and if not puts up an alert pop up window giving instructions to make a selection first.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionUpdateCustomer(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Customer button clicked.  -- onActionUpdateCustomer(ActionEvent actionEvent) called in MainMenuController.java");
@@ -190,6 +192,7 @@ public class MainMenuController implements Initializable {
 
     /** This event handler method loads the Appointment window without sending any data over.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("Add Appointment button clicked.  -- onActionAddAppointment(ActionEvent actionEvent) called in MainMenuController.java");
@@ -205,6 +208,7 @@ public class MainMenuController implements Initializable {
     /** This event handler method loads the Appointment window and sends that appointment's associated data over.  It checks if a
      selection was made and if not puts up an alert pop up window giving instructions to make a selection first.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionUpdateAppointment(ActionEvent actionEvent) throws IOException {
         System.out.println("Update Appointment button clicked.  -- onActionUpdateAppointment(ActionEvent actionEvent) called in MainMenuController.java");
@@ -279,6 +283,7 @@ public class MainMenuController implements Initializable {
     /** This event handler method for the Week radio button calls another method to check the database for appointments scheduled
      in the current week and displays only those filtered appointments in the bottom table.
      @param actionEvent An event from an action.
+     @throws SQLException  If a database access exception occurred.
      */
     public void onActionWeekView(ActionEvent actionEvent) throws SQLException {
         System.out.println("Week radio button clicked.  -- onActionWeekView(ActionEvent actionEvent) called in MainMenuController.java");
@@ -292,6 +297,7 @@ public class MainMenuController implements Initializable {
     /** This event handler method for the Month radio button calls another method to check the database for appointments scheduled in
      the current month and displays only those filtered appointments in the bottom table.
      @param actionEvent An event from an action.
+     @throws SQLException  If a database access exception occurred.
      */
     public void onActionMonthView(ActionEvent actionEvent) throws SQLException {
         System.out.println("Month radio button clicked.  -- onActionMonthView(ActionEvent actionEvent) called in MainMenuController.java");
@@ -316,6 +322,7 @@ public class MainMenuController implements Initializable {
 
     /** This event handler method for the Reports button loads the Reports menu window.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionViewReports(ActionEvent actionEvent) throws IOException {
         System.out.println("Reports button clicked.  -- onActionViewReports(ActionEvent actionEvent) called in MainMenuController.java");

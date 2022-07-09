@@ -1,9 +1,6 @@
 package daoModel;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /** This class manipulates appointments. */
 public class Appointment {
@@ -22,6 +19,7 @@ public class Appointment {
     private LocalDateTime start;
     private LocalDateTime end;
 
+
     /** This method is a constructor for Appointments.
      @param apptId The appointment ID to be constructed.
      @param customerId The customer ID to be constructed.
@@ -37,7 +35,6 @@ public class Appointment {
      @param start The start LocalDateTime to be constructed.
      @param end The end LocalDateTime to be constructed.
      */
-
     public Appointment(int apptId, int customerId, int userId, int contactId, String title, String description, String location, String type, String customerName, String userName, String contactName, LocalDateTime start, LocalDateTime end) {
         this.apptId = apptId;
         this.customerId = customerId;
@@ -54,56 +51,67 @@ public class Appointment {
         this.end = end;
     }
 
-    /** This method is a constructor for Appointments.
-     @param apptId The appointment ID to be constructed.
-     @param title The title to be constructed.
-     @param customerId The customer ID to be constructed.
-     @param userId The user ID to be constructed.
-     @param desc The description to be constructed.
-     @param loc The location to be constructed.
-     @param contactName The contact name to be constructed.
-     @param type The type to be constructed.
-     @param sDate The start LocalDate to be constructed.
-     @param sTime The start LocalTime to be constructed.
-     @param eDate The end LocalDate to be constructed.
-     @param eTime The end LocalTime to be constructed.
-     */
-    public Appointment(int apptId, String title, int customerId, int userId, String desc, String loc, String contactName, String type, LocalDate sDate, LocalTime sTime, LocalDate eDate, LocalTime eTime) {
-    }
+//    * This method is a constructor for Appointments.
+//     @param apptId The appointment ID to be constructed.
+//     @param title The title to be constructed.
+//     @param customerId The customer ID to be constructed.
+//     @param userId The user ID to be constructed.
+//     @param description The description to be constructed.
+//     @param location The location to be constructed.
+//     @param contactName The contact name to be constructed.
+//     @param type The type to be constructed.
+//     @param sDate The start LocalDate to be constructed.
+//     @param sTime The start LocalTime to be constructed.
+//     @param eDate The end LocalDate to be constructed.
+//     @param eTime The end LocalTime to be constructed.
+//    public Appointment(int apptId, String title, int customerId, int userId, String description, String location, String contactName, String type, LocalDate sDate, LocalTime sTime, LocalDate eDate, LocalTime eTime) {
+//        this.apptId = apptId;
+//        this.title = title;
+//        this.customerId = customerId;
+//        this.userId = userId;
+//        this.description = description;
+//        this.location = location;
+//        this.contactName = contactName;
+//        this.type = type;
+//        this.sDate = sDate;
+//        this.sTime = sTime;
+//        this.eDate = eDate;
+//        this.eTime = eTime;
+//    }
 
-    /** This method is a constructor for Appointments.
-     @param apptId The appointment ID to be constructed.
-     @param title The title to be constructed.
-     @param customerId The customer ID to be constructed.
-     @param userId The user ID to be constructed.
-     @param desc The description to be constructed.
-     @param loc The location to be constructed.
-     @param contactName The contact name to be constructed.
-     @param type The type to be constructed.
-     @param sLDT The start LocalDateTime to be constructed.
-     @param eLDT The end LocalDateTime to be constructed.
-     */
-    public Appointment(int apptId, String title, int customerId, int userId, String desc, String loc, String contactName, String type, LocalDateTime sLDT, LocalDateTime eLDT) {
+//    * This method is a constructor for Appointments.
+//     @param apptId The appointment ID to be constructed.
+//     @param title The title to be constructed.
+//     @param customerId The customer ID to be constructed.
+//     @param userId The user ID to be constructed.
+//     @param desc The description to be constructed.
+//     @param loc The location to be constructed.
+//     @param contactName The contact name to be constructed.
+//     @param type The type to be constructed.
+//     @param sLDT The start LocalDateTime to be constructed.
+//     @param eLDT The end LocalDateTime to be constructed.
+//
+//    public Appointment(int apptId, String title, int customerId, int userId, String desc, String loc, String contactName, String type, LocalDateTime sLDT, LocalDateTime eLDT) {
+//
+//    }
 
-    }
-
-    /** This method is a constructor for Appointments.
-     @param apptId The appointment ID to be constructed.
-     @param custId The customer ID to be constructed.
-     @param userId The user ID to be constructed.
-     @param contactId The contact ID to be constructed.
-     @param title The title to be constructed.
-     @param desc The description to be constructed.
-     @param loc The location to be constructed.
-     @param type The type to be constructed.
-     @param custName The customer name to be constructed.
-     @param userName The user name to be constructed.
-     @param contactName The contact name to be constructed.
-     @param start The start Timestamp to be constructed.
-     @param end The end Timestamp to be constructed.
-     */
-    public Appointment(int apptId, int custId, int userId, int contactId, String title, String desc, String loc, String type, String custName, String userName, String contactName, Timestamp start, Timestamp end) {
-    }
+//    * This method is a constructor for Appointments.
+//     @param apptId The appointment ID to be constructed.
+//     @param custId The customer ID to be constructed.
+//     @param userId The user ID to be constructed.
+//     @param contactId The contact ID to be constructed.
+//     @param title The title to be constructed.
+//     @param desc The description to be constructed.
+//     @param loc The location to be constructed.
+//     @param type The type to be constructed.
+//     @param custName The customer name to be constructed.
+//     @param userName The user name to be constructed.
+//     @param contactName The contact name to be constructed.
+//     @param start The start Timestamp to be constructed.
+//     @param end The end Timestamp to be constructed.
+//
+//    public Appointment(int apptId, int custId, int userId, int contactId, String title, String desc, String loc, String type, String custName, String userName, String contactName, Timestamp start, Timestamp end) {
+//    }
 
     /** This method is a constructor for Appointments.
      @param apptId The appointment ID to be constructed.
@@ -114,116 +122,115 @@ public class Appointment {
         this.start = start;
     }
 
-    /**
-     @ return the customer name
+    /**  This method gets the customer name.
+     @return Returns the customer name.
      */
     public String getCustomerName() {
         return customerName;
     }
 
-    /**
-     @ return the user name
+    /**  This method gets the user name.
+     @return Returns the user name.
      */
     public String getUserName() {
         return userName;
     }
 
-    /**
-     @ return the contact name
+    /**  This method gets the contact name.
+     @return Returns the contact name.
      */
     public String getContactName() {
         return contactName;
     }
 
-    /**
-     @ return the appointment ID
+    /** This method gets the appointment ID.
+     @return Returns the appointment ID.
      */
     public int getApptId() {
         return apptId;
     }
 
-    /**
-     @ return the title
+    /** This method gets the title.
+     @return Returns the title.
      */
     public String getTitle() {
         return title;
     }
 
-    /**
-     @ return the description
+    /** This method gets the description.
+     @return Returns the description.
      */
     public String getDescription() {
         return description;
     }
 
-    /**
-     @ return the location
+    /**  This method gets the location.
+     @return Returns the location.
      */
     public String getLocation() {
         return location;
     }
 
-    /**
-     @ return the type
+    /**  This method gets the type.
+     @return Returns the type.
      */
     public String getType() {
         return type;
     }
 
-    /**
-     @ return the start LocalDateTime
+    /**  This method gets the start LocalDateTime.
+     @return Returns the start LocalDateTime.
      */
     public LocalDateTime getStart() {
         return start; }
 
-    /**
-     @ return the end LocalDateTime
+    /**  This method gets the end LocalDateTime.
+     @return Returns the end LocalDateTime.
      */
     public LocalDateTime getEnd() {
         return end;
     }
 
-    /**
-     @ return the customer ID
+    /**  This method gets the customer ID.
+     @return Returns the customer ID.
      */
     public int getCustomerId() {
         return customerId;
     }
 
-    /**
-     @ return the user ID
+    /**  This method gets the user ID.
+     @return Returns the user ID.
      */
     public int getUserId() {
         return userId;
     }
 
-    /**
-     @ return the contact ID
+    /**  This method gets the contact ID.
+     @return Returns the contact ID.
      */
     public int getContactId() {
         return contactId;
     }
 
-    /**
-     @ return the start LocalDate and start LocalTime
+    /**  This method gets the start String.
+     @return Returns the start LocalDate and start LocalTime in a string.
      */
     public String getStartString() {
         return start.toLocalDate().toString() + " " + start.toLocalTime().toString();
     }
 
-    /**
-     @ return the end LocalDate and end LocalTime
+    /**  This method gets the end String.
+     @return Returns the end LocalDate and end LocalTime in a string.
      */
     public String getEndString() {
         return end.toLocalDate().toString() + " " + end.toLocalTime().toString();
     }
 
-    /**
-     @ return the type
-     */
-    @Override
-    public String toString(){
+    //This method changes the observable list Customer_ID combo box choices in the add/update appointment window to have both customer ID and customer name.
+    //@ return Returns the type.
+    /*@Override
+    public String toString(){  // not used
         return (type);
-    }
+    }*/
 
 }

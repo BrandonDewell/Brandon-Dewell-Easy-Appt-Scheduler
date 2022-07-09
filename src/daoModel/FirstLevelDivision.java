@@ -8,9 +8,9 @@ public class FirstLevelDivision {
     private int countryId;
 
     /** This method is a constructor for first level divisions.
-     @param divisionId The division Id to be constructed.
+     @param divisionId The division ID to be constructed.
      @param division The division to be constructed.
-     @param countryId The country Id to be constructed.
+     @param countryId The country ID to be constructed.
      */
     public FirstLevelDivision(int divisionId, String division, int countryId) {
         this.divisionId = divisionId;
@@ -18,29 +18,29 @@ public class FirstLevelDivision {
         this.countryId = countryId;
     }
 
-    /**
-     @ return the division ID
+    /**  This method gets the division ID.
+     @return Returns the division ID.
      */
     public int getDivisionId() {
         return divisionId;
     }
 
-    /**
-     @ return the division
+    /**  This method gets the division.
+     @return Returns the division.
      */
     public String getDivision() {
         return division;
     }
 
-    /**
-     @ return the country ID
+    /**  This method gets the country ID.
+     @return Returns the country ID.
      */
     public int getCountryId() {
         return countryId;
     }
 
-    /**
-     @ return the String of division ID and division
+    /**  This method changes the observable list State/Province combo box choices in the add/update customer window to have both division ID and division.
+     @return Returns the String of division ID and division in a string.
      */
     @Override
     public String toString(){

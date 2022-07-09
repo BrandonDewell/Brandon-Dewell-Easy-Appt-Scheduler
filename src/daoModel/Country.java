@@ -14,22 +14,22 @@ public class Country {
         this.countryName = countryName;
     }
 
-    /**
-     @ return the country ID
+    /**  This method gets the country ID.
+     @return Returns the country ID.
      */
     public int getCountryId() {
         return countryId;
     }
 
-    /**
-     @ return the country name
+    /**  This method gets the country name.
+     @return Returns the country name.
      */
     public String getCountryName() {
         return countryName;
     }
 
-    /**
-     @ return the String of country ID and country name
+    /**  This method changes the observable list Country combo box choices in the add/update customer window to have both country ID and country name.
+     @return Returns the String of country ID and country name in a string.
      */
     @Override
     public String toString(){

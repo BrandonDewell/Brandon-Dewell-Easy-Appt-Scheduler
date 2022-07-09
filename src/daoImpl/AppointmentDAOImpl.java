@@ -115,6 +115,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     /** This method gets an Observable List via a SQL call to the database.
      @return Returns the weekApptsOL observable list of appointment objects based on the current week.
+     @throws SQLException  If a database access exception occurred.
      */
     public ObservableList<Appointment> selectWeekViewOL() throws SQLException {
 
@@ -186,6 +187,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     /** This method gets an Observable List via a SQL call to the database.
      @return Returns the monthApptsOL observable list of appointment objects based on the current month.
+     @throws SQLException  If a database access exception occurred.
      */
     public ObservableList<Appointment> selectMonthViewOL() throws SQLException {
 
@@ -219,8 +221,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
                 /*LocalDateTime sLDT = start.toLocalDateTime();
                 LocalDateTime eLDT = end.toLocalDateTime();*/
 
-
-            if(Utility.isCurrentMonth(start.toLocalDate()) == true){    // "start.toLocalDateTime().toLocalDate()" is what you would call doing a "cascading method call" or somthing similar.  - from meeting with Juan 6/24 at 9:15am.
+            //if(Utility.isCurrentMonth(start.toLocalDate()) == true){  // original unsimlified version
+            if(Utility.isCurrentMonth(start.toLocalDate())){    // "start.toLocalDateTime().toLocalDate()" is what you would call doing a "cascading method call" or somthing similar.  - from meeting with Juan 6/24 at 9:15am.
                 Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
                 monthApptsOL.add(a);
             }
@@ -230,6 +232,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     }
 
     /** This method gets an Observable List via a SQL call to the database.
+     * @throws SQLException  If a database access exception occurred.
      */
     public void selectAllView() throws SQLException {
 
@@ -252,7 +255,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
                 /*LocalDateTime sLDT = start.toLocalDateTime();
                 LocalDateTime eLDT = end.toLocalDateTime();*/
-            Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
+            new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
         }
     }
 
@@ -352,7 +355,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     }
 
-    /** This method selects an appointment. */
+    /** This method selects an appointment.
+     * @throws SQLException  If a database access exception occurred.
+     */
      public void select() throws SQLException {
 
         /*if (onActionWeekView.isS){
@@ -401,7 +406,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
 
     /** This method updates an appointment object via a SQL call to the database.
      @param appointment The appointment object to be updated.
-     @return The int 0 returned. */
+     @return The int 0 returned.
+     */
     @Override
     public int update(Appointment appointment) {
         return 0;
@@ -410,7 +416,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     /** This method updates an appointment object via a SQL call to the database.
      @param AppointmentID The AppointmentID int to be updated.
      @param Type The Type string to be updated.
-     @return rowsAffected The number of rows the SQL statment worked on and returned as an int. */
+     @return rowsAffected The number of rows the SQL statment worked on and returned as an int.
+     @throws SQLException  If a database access exception occurred.
+     */
     public static int update(int AppointmentID, String Type) throws SQLException {  // this function updates the appointment type
         String sql = "UPDATE APPOINTMENTS " +
                 "SET Type = ? " +
@@ -529,7 +537,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
     }
 
     /** This method provides upcoming information on whether there is an upcoming appointment in the next 15 minutes via a SQL call to the database.
-     @return Returns the appointmentID and time if found, otherwise returns null. */
+     @return Returns the appointmentID and time if found, otherwise returns null.
+     @throws SQLException  If a database access exception occurred.*/
     public static Appointment upcomingApptInfo() throws SQLException {
 
             String sql = "SELECT * " +

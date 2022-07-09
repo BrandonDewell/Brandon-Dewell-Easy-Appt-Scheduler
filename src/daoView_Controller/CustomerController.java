@@ -74,8 +74,10 @@ public class CustomerController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Fields must not be left blank.\nDrop down selection must be made.");
-                alert.setContentText("Please enter a valid value for each text field.\nCustomer Name, Address, Postal Code, and Phone " +
-                        "Number must use characters.\nPlease make a selection in the drop down boxes.");
+                alert.setContentText("""
+                        Please enter a valid value for each text field.
+                        Customer Name, Address, Postal Code, and Phone Number must use characters.
+                        Please make a selection in the drop down boxes.""");
                 alert.showAndWait();
             } else {
                 if (selectedCustomer == null) {  // This is where the determination is made whether the add or update button was clicked in the main menu.  Nothing was selected so this is an Add Customer situation.
@@ -105,6 +107,7 @@ public class CustomerController implements Initializable {
 
     /** This event handler method for the Cancel button applies an Alert pop up window and if the user clicks OK, loads the main menu.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         System.out.println("Customer cancel button clicked.  -- onActionCancel(ActionEvent actionEvent) called in CustomerController.java");

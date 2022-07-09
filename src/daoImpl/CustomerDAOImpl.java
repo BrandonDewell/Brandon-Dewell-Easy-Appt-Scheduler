@@ -112,6 +112,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
      @param CustomerID The customerID int to be matched in the database to do the update.
      @param CustomerName The customer name string to be matched in the database to do the update.
      @return Returns the rowsAffected as an int or the int 0.
+     @throws SQLException  If a database access exception occurred.
      */
     public static int update(int CustomerID, String CustomerName) throws SQLException {  // this function updates the customer name
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ? WHERE Customer_ID = ?";
@@ -125,7 +126,8 @@ public class CustomerDAOImpl implements ICustomerDAO {
 
     /** This method deletes an appointment object via a SQL call to the database.
      @param customer The customer object with a matching customerID in the database to be deleted.
-     @return Returns the rowsAffected as an int or the int 0. */
+     @return Returns the rowsAffected as an int or the int 0.
+     */
     @Override
     public int delete(Customer customer) {
         try {
@@ -144,7 +146,9 @@ public class CustomerDAOImpl implements ICustomerDAO {
 
     /** This method deletes an appointment object via a SQL call to the database.
      @param CustomerID The customerId int with a matching customerID in the database to be deleted.
-     @return Returns the rowsAffected as an int. */
+     @return Returns the rowsAffected as an int.
+     @throws SQLException  If a database access exception occurred.
+     */
     public int delete(int CustomerID) throws SQLException {
         String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

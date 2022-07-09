@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/** This class opens and closes the connection to the database. */
 public abstract class JDBC {  // abstract because I am not going to be instantiating any objects out of this class in order to connect to the DB.
 
     private static final String protocol = "jdbc";  // final because I do not want it extended or inherited from.
@@ -16,6 +17,7 @@ public abstract class JDBC {  // abstract because I am not going to be instantia
     private static String password = "Passw0rd!"; // Password for the mySQL database
     public static Connection connection;  // Connection Interface
 
+    /** This method opens the connection to allow SQL calls to the database. */
     public static void openConnection()  // try/catch block handling is required by the JDBC protocol
     {
         try {
@@ -23,19 +25,19 @@ public abstract class JDBC {  // abstract because I am not going to be instantia
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // creates a connection object reference
             System.out.println("Connection successful! -- openConnection() called from JDBC.java");
         }
-        catch(SQLException e) {
+        catch(SQLException | ClassNotFoundException e) {
             e.printStackTrace();  // 5/14/22 3:57pm from Getting the DBConnection class project ready video at about 10 minutes in.
-        }
-        catch(ClassNotFoundException e){
-            e.printStackTrace();
         }
     }
 
     // need to get the connection
+    /** This method gets the connection to the database.
+     @return Returns a connection. */
     public static Connection getConnection(){   // 5/14/22 4:05pm about 11 mins into the Getting the DBConnection class project ready video.
         return connection;
     }
 
+    /** This method closes the connection to the database. */
     public static void closeConnection() {
         try {
             connection.close();

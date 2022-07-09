@@ -257,6 +257,7 @@ public class AppointmentController implements Initializable {
 
     /** This event handler method for the Cancel button applies an Alert pop up window and if the user clicks OK, loads the main menu.
      @param actionEvent An event from an action.
+     @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         System.out.println("Appointment cancel button clicked");

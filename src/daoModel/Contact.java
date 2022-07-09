@@ -18,29 +18,29 @@ public class Contact {
         this.email = email;
     }
 
-    /**
-     @ return the contact ID
+    /** This method gets the contact ID.
+     @return Returns the contact ID.
      */
     public int getContactId() {
         return contactId;
     }
 
-    /**
-     @ return the contact name
+    /** This method gets the contact name.
+     @return Returns the contact name.
      */
     public String getContactName() {
         return contactName;
     }
 
-    /**
-     @ return the email address
+    /** This method gets the email address.
+     @return Returns the email address.
      */
     public String getEmail() {
         return email;
     }
 
-    /**
-     @ return the string of contactId and contactName
+    /**  This method changes the observable list Contact combo box choices in the add/update appointment window to have both contact ID and contact name.
+     @return Returns the string of contactId and contactName as a string.
      */
     @Override
     public String toString(){

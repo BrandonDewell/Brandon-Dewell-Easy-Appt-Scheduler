@@ -18,29 +18,29 @@ public class User {
         this.password = password;
     }
 
-    /**
-     @ return the user ID
+    /** This method gets the user ID.
+     @return Returns the user ID.
      */
     public int getUserId() {
         return userId;
     }
 
-    /**
-     @ return the user name
+    /** This method gets the user name.
+     @return Returns the user name.
      */
     public String getUserName() {
         return userName;
     }
 
-    /**
-     @ return the password
+    /** This method returns the password.
+     @return Returns the password.
      */
     public String getPassword() {
         return password;
     }
 
-    /**
-     @ return the String of user ID and user name
+    /**  This method changes the observable list User_ID combo box choices in the add/update appointment window to have both user ID and user name.
+     @return Returns the String of user ID and user name in a string.
      */
     @Override
     public String toString(){

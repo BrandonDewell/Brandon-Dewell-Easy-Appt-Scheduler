@@ -6,7 +6,9 @@ import javafx.collections.ObservableList;
 /** This method is an Interface that provides a method to be used in its associated User implementation file. */
 public interface IUserDAO {
 
-    /** A method signature to get an observable list of users. */
+    /** A method signature to get an observable list of users.
+     * @return allUsersOL Returns an observable list.
+     */
     ObservableList<User> getAllUsersOL();
 
 }

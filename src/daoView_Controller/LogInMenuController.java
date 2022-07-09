@@ -61,6 +61,7 @@ public class LogInMenuController implements Initializable {
     /** This event handler method shows the current time zone of the user's computer.  It allows the user to sign in and checks
       those credentials with the database via a SQL call.  Correct and incorrect attempts are logged.  When logged in, an pop up
       alerts the user to whether or not an appointment is scheduled in the next 15 minutes.
+     @param actionEvent An action from an event.
      */
     public void onActionSignIn(ActionEvent actionEvent) {
         System.out.println("Sign In button is clicked");
@@ -96,10 +97,10 @@ public class LogInMenuController implements Initializable {
                     String loginAttempt = "login_activity.txt";
                     FileWriter appendLoginAttempt = new FileWriter(loginAttempt, true);
 
+                    PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
                     if (userFound){
 
                         // login auditing
-                        PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
                         loginAudit.println("User " + userName + " successfully logged in on " + time);
                         loginAudit.close();
 
@@ -138,7 +139,6 @@ public class LogInMenuController implements Initializable {
                     } else {
 
                         // login auditing
-                        PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
                         loginAudit.println("User " + userName + " had a failed log-in attempt on " + time);
                         loginAudit.close();
 

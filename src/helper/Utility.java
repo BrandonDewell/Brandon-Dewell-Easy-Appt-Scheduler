@@ -5,16 +5,28 @@ import javafx.collections.ObservableList;
 
 import java.time.*;
 
+/** This class provides methods to do things that don't quite fit into other classes but are useful static methods. */
 public class Utility {
 
+    /** This method compares data in the current year and month with the ld parameter.
+     @param ld The LocalDate object parameter.
+     @return Returns true or false.
+     */
     public static boolean isCurrentMonth(LocalDate ld){
 
         YearMonth yearMonthCurrent = YearMonth.now();
         YearMonth yearMonthTest = YearMonth.of(ld.getYear(), ld.getMonth());
 
         return yearMonthCurrent.equals(yearMonthTest);  // compares data in each object and returns it.
-
     }
+
+    /** This method creates an observable list of times for selection from the time drop down combo boxes in the add/update appointment window.
+     @param osZId The zone id of the operating system of the user.
+     @param businessZId The time zone Eastern Time of where the business is located.
+     @param businessHourStart The opening time of the business.
+     @param workHours The amount of hours the business is open.
+     @return timeList Returns the observable list named timeList.
+     */
     public static ObservableList<LocalTime> generateDynamicTimeList(ZoneId osZId, ZoneId businessZId, LocalTime businessHourStart, int workHours) {
         ObservableList<LocalTime> timeList = FXCollections.observableArrayList();
         ZonedDateTime businessZDT = ZonedDateTime.of(LocalDate.now(), businessHourStart, businessZId);  // today's date, business hour that it opens at, and eastern time.
@@ -38,13 +50,18 @@ public class Utility {
         //  System.out.println(lt + " in the Time Zone in " + osZId);
 
         return timeList;
-
-
     }
 
 
     // Here is another way of setting up the time list to adjust the available times for scheduling appointments based on the user's timezone:
 
+    /** This method creates a timeList of available times for selection from the time drop down combo boxes in the add/update appointment window.
+     @param osZId The zone id of the operating system of the user.
+     @param businessZId The time zone Eastern Time of where the business is located.
+     @param businessHourStart The opening time of the business.
+     @param workQuarterHours The amount of 15 minute segments that the business is open.
+     @return timeList Returns the observable list named timeList.
+     */
     public static ObservableList<LocalTime> generateDynamicTimeListOL(ZoneId osZId, ZoneId businessZId, LocalTime businessHourStart, int workQuarterHours) {
         ObservableList<LocalTime> timeList = FXCollections.observableArrayList();
         ZonedDateTime businessZDT = ZonedDateTime.of(LocalDate.now(), businessHourStart, businessZId);  // today's date, business hour that it opens at, and eastern time.
@@ -61,7 +78,6 @@ public class Utility {
             localZDT = localZDT.plusMinutes(15);  // this has the built in functionality to work with days as it is coming from a zoneddatetime object.  This way doesn't need to worry about the if i< 24 and if i > 23 from above
         }
         return timeList;
-
     }
 
     /*public static ObservableList<Month> getAllMonthsOL() {
@@ -93,18 +109,13 @@ public class Utility {
                 LocalDateTime eLDT = end.toLocalDateTime();*//*
                 Appointment a = new Appointment(apptId, custId, userId, contactId, title, desc, loc, type, custName, userName, contactName, start, end);
 
-
                 //System.out.println("Timestamp start = " + start);   // Timestamp outputs as 2020-05-29 12:00:00.0 so date and time are both represented in a timestamp.
                 //allMonthsOL.add(a.);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return allMonthsOL;
     }
-
-
     }*/
-
 }

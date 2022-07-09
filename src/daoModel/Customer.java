@@ -36,71 +36,71 @@ public class Customer {
         this.country = country;
     }
 
-    /**
-     @ return the country ID
+    /** This method gets the country ID.
+     @return Returns the country ID.
      */
     public int getCountryId() {
         return countryId;
     }
 
-    /**
-     @ return the division
+    /** This method gets the division.
+     @return Returns the division.
      */
     public String getDivision() {
         return division;
     }
 
-    /**
-     @ return the country
+    /** This method gets the country.
+     @return Returns the country.
      */
     public String getCountry() {
         return country;
     }
 
-    /**
-     @ return the customer ID
+    /** This method gets the customer ID.
+     @return int Returns the customer ID.
      */
     public int getCustomerId() {
         return customerId;
     }
 
-    /**
-     @ return the customer name
+    /** This method gets the customer name.
+     @return Returns the customer name.
      */
     public String getCustomerName() {
         return customerName;
     }
 
-    /**
-     @ return the address
+    /** This method gets the address.
+     @return Returns the address.
      */
     public String getAddress() {
         return address;
     }
 
-    /**
-     @ return the postal code
+    /** This method gets the postal code.
+     @return Returns the postal code.
      */
     public String getPostalCode() {
         return postalCode;
     }
 
-    /**
-     @ return the phone number
+    /** This method gets the phone number.
+     @return Returns the phone number.
      */
     public String getPhone() {
         return phone;
     }
 
-    /**
-     @ return the division ID
+    /** This method gets the division ID.
+     @return Returns the division ID.
      */
     public int getDivisionId() {
         return divisionId;
     }
 
-    /**
-     @ return the String of customer ID and customer name
+    /**  This method changes the observable list Customer_ID combo box choices in the add/update appointment window to have both customer ID and customer name.
+     @return Returns the String of customer ID and customer name in a string.
      */
     @Override
     public String toString(){
