@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.AppointmentController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.AppointmentController">
     <children>
         <Label fx:id="appointmentLabel" layoutX="243.0" layoutY="14.0" text="Appointment">
             <font>

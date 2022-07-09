@@ -1,6 +1,5 @@
 package main;
 
-import daoInt.FISqlSelAll;
 import helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,9 +21,6 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         ResourceBundle rb = ResourceBundle.getBundle("main/Natural", Locale.getDefault());
-
-        FISqlSelAll sqlAll = s -> "SELECT * FROM " + s;
-        sqlAll.getSqlAll("USERS");
 
             try{
                 Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/LogInMenu.fxml"));

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.LogInMenuController">
+<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="daoView_Controller.LogInMenuController">
    <children>
       <Label fx:id="logInLabel" layoutX="170.0" layoutY="14.0" text="LogIn">
          <font>

@@ -53,7 +53,7 @@ public class LogInMenuController implements Initializable {
         passwordLabel.setText(rb.getString("Password"));
         displayMainMenuB.setText(rb.getString("SignIn"));
         logInLabel.setText(rb.getString("LogIn"));
-        zoneLabel.setText(rb.getString("Location") + systemDefault());
+        zoneLabel.setText(rb.getString("Location") + ZoneId.systemDefault());
     }
 
     /** This event handler method shows the current time zone of the user's computer.  It allows the user to sign in and checks
@@ -92,8 +92,9 @@ public class LogInMenuController implements Initializable {
                     String loginAttempt = "login_activity.txt";
                     FileWriter appendLoginAttempt = new FileWriter(loginAttempt, true);
 
-                    PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
                     if (userFound){
+                        PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
+                        loginAudit.println("User " + userName + " successfully logged in on " + time);
                         loginAudit.close();
 
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -125,6 +126,8 @@ public class LogInMenuController implements Initializable {
                         stage.setScene(scene);
                         stage.show();
                     } else {
+                        PrintWriter loginAudit = new PrintWriter(appendLoginAttempt);
+                        loginAudit.println("User " + userName + " had a failed log-in attempt on " + time);
                         loginAudit.close();
 
                         Alert alert = new Alert(Alert.AlertType.ERROR);

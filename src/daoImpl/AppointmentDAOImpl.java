@@ -87,6 +87,9 @@ public class AppointmentDAOImpl implements IAppointmentDAO {
         String sql = "SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
                      "FROM Appointments, Customers, Users, Contacts " +
                      "WHERE Appointments.Customer_ID = Customers.Customer_ID AND Appointments.Contact_ID = Contacts.Contact_ID AND Appointments.User_ID = Users.User_ID AND YEARWEEK (start, 0) = YEARWEEK (curDate(), 0)";
+                   /*"SELECT Appointment_ID, Title, Appointments.Customer_ID, Customers.Customer_Name, Appointments.User_ID, Users.User_Name, Contacts.Contact_Name, Description, Location, Appointments.Contact_ID, Type, Start, End " +
+                     "FROM Appointments INNER JOIN Customers ON Appointments.Customer_ID = Customers.Customer_ID INNER JOIN Users ON Appointments.User_ID = Users.User_ID INNER JOIN Contacts ON Appointments.Contact_ID = Contacts.Contact_ID " +
+                     "WHERE YEARWEEK (start, 0) = YEARWEEK (curDate(), 0)";*/
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
