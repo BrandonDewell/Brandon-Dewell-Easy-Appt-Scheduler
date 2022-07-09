@@ -64,7 +64,7 @@ public class LogInMenuController implements Initializable {
      @param actionEvent An action from an event.
      */
     public void onActionSignIn(ActionEvent actionEvent) {
-        System.out.println("Sign In button is clicked");
+       // System.out.println("Sign In button is clicked");
 
             UserDAOImpl udao = new UserDAOImpl();
             ObservableList<User> userList = udao.getAllUsersOL();
@@ -101,7 +101,7 @@ public class LogInMenuController implements Initializable {
                     if (userFound){
 
                         // login auditing
-                        loginAudit.println("User " + userName + " successfully logged in on " + time);
+                     //   loginAudit.println("User " + userName + " successfully logged in on " + time);
                         loginAudit.close();
 
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();  // get the stage early here at this point.
@@ -139,7 +139,7 @@ public class LogInMenuController implements Initializable {
                     } else {
 
                         // login auditing
-                        loginAudit.println("User " + userName + " had a failed log-in attempt on " + time);
+                     //   loginAudit.println("User " + userName + " had a failed log-in attempt on " + time);
                         loginAudit.close();
 
                         Alert alert = new Alert(Alert.AlertType.ERROR);

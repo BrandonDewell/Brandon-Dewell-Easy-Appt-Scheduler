@@ -56,7 +56,7 @@ public class ReportsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Reports is initialized  -- initialize(URL url, ResourceBundle resourceBundle) called from ReportsController.java");
+       // System.out.println("Reports is initialized  -- initialize(URL url, ResourceBundle resourceBundle) called from ReportsController.java");
 
         AppointmentDAOImpl dao = new AppointmentDAOImpl();
         monthComboBox.setItems(monthOL);
@@ -161,7 +161,7 @@ public class ReportsController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        System.out.println("Reports cancel button clicked");
+       // System.out.println("Reports cancel button clicked");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear any information you selected.  Would you like to continue?");
         Optional<ButtonType> result = alert.showAndWait();                  // optional container we named result contains enumerations for button types.

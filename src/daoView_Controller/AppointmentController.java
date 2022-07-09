@@ -55,7 +55,7 @@ public class AppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("-- initialize(URL url, ResourceBundle resourceBundle) called from AppointmentController.java");
+     //   System.out.println("-- initialize(URL url, ResourceBundle resourceBundle) called from AppointmentController.java");
 
         CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         customerIDComboBox.setItems(customerDAO.getAllCustomersOL());
@@ -82,7 +82,7 @@ public class AppointmentController implements Initializable {
      @param actionEvent An event from an action.
      */
     public void onActionSave(ActionEvent actionEvent) {
-        System.out.println("Appointment save button clicked.  -- onActionSave(ActionEvent actionEvent) called in AppointmentController.java\"");
+    //    System.out.println("Appointment save button clicked.  -- onActionSave(ActionEvent actionEvent) called in AppointmentController.java\"");
 
         try {
 
@@ -182,13 +182,13 @@ public class AppointmentController implements Initializable {
                     if (selectedAppointment == null) {
                         int rowsAffected = dao.insert(title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
                         if (rowsAffected > 0) {
-                            System.out.println("**************************appt insert successful");
+                         //   System.out.println("**************************appt insert successful");
                         }
 
                     } else {
                         int rowsAffected = dao.update(selectedAppointment.getApptId(), title, desc, loc, type, sLDT, eLDT, cust.getCustomerId(), u.getUserId(), contact.getContactId());
                         if (rowsAffected > 0) {
-                            System.out.println("*************************appt update successful");
+                        //    System.out.println("*************************appt update successful");
                         }
                     }
                 }
@@ -260,7 +260,7 @@ public class AppointmentController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        System.out.println("Appointment cancel button clicked");
+       // System.out.println("Appointment cancel button clicked");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear any information you entered.  Would you like to continue?");
         Optional<ButtonType> result = alert.showAndWait();                  // optional container we named result contains enumerations for button types.
@@ -328,7 +328,7 @@ public class AppointmentController implements Initializable {
         is chosen from the drop down calendar.
      @param actionEvent  An event from an action. */
     public void onActionStartDate(ActionEvent actionEvent) {
-        System.out.println("onActionStartDate event handler activated.");
+      //  System.out.println("onActionStartDate event handler activated.");
         //if(startDateDatePicker.getValue() < endDateDatePicker.){
 
     }

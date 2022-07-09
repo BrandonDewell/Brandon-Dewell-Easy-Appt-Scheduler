@@ -427,7 +427,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
         ps.setInt(1, AppointmentID);
         ps.setString(2, Type);
         int rowsAffected = ps.executeUpdate();
-        System.out.println("The number of rows affected from the update() call is " + rowsAffected);
+      //  System.out.println("The number of rows affected from the update() call is " + rowsAffected);
         return rowsAffected;
     }
 
@@ -485,7 +485,7 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, appointment.getApptId());
             int rowsAffected = ps.executeUpdate();
-            System.out.println("The number of rows affected from the delete() call is " + rowsAffected);
+       //     System.out.println("The number of rows affected from the delete() call is " + rowsAffected);
             return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -506,8 +506,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, AppointmentID);
             int rowsAffected = ps.executeUpdate();
-            System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int delete(int " +
-                    "AppointmentID) in AppointmentDAOImpl.java *******************************");
+        //    System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int delete(int " +
+            //        "AppointmentID) in AppointmentDAOImpl.java *******************************");
             return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -527,8 +527,8 @@ public class AppointmentDAOImpl implements IAppointmentDAO {  // write sql inter
             ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, CustomerID);
             int rowsAffected = ps.executeUpdate();
-            System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int deleteCustAppts(int " +
-                    "CustomerID) in AppointmentDAOImpl.java *******************************");
+      //      System.out.println("The number of rows affected from the delete() call is " + rowsAffected  +  "  -- public int deleteCustAppts(int " +
+        //            "CustomerID) in AppointmentDAOImpl.java *******************************");
             return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();

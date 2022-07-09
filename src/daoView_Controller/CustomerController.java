@@ -42,7 +42,7 @@ public class CustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("  -- initialize(URL url, ResourceBundle resourceBundle) called from CustomerController.java");
+      //  System.out.println("  -- initialize(URL url, ResourceBundle resourceBundle) called from CustomerController.java");
 
         CountryDAOImpl countryDAO = new CountryDAOImpl();
         countryComboBox.setItems(countryDAO.getAllCountriesOL());
@@ -58,7 +58,7 @@ public class CustomerController implements Initializable {
      @param actionEvent An event from an action.
      */
     public void onActionSave(ActionEvent actionEvent) {
-        System.out.println("Customer save button clicked.  -- onActionSave(ActionEvent actionEvent) called in CustomerController.java");
+     //   System.out.println("Customer save button clicked.  -- onActionSave(ActionEvent actionEvent) called in CustomerController.java");
 
         try {
 
@@ -110,7 +110,7 @@ public class CustomerController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        System.out.println("Customer cancel button clicked.  -- onActionCancel(ActionEvent actionEvent) called in CustomerController.java");
+     //   System.out.println("Customer cancel button clicked.  -- onActionCancel(ActionEvent actionEvent) called in CustomerController.java");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear any information you entered.  Would you like to continue?");
         Optional<ButtonType> result = alert.showAndWait();                  // optional container we named result contains enumerations for button types.

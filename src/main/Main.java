@@ -37,7 +37,7 @@ public class Main extends Application {
 
         //Lambda expression that returns a value
         /*FIGetRecords message = s -> "Hello " + s;
-        System.out.println(message.getMessage("Brandon"));*/
+      //  System.out.println(message.getMessage("Brandon"));*/
 
         FISqlSelAll sqlAll = s -> "SELECT * FROM " + s;
         sqlAll.getSqlAll("USERS");
@@ -47,13 +47,13 @@ public class Main extends Application {
                 stage.setTitle(rb.getString("LogIn"));
                 stage.setScene(new Scene(root, 400, 200));
                 stage.show();
-                System.out.println(" -- start(Stage stage) called from Main.java");
+              //  System.out.println(" -- start(Stage stage) called from Main.java");
 
                /* Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));  // this gets the Main Menu page loaded.
                 stage.setTitle("Main Menu");
                 stage.setScene(new Scene(root, 1500, 700));
                 stage.show();
-                System.out.println(" -- start(Stage stage) called from Main.java");*/
+              //  System.out.println(" -- start(Stage stage) called from Main.java");*/
             } catch (IOException ex){
                 ex.printStackTrace();
             }
@@ -64,13 +64,13 @@ public class Main extends Application {
         //    stage.setTitle(rb.getString("Log") + " " + rb.getString("In"));
             stage.setScene(new Scene(root, 300, 200));
             stage.show();
-            System.out.println(" -- start(Stage stage) called from Main.java");
+          //  System.out.println(" -- start(Stage stage) called from Main.java");
 
            *//* Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
             stage.setTitle("Main Menu");
             stage.setScene(new Scene(root, 1200, 700));
             stage.show();
-            System.out.println(" -- start(Stage stage) called from Main.java");*//*
+           // System.out.println(" -- start(Stage stage) called from Main.java");*//*
         }*/
 
     }
@@ -90,7 +90,7 @@ public class Main extends Application {
     // all of this was between JDBC.openConnection(); and launch(args);
 
     /* TimeZone info from TimeZone webinar
-         System.out.println(ZoneId.systemDefault());  // Displays Time Zone in Java
+      //   System.out.println(ZoneId.systemDefault());  // Displays Time Zone in Java
 
          ZoneId.getAvailableZoneIds().stream().sorted().forEach(System.out::println);  // Displays a list of all the available Time
          Zones supported by JDK 17.

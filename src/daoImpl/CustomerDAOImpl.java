@@ -120,7 +120,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
         ps.setString(1, CustomerName);
         ps.setInt(2, CustomerID);
         int rowsAffected = ps.executeUpdate();
-        System.out.println("The number of rows affected from the update() call is " + rowsAffected);
+     //   System.out.println("The number of rows affected from the update() call is " + rowsAffected);
         return rowsAffected;
     }
 
@@ -135,8 +135,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, customer.getCustomerId());
             int rowsAffected = ps.executeUpdate();
-            System.out.println("The number of rows affected from the delete() call is " + rowsAffected + ".  -- delete(int CustomerID) called in CustomerDAOImpl.java");
-
+     //       System.out.println("The number of rows affected from the delete() call is " + rowsAffected + ".  -- delete(int CustomerID) called in CustomerDAOImpl.java");
             return rowsAffected;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -154,8 +153,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, CustomerID);
         int rowsAffected = ps.executeUpdate();
-        System.out.println("The number of rows affected from the delete() call is " + rowsAffected + ".  -- delete(int CustomerID) called in CustomerDAOImpl.java");
-
+     //   System.out.println("The number of rows affected from the delete() call is " + rowsAffected + ".  -- delete(int CustomerID) called in CustomerDAOImpl.java");
         return rowsAffected;
     }
 
