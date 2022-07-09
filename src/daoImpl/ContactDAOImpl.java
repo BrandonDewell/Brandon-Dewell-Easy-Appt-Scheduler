@@ -36,7 +36,6 @@ public class ContactDAOImpl implements IContactDAO {
         catch (SQLException ex){
             ex.printStackTrace();
         }
-
         return contactsOL;
     }
 }

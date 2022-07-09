@@ -104,7 +104,6 @@ public class Customer {
      */
     @Override
     public String toString(){
-        //return String.valueOf(customerId) + " - " + (customerName);  // String.valueOf is deemed unnecessary
         return (customerId) + " - " + (customerName);
     }
 }

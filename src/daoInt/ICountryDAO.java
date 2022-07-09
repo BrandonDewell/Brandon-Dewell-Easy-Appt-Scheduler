@@ -10,5 +10,4 @@ public interface ICountryDAO {
      * @return allCountriesOL Returns an observable list.
      */
     ObservableList<Country> getAllCountriesOL();
-
 }

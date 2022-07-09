@@ -11,5 +11,4 @@ public interface IFirstLevelDivisionDAO {
      * @return allFirstLevelDivisionsOL Returns an observable list.
      */
     ObservableList<FirstLevelDivision> getAllFirstLevelDivisionsOL(int countryId);
-
 }

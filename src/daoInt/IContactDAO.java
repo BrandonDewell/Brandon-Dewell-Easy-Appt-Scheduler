@@ -10,5 +10,4 @@ public interface IContactDAO {
      * @return allContactsOL Returns an observable list.
      */
     ObservableList<Contact> getAllContactsOL();
-
 }

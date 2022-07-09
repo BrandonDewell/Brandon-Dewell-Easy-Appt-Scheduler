@@ -5,28 +5,26 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /** This class opens and closes the connection to the database. */
-public abstract class JDBC {  // abstract because I am not going to be instantiating any objects out of this class in order to connect to the DB.
+public abstract class JDBC {
 
-    private static final String protocol = "jdbc";  // final because I do not want it extended or inherited from.
+    private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
     private static final String location = "//localhost/";
     private static final String databaseName = "client_schedule";
-    private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL
-    private static final String driver = "com.mysql.cj.jdbc.Driver"; // reference to the driver interface that is part of the connection
-    private static final String userName = "sqlUser"; // Username for the mySQL database
-    private static String password = "Passw0rd!"; // Password for the mySQL database
-    public static Connection connection;  // Connection Interface
+    private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER";
+    private static final String driver = "com.mysql.cj.jdbc.Driver";
+    private static final String userName = "sqlUser";
+    private static String password = "Passw0rd!";
+    public static Connection connection;
 
     /** This method opens the connection to allow SQL calls to the database. */
-    public static void openConnection()  // try/catch block handling is required by the JDBC protocol
-    {
+    public static void openConnection() {
         try {
-            Class.forName(driver); // this locates the driver
-            connection = DriverManager.getConnection(jdbcUrl, userName, password); // creates a connection object reference
-           // System.out.println("Connection successful! -- openConnection() called from JDBC.java");
+            Class.forName(driver);
+            connection = DriverManager.getConnection(jdbcUrl, userName, password);
         }
         catch(SQLException | ClassNotFoundException e) {
-            e.printStackTrace();  // 5/14/22 3:57pm from Getting the DBConnection class project ready video at about 10 minutes in.
+            e.printStackTrace();
         }
     }
 
@@ -41,7 +39,6 @@ public abstract class JDBC {  // abstract because I am not going to be instantia
     public static void closeConnection() {
         try {
             connection.close();
-          //  System.out.println("Connection closed!  -- closeConnection() called from JDBC.java");
         }
         catch(Exception e) {
             System.out.println("Error:" + e.getMessage());

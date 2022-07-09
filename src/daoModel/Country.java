@@ -9,7 +9,7 @@ public class Country {
      @param countryId The country ID to be constructed.
      @param countryName The country name to be constructed.
      */
-    public Country(int countryId, String countryName) {  // constructor
+    public Country(int countryId, String countryName) {
         this.countryId = countryId;
         this.countryName = countryName;
     }

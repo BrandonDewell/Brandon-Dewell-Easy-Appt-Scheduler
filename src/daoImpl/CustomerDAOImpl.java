@@ -43,7 +43,6 @@ public class CustomerDAOImpl implements ICustomerDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return allCustomersOL;
     }
 
@@ -68,21 +67,10 @@ public class CustomerDAOImpl implements ICustomerDAO {
         return 0;
     }
 
-    /*public static int insert(String fruitName, int colorId) throws SQLException {
-        String sql = "INSERT INTO FRUITS (Fruit_Name, Color_ID) VALUES (?, ?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, fruitName);
-        ps.setInt(2, colorId);
-        int rowsAffected = ps.executeUpdate();  // executeUpdate() does the insert into the DB table and assigns the number of rows
-        // affected to the variable rowsAffected.
-        return rowsAffected;
-    }*/
-
     /** This method selects a customer via a SQL call to the database.
      @param customer The customer object to be selected.
      */
     public void select(Customer customer) {
-
     }
 
     /** This method updates a customer via a SQL call to the database.
@@ -114,13 +102,12 @@ public class CustomerDAOImpl implements ICustomerDAO {
      @return Returns the rowsAffected as an int or the int 0.
      @throws SQLException  If a database access exception occurred.
      */
-    public static int update(int CustomerID, String CustomerName) throws SQLException {  // this function updates the customer name
+    public static int update(int CustomerID, String CustomerName) throws SQLException {
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ? WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, CustomerName);
         ps.setInt(2, CustomerID);
         int rowsAffected = ps.executeUpdate();
-     //   System.out.println("The number of rows affected from the update() call is " + rowsAffected);
         return rowsAffected;
     }
 
@@ -135,7 +122,6 @@ public class CustomerDAOImpl implements ICustomerDAO {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, customer.getCustomerId());
             int rowsAffected = ps.executeUpdate();
-     //       System.out.println("The number of rows affected from the delete() call is " + rowsAffected + ".  -- delete(int CustomerID) called in CustomerDAOImpl.java");
             return rowsAffected;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -153,7 +139,6 @@ public class CustomerDAOImpl implements ICustomerDAO {
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, CustomerID);
         int rowsAffected = ps.executeUpdate();
-     //   System.out.println("The number of rows affected from the delete() call is " + rowsAffected + ".  -- delete(int CustomerID) called in CustomerDAOImpl.java");
         return rowsAffected;
     }
 

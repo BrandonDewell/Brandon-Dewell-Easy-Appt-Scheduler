@@ -23,10 +23,8 @@ public class UserDAOImpl implements IUserDAO {
         ObservableList<User> usersOL = FXCollections.observableArrayList();
 
         try {
-           // String sql = "SELECT * FROM USERS";  // I am replacing this with a lambda.
             FISqlSelAll sqlAll = s -> "SELECT * FROM " + s;
             String sql = sqlAll.getSqlAll("USERS");
-           // System.out.println("Lambda sqlAll used.");
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -40,7 +38,6 @@ public class UserDAOImpl implements IUserDAO {
         catch (SQLException ex){
             ex.printStackTrace();
         }
-
         return usersOL;
     }
 

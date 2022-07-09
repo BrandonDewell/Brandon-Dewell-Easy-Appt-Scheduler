@@ -44,7 +44,6 @@ public class User {
      */
     @Override
     public String toString(){
-        //return String.valueOf(userId) + " - " + (userName);
         return (userId) + " - " + (userName);
     }
 

@@ -27,8 +27,7 @@ public class CountryDAOImpl implements ICountryDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int countryID = rs.getInt("Country_ID");
-                String countryName = rs.getString("Country");  // I only got customer id and customer name and excluded lots
-                // of other columns in the while loop walking through all the customer data.
+                String countryName = rs.getString("Country");
                 Country c = new Country(countryID, countryName);
                 countriesOL.add(c);
             }
@@ -38,5 +37,4 @@ public class CountryDAOImpl implements ICountryDAO {
         }
         return countriesOL;
     }
-
 }

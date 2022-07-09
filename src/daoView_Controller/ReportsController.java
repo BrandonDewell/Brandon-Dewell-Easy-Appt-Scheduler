@@ -56,7 +56,6 @@ public class ReportsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       // System.out.println("Reports is initialized  -- initialize(URL url, ResourceBundle resourceBundle) called from ReportsController.java");
 
         AppointmentDAOImpl dao = new AppointmentDAOImpl();
         monthComboBox.setItems(monthOL);
@@ -69,9 +68,7 @@ public class ReportsController implements Initializable {
         TitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         DescCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-       // SDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         SDATCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
-       // EDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         EDATCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
         CustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         ApptsByContactTable.getSortOrder().addAll(ApptIDCol);
@@ -102,7 +99,7 @@ public class ReportsController implements Initializable {
 
         String month = monthComboBox.getValue();
         String type = typeComboBox.getValue();
-        if((month == null) || (type == null)){            // this section only applies if we MUST have both a month selection made and a type selection made.
+        if((month == null) || (type == null)){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Please make a selection from each box.");
@@ -111,7 +108,6 @@ public class ReportsController implements Initializable {
             return;
         }
         int numb = AppointmentDAOImpl.numberByMonthAndType(month, type);
-        // ResultLabel.setText("The total = " + Integer.toString(numb));  // Java is smart enough to know we want to use a string here at Integer.toString and that is why it is flagging it as unnecessary.
         ResultLabel.setText("The total = " + numb);
 
     }
@@ -121,8 +117,6 @@ public class ReportsController implements Initializable {
      @param actionEvent An event from an action.
      */
     public void onActionContact(ActionEvent actionEvent) {
-
-       // ObservableList<Appointment> filteredAppointmentsOL = FXCollections.observableArrayList();  // commented out for lambda implementation
 
         Contact c = contactComboBox.getValue();
         if(c == null){
@@ -135,15 +129,8 @@ public class ReportsController implements Initializable {
                     Please make a selection in the drop down boxes.
                     Select a date by clicking on the date chooser button.""");
             alert.showAndWait();
-
             return;
         }
-        /*AppointmentDAOImpl adao = new AppointmentDAOImpl();  // making this into a lambda
-        for(Appointment a : adao.getAllAppointmentsOL()){
-            if(a.getContactId() == c.getContactId()){
-                filteredAppointmentsOL.add(a);
-            }
-        }*/
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         ObservableList<Appointment> filteredAppointmentsOL = adao.getAllAppointmentsOL().filtered(a -> {
             if(a.getContactId() == c.getContactId()){
@@ -161,12 +148,10 @@ public class ReportsController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
-       // System.out.println("Reports cancel button clicked");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear any information you selected.  Would you like to continue?");
-        Optional<ButtonType> result = alert.showAndWait();                  // optional container we named result contains enumerations for button types.
-        if (result.isPresent() && result.get() == ButtonType.OK) {            // isPresent returns a boolean if there is something inside the optional container.
-            // therefore its a check on whether someone clicked a button.  result.get() checks to see what type of button is clicked, the ok button or cancel button.
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1500, 700);

@@ -28,8 +28,7 @@ public class FirstLevelDivisionDAOImpl implements IFirstLevelDivisionDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int divId = rs.getInt("Division_ID");
-                String div = rs.getString("Division");  // I only got customer id and customer name and excluded lots
-                // of other columns in the while loop walking through all the customer data.
+                String div = rs.getString("Division");
                 int countryIdX = rs.getInt("Country_ID");
                 FirstLevelDivision fld = new FirstLevelDivision(divId, div, countryIdX);
                 firstLevelDivisionsOL.add(fld);
@@ -38,7 +37,6 @@ public class FirstLevelDivisionDAOImpl implements IFirstLevelDivisionDAO {
         catch (SQLException ex){
             ex.printStackTrace();
         }
-
         return firstLevelDivisionsOL;
     }
 

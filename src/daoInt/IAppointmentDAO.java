@@ -9,7 +9,6 @@ public interface IAppointmentDAO {
     /** A method signature to get an observable list of appointments.
      *  @return Returns an observable list.
      */
-    //public ObservableList<Appointment> getAllAppointmentsOL();  //previous version
     ObservableList<Appointment> getAllAppointmentsOL();
 
     /** A method signature to insert an appointment into the database.

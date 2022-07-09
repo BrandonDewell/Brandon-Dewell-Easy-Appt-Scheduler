@@ -42,11 +42,9 @@ public class CustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-      //  System.out.println("  -- initialize(URL url, ResourceBundle resourceBundle) called from CustomerController.java");
 
         CountryDAOImpl countryDAO = new CountryDAOImpl();
         countryComboBox.setItems(countryDAO.getAllCountriesOL());
-
     }
 
     /** This event handler method for the Save button saves a customer.
@@ -58,7 +56,6 @@ public class CustomerController implements Initializable {
      @param actionEvent An event from an action.
      */
     public void onActionSave(ActionEvent actionEvent) {
-     //   System.out.println("Customer save button clicked.  -- onActionSave(ActionEvent actionEvent) called in CustomerController.java");
 
         try {
 
@@ -69,8 +66,7 @@ public class CustomerController implements Initializable {
             String postCode = postalCodeTextField.getText();
             String phone = phoneNumberTextField.getText();
 
-            if(name.isBlank() || address.isBlank() || postCode.isBlank() || phone.isBlank() || stateProv == null){  // combo boxes use
-                // comboBox == null to do error checks instead of textfield.isBlank()
+            if(name.isBlank() || address.isBlank() || postCode.isBlank() || phone.isBlank() || stateProv == null){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Fields must not be left blank.\nDrop down selection must be made.");
@@ -80,12 +76,11 @@ public class CustomerController implements Initializable {
                         Please make a selection in the drop down boxes.""");
                 alert.showAndWait();
             } else {
-                if (selectedCustomer == null) {  // This is where the determination is made whether the add or update button was clicked in the main menu.  Nothing was selected so this is an Add Customer situation.
-                    Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");  // The customerId, countryId, division, and country parameters are not really important and
-                    // I don't care about that info so I can "leave" them blank.
+                if (selectedCustomer == null) {
+                    Customer c = new Customer(0, name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
                     CustomerDAOImpl dao = new CustomerDAOImpl();
                     dao.insert(c);
-                } else {  // Something WAS selected so this is an Update Customer situation
+                } else {
                     Customer c = new Customer(selectedCustomer.getCustomerId(), name, address, postCode, phone, stateProv.getDivisionId(), 0, "", "");
                     CustomerDAOImpl dao = new CustomerDAOImpl();
                     dao.update(c);
@@ -102,7 +97,6 @@ public class CustomerController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /** This event handler method for the Cancel button applies an Alert pop up window and if the user clicks OK, loads the main menu.
@@ -110,12 +104,10 @@ public class CustomerController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
-     //   System.out.println("Customer cancel button clicked.  -- onActionCancel(ActionEvent actionEvent) called in CustomerController.java");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear any information you entered.  Would you like to continue?");
-        Optional<ButtonType> result = alert.showAndWait();                  // optional container we named result contains enumerations for button types.
-        if(result.isPresent() && result.get() == ButtonType.OK){            // isPresent returns a boolean if there is something inside the optional container.
-            // therefore its a check on whether someone clicked a button.  result.get() checks to see what type of button is clicked, the ok button or cancel button.
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
             Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/MainMenu.fxml"));
             Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1500, 700);
@@ -123,7 +115,6 @@ public class CustomerController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
-
     }
 
     /** This event handler method sets the options in the State/Providence combo box based on when a Country has been selected in this combo box.
@@ -134,7 +125,6 @@ public class CustomerController implements Initializable {
         Country c = countryComboBox.getValue();
         FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
         stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(c.getCountryId()));
-
     }
 
     /** This method receives a reference for a customer object and sets its values to text for text fields and combo boxes.
@@ -157,7 +147,7 @@ public class CustomerController implements Initializable {
         }
 
         FirstLevelDivisionDAOImpl firstLevelDivisionDAO = new FirstLevelDivisionDAOImpl();
-        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(selectedCustomer.getCountryId()));  // this narrows down the state/providence drop down choices to only be those available for the specific country already selected.
+        stateProvinceComboBox.setItems(firstLevelDivisionDAO.getAllFirstLevelDivisionsOL(selectedCustomer.getCountryId()));
 
         for(FirstLevelDivision f : stateProvinceComboBox.getItems()){
             if(selectedCustomer.getDivisionId() == f.getDivisionId()){
@@ -165,23 +155,5 @@ public class CustomerController implements Initializable {
                 break;
             }
         }
-
-        //retrieved id of inCustomer, converted that id which is an int to a string (via the valueOf method) so we can assign it to a text field.
-        /*modifyPartNameTxt.setText(selectedPart.getName());
-        modifyPartInvTxt.setText(String.valueOf(selectedPart.getStock()));
-        modifyPartPriceTxt.setText(String.valueOf(selectedPart.getPrice()));
-        modifyPartMaxTxt.setText(String.valueOf(selectedPart.getMax()));
-        modifyPartMinTxt.setText(String.valueOf(selectedPart.getMin()));
-
-        if(selectedPart instanceof InHouse) {
-            modifyPartMachineTxt.setText(String.valueOf(((InHouse) selectedPart).getMachineId()));
-            modifyPartMachineLbl.setText("Machine ID");
-            modifyPartInHouseRBtn.setSelected(true);
-        }
-        else {
-            modifyPartMachineTxt.setText(((Outsourced) selectedPart).getCompanyName());
-            modifyPartMachineLbl.setText("Company Name");
-            modifyPartOutsourcedRBtn.setSelected(true);
-        }*/
     }
 }

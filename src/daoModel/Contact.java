@@ -44,7 +44,6 @@ public class Contact {
      */
     @Override
     public String toString(){
-        //return String.valueOf(contactId) + " - " + (contactName);
         return (contactId) + " - " + (contactName);
     }
 }

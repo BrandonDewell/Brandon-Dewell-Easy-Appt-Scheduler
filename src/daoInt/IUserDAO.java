@@ -10,5 +10,4 @@ public interface IUserDAO {
      * @return allUsersOL Returns an observable list.
      */
     ObservableList<User> getAllUsersOL();
-
 }

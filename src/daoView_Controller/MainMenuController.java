@@ -66,7 +66,6 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-      //  System.out.println("Main Menu is initialized  -- initialize(URL url, ResourceBundle resourceBundle) called from MainMenuController.java");
 
         CustomerDAOImpl dao = new CustomerDAOImpl();
 
@@ -90,10 +89,8 @@ public class MainMenuController implements Initializable {
         SAcontactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         SAcontactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         SAtypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-       // SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("startString"));  // replaced start with startString to get rid of the T in the tableview's start column for the date and time.
-       // SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-        SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("endString"));  // replaced end with endString to get rid of the T in the tableview's end column for the date and time.
+        SAsDATCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
+        SAeDATCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
         SAcustNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         SAcustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         SAuserNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
@@ -106,7 +103,6 @@ public class MainMenuController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
-     //   System.out.println("Add Customer button clicked.  -- onActionAddCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Customer.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -122,11 +118,10 @@ public class MainMenuController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionUpdateCustomer(ActionEvent actionEvent) throws IOException {
-     //   System.out.println("Update Customer button clicked.  -- onActionUpdateCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
-        Customer temp = custTable.getSelectionModel().getSelectedItem();  // 1. get the selected item and assign it to a temporary variable.
+        Customer temp = custTable.getSelectionModel().getSelectedItem();
 
-        if (temp == null) {        // 2. check if temp is null, then if null pop up an error message box telling the user to make sure to select an item.
+        if (temp == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("No selection was made");
@@ -134,18 +129,15 @@ public class MainMenuController implements Initializable {
             alert.showAndWait();
 
         }
-        else {                   // 3. else do the rest including sending data and loading the update customer stage.
-            FXMLLoader loader = new FXMLLoader();                                           // 4. created the FXMLLoader object.
-            loader.setLocation(getClass().getResource("/daoView_Controller/Customer.fxml"));  // 5. let that loader object know which view to use.
-            loader.load();                                                                  // 6. load the object.
+        else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/daoView_Controller/Customer.fxml"));
+            loader.load();
 
-            CustomerController CustController = loader.getController();  // 7. call the loader object's getController() method using the loader reference variable CustController.
-             // 8. use indexOf() to get the index of the selected item in the allParts observableList and assign it to tempIndex.  **** we dont use indexOf() with a database.
+            CustomerController CustController = loader.getController();
+            CustController.sendCustomer(temp);
 
-            CustController.sendCustomer(temp);        // 9. move the selected object to the controller
-              // and also move the index of the selected object.  ** we dont deal with the index.
-
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();                      // 10. then set the stage and scene
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent root = loader.getRoot();
             stage.setTitle("Update Customer");
             Scene scene = new Scene(root, 600, 600);
@@ -161,7 +153,6 @@ public class MainMenuController implements Initializable {
      @param actionEvent An event from an action.
      */
     public void onActionDeleteCustomer(ActionEvent actionEvent) {
-       // System.out.println("Delete Customer button clicked.  -- onActionDeleteCustomer(ActionEvent actionEvent) called in MainMenuController.java");
 
         Customer temp = custTable.getSelectionModel().getSelectedItem();
         if (temp == null) {
@@ -195,7 +186,6 @@ public class MainMenuController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
-     //   System.out.println("Add Appointment button clicked.  -- onActionAddAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Appointment.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -211,7 +201,6 @@ public class MainMenuController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionUpdateAppointment(ActionEvent actionEvent) throws IOException {
-      //  System.out.println("Update Appointment button clicked.  -- onActionUpdateAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
         Appointment temp = apptTable.getSelectionModel().getSelectedItem();
 
@@ -247,7 +236,6 @@ public class MainMenuController implements Initializable {
      @param actionEvent An event from an action.
      */
     public void onActionDeleteAppointment(ActionEvent actionEvent) {
-     //   System.out.println("Delete Appointment button clicked.  -- onActionDeleteAppointment(ActionEvent actionEvent) called in MainMenuController.java");
 
         Appointment temp = apptTable.getSelectionModel().getSelectedItem();
         if (temp == null) {
@@ -269,13 +257,8 @@ public class MainMenuController implements Initializable {
                 Alert alertInfo = new Alert(Alert.AlertType.INFORMATION, "Please click OK to continue.");
                 alertInfo.setTitle("Deleted");
                 alertInfo.setHeaderText("The Appointment ID number " + temp.getApptId() + " of type " + temp.getType() + " has been deleted.");
-               // Optional<ButtonType> resultInfo = alertInfo.showAndWait();
                 alertInfo.showAndWait();
                 apptTable.setItems(adao.getAllAppointmentsOL());
-
-                /*CustomerDAOImpl dao = new CustomerDAOImpl();
-                dao.delete(temp);  // tried casting customer object temp to customerDAOImpl object, but wont work.
-                custTable.setItems(dao.getAllCustomersOL());*/
             }
         }
     }
@@ -286,7 +269,6 @@ public class MainMenuController implements Initializable {
      @throws SQLException  If a database access exception occurred.
      */
     public void onActionWeekView(ActionEvent actionEvent) throws SQLException {
-     //   System.out.println("Week radio button clicked.  -- onActionWeekView(ActionEvent actionEvent) called in MainMenuController.java");
 
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         apptTable.setItems(adao.selectWeekViewOL());
@@ -300,7 +282,6 @@ public class MainMenuController implements Initializable {
      @throws SQLException  If a database access exception occurred.
      */
     public void onActionMonthView(ActionEvent actionEvent) throws SQLException {
-      //  System.out.println("Month radio button clicked.  -- onActionMonthView(ActionEvent actionEvent) called in MainMenuController.java");
 
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         apptTable.setItems(adao.selectMonthViewOL());
@@ -313,7 +294,6 @@ public class MainMenuController implements Initializable {
      @param actionEvent An event from an action.
      */
     public void onActionAllView(ActionEvent actionEvent) {
-      //  System.out.println("All radio button clicked.  -- onActionAllView(ActionEvent actionEvent) called in MainMenuController.java");
 
         AppointmentDAOImpl adao = new AppointmentDAOImpl();
         apptTable.setItems(adao.getAllAppointmentsOL());
@@ -325,7 +305,6 @@ public class MainMenuController implements Initializable {
      @throws IOException  If an input or output exception occurred.
      */
     public void onActionViewReports(ActionEvent actionEvent) throws IOException {
-      //  System.out.println("Reports button clicked.  -- onActionViewReports(ActionEvent actionEvent) called in MainMenuController.java");
 
         Parent root = FXMLLoader.load(getClass().getResource("/daoView_Controller/Reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
